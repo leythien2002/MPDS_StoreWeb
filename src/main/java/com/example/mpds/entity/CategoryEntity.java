@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 @Table(name = "category")
 public class CategoryEntity extends BaseEntity{
-    @Column
+    @Column(nullable = false)
     private String name;
     @OneToMany(mappedBy = "category")
     private List<ProductEntity> listProduct;

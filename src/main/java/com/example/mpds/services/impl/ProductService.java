@@ -2,6 +2,7 @@ package com.example.mpds.services.impl;
 
 import com.example.mpds.dto.ProductDTO;
 import com.example.mpds.entity.ProductEntity;
+import com.example.mpds.mapper.ProductMapper;
 import com.example.mpds.repository.ProductRepository;
 import com.example.mpds.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,30 @@ import java.util.List;
 public class ProductService implements IProductService {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private ProductMapper mapper;
     @Override
     public List<ProductDTO> findAll(Pageable pageable) {
         List<ProductDTO> results=new ArrayList<>();
 
+        List<ProductEntity> productList=productRepository.findAll(pageable).getContent();
+        for(ProductEntity item:productList){
+            ProductDTO productDTO=mapper.toDTO(item);
+            results.add(productDTO);
+        }
+        return results;
+    }
+    public List<ProductDTO> findAll() {
+        List<ProductDTO> results=new ArrayList<>();
         List<ProductEntity> productList=productRepository.findAll();
-        return null;
+        for(ProductEntity item:productList){
+            ProductDTO productDTO=mapper.toDTO(item);
+            results.add(productDTO);
+        }
+        return results;
+    }
+
+    public int totalProduct(){
+        return (int) productRepository.count();
     }
 }

@@ -1,15 +1,16 @@
 package com.example.mpds.entity;
 
 import jakarta.persistence.*;
+import org.springframework.lang.NonNull;
 
 import java.util.List;
 
 @Entity
 @Table(name = "products")
 public class ProductEntity extends BaseEntity{
-    @Column
+    @Column(nullable = false)
     private String name;
-    @Column
+    @Column(nullable = false)
     private Double price;
     @ManyToOne
     @JoinColumn(name = "catergoryId")
@@ -25,7 +26,7 @@ public class ProductEntity extends BaseEntity{
 
     @Column
     private String description;
-    @Column
+    @Column(nullable = false)
     private int status; // check if this product is deleted by admin
 
     public String getName() {

@@ -11,9 +11,9 @@ public class InvoiceInfoEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name="idProduct")
     private ProductEntity idProduct;
-    @Column
+    @Column(nullable = false)
     private int amount;
-    @Column
+    @Column(nullable = false)
     private double price;
     //neu khong co col price thì khi gia san pham thay doi, va luc tham chieu qua table khac de xac dinh gia thi se bi sai.
 

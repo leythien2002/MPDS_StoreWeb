@@ -8,19 +8,19 @@ import java.util.List;
 @Entity
 @Table(name = "invoices")
 public class InvoiceEntity extends BaseEntity{
-    @Column
+    @Column(name = "userid",nullable = false)
     private String userId;
-    @Column
+    @Column(name = "totalmoney",nullable = false)
     private String totalMoney;
     @OneToMany(mappedBy = "idInvoice")
     private List<InvoiceInfoEntity> listInvoiceInfo;
 
-    @Column
+    @Column(name = "createdate")
     @CreatedDate
     private String createDate;
-    @Column
+    @Column(nullable = false)
     private String phone;
-    @Column
+    @Column(nullable = false)
     private String address;
 
     public String getUserId() {
