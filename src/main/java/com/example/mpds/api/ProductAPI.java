@@ -20,25 +20,35 @@ public class ProductAPI {
     @Autowired
     private ProductService productService;
 
-
     @GetMapping(value = "/shop")
     //limit se tu set, chu khong lay tu request
-    public String shop(@RequestParam(value = "page",defaultValue = "1") int page, Model model){
+    public String shop(@RequestParam(value = "page",defaultValue = "1")int page,
+                       @RequestParam(value = "sort",defaultValue ="default" ) String sort
+            , Model model){
         Pageable pageable;
-//        if(sort==1){
-//             pageable= PageRequest.of(page-1,2, Sort.Direction.DESC);
-//        }
-//        if(sort==0){
-//             pageable= PageRequest.of(page-1,2, Sort.Direction.ASC);
-//        }
-//        else{}
-            pageable = PageRequest.of(page-1,2);
-
+        switch (sort){
+            case "asc":
+                pageable= PageRequest.of(page-1,2, Sort.by("price").ascending());
+                break;
+            case "desc":
+                pageable= PageRequest.of(page-1,2, Sort.by("price").descending());
+                break;
+            default:
+                pageable = PageRequest.of(page-1,2);
+                break;
+        }
         ProductOutput result= new ProductOutput();
+        result.setCurrentPage(page);
         result.setTotalPage((int) Math.ceil((double)productService.totalProduct()/2));
         result.setListResult(productService.findAll(pageable));
         //nen truyen them page hien tai vi co class active trong html
         model.addAttribute("listProduct",result);
         return "shop";
+    }
+    @GetMapping(value = "/detail")
+    public String detailProduct(@RequestParam(value = "name")String name,Model model){
+        ProductDTO productDTO=productService.findOne(name);
+        model.addAttribute("product",productDTO);
+        return "detail";
     }
 }

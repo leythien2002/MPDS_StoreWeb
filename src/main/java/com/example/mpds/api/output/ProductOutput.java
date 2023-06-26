@@ -7,9 +7,17 @@ import java.util.List;
 
 public class ProductOutput {
 
+    private int currentPage;
     private int totalPage;
     private List<ProductDTO> listResult=new ArrayList<>();
 
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
 
     public int getTotalPage() {
         return totalPage;

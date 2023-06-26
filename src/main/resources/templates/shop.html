@@ -209,12 +209,12 @@
                       <li class="list-inline-item text-muted me-3"><a class="reset-anchor p-0" href="#!"><i class="fas fa-th-large"></i></a></li>
                       <li class="list-inline-item text-muted me-3"><a class="reset-anchor p-0" href="#!"><i class="fas fa-th"></i></a></li>
                       <li class="list-inline-item">
-                        <select class="selectpicker" data-customclass="form-control form-control-sm">
+                        <select class="selectpicker" data-customclass="form-control form-control-sm" onchange="redirectOnChange(this)">
                           <option value>Sort By </option>
                           <option value="default">Default sorting </option>
                           <option value="popularity">Popularity </option>
-                          <option value="low-high">Price: Low to High </option>
-                          <option value="high-low">Price: High to Low </option>
+                          <option value="asc">Price: Low to High </option>
+                          <option value="desc">Price: High to Low </option>
                         </select>
                       </li>
                     </ul>
@@ -235,7 +235,7 @@
                           </ul>
                         </div>
                       </div>
-                      <h6> <a class="reset-anchor" th:href="detail.html" th:text="${product.name}"></a></h6>
+                      <h6> <a class="reset-anchor" th:href="@{/detail(name=${product.name})}" th:text="${product.name}"></a></h6>
                       <p class="small text-muted" th:text="${product.price}" ></p>
                     </div>
                   </div>
@@ -261,7 +261,8 @@
                 <nav aria-label="Page navigation example">
                   <ul class="pagination justify-content-center justify-content-lg-end">
                     <li class="page-item mx-1"><a class="page-link" href="#!" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                    <li class="page-item mx-1 active" th:each="page:${#numbers.sequence(1,listProduct.totalPage)}"><a class="page-link" th:href="@{'?page=' + ${page}}" th:text="${page}"></a></li>
+                    <li class="page-item mx-1 "  th:each="page:${#numbers.sequence(1,listProduct.totalPage)}" th:classappend="${page==listProduct.currentPage} ? 'active': ''"  >
+                        <a class="page-link" th:href="@{'?page=' + ${page}}" th:text="${page}"></a></li>
                     <li class="page-item ms-1"><a class="page-link" href="#!" aria-label="Next"><span aria-hidden="true">»</span></a></li>
                   </ul>
                 </nav>
@@ -321,6 +322,31 @@
       <script src="vendor/swiper/swiper-bundle.min.js"></script>
       <script src="vendor/choices.js/public/assets/scripts/choices.min.js"></script>
       <script src="js/front.js"></script>
+<!--      add jquery for ajax-->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--      get sort value -->
+      <script>
+
+        function redirectOnChange(selectElement) {
+          var urlParams = new URLSearchParams(window.location.search); // Lấy các tham số từ URL
+          if (urlParams.has("sort")) {
+            urlParams.delete("sort");
+          }
+          var params = urlParams.toString();
+          var selectedValue = selectElement.value;
+          // Thực hiện chuyển hướng người dùng đến URL tương ứng với giá trị đã chọn
+          if (selectedValue === "default") {
+            window.location.href = "?sort=default"+"&"+params;
+          } else if (selectedValue === "popularity") {
+            window.location.href = "?";
+          } else if (selectedValue === "asc") {
+            window.location.href = "?sort=asc"+"&"+params;
+          } else if (selectedValue === "desc") {
+            window.location.href = "?sort=desc"+"&"+params;
+          }
+        }
+      </script>
+
       <!-- Nouislider Config-->
       <script>
         var range = document.getElementById('range');
@@ -349,6 +375,7 @@
         
       </script>
       <script>
+
         // ------------------------------------------------------- //
         //   Inject SVG Sprite - 
         //   see more here 

@@ -38,6 +38,12 @@ public class ProductService implements IProductService {
         }
         return results;
     }
+    public ProductDTO findOne(String name){
+        ProductDTO productDTO=new ProductDTO();
+        ProductEntity product=productRepository.findOneByName(name);
+        productDTO= mapper.toDTO(product);
+        return productDTO;
+    }
 
     public int totalProduct(){
         return (int) productRepository.count();
