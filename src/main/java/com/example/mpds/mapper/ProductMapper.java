@@ -23,6 +23,7 @@ public class ProductMapper {
     }
     public ProductDTO toDTO(ProductEntity entity){
         ProductDTO dto=new ProductDTO();
+        dto.setId(entity.getId());//set id for add product to cart
         dto.setDescription(entity.getDescription());
         dto.setPrice(entity.getPrice());
         dto.setName(entity.getName());

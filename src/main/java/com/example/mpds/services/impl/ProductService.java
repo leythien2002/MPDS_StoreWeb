@@ -44,6 +44,12 @@ public class ProductService implements IProductService {
         productDTO= mapper.toDTO(product);
         return productDTO;
     }
+    public ProductDTO findOne(int id){
+        ProductDTO productDTO=new ProductDTO();
+        ProductEntity product=productRepository.findOneById(id);
+        productDTO= mapper.toDTO(product);
+        return productDTO;
+    }
 
     public int totalProduct(){
         return (int) productRepository.count();

@@ -15,6 +15,8 @@ public class ProductDTO extends AbstractDTO{
     private String image3;
     private String description;
 
+
+
     //co can status ko ?
     private int status; // check if this product is deleted by admin
 

@@ -48,7 +48,10 @@
                 </li>
               </ul>
               <ul class="navbar-nav ms-auto">               
-                <li class="nav-item"><a class="nav-link" href="cart.html"> <i class="fas fa-dolly-flatbed me-1 text-gray"></i>Cart<small class="text-gray fw-normal">(2)</small></a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/cart}"> <i class="fas fa-dolly-flatbed me-1 text-gray"></i>Cart
+                  <small class="text-gray fw-normal cartSize" th:if="${session.cart}!=null"  th:text="'('+${session.cart.size()+')'}"></small>
+                  <small class="text-gray fw-normal cartSize" th:if="${session.cart}==null"  th:text="'('+0+')'"></small>
+                </a></li>
                 <li class="nav-item"><a class="nav-link" href="#!"> <i class="far fa-heart me-1"></i><small class="text-gray fw-normal"> (0)</small></a></li>
                 <li class="nav-item"><a class="nav-link" href="#!"> <i class="fas fa-user me-1 text-gray fw-normal"></i>Login</a></li>
               </ul>
@@ -230,7 +233,7 @@
                         <div class="product-overlay">
                           <ul class="mb-0 list-inline">
                             <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#!"><i class="far fa-heart"></i></a></li>
-                            <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="cart.html">Add to cart</a></li>
+                            <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark addToCart" th:value="${product.getId()}">Add to cart</a></li>
                             <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#productView" data-bs-toggle="modal"><i class="fas fa-expand"></i></a></li>
                           </ul>
                         </div>
@@ -326,7 +329,6 @@
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!--      get sort value -->
       <script>
-
         function redirectOnChange(selectElement) {
           var urlParams = new URLSearchParams(window.location.search); // Lấy các tham số từ URL
           if (urlParams.has("sort")) {
@@ -346,7 +348,38 @@
           }
         }
       </script>
+        <script>
+            // Gắn sự kiện click vào nút "Add to cart"
+            $(document).ready(function() {
 
+                $('.addToCart').click(function() {
+                    // Thực hiện xử lý AJAX ở đây
+                  // //Javascript thuần
+                  // var addToCartButton = document.getElementById("addToCart");
+                  // // Lấy giá trị của thuộc tính "value"
+                  // var value = addToCartButton.value;
+
+                  // Lấy giá trị của thuộc tính "value" bằng jQuery
+                  var value = $(this).attr("value");
+                    $.ajax({
+                        url: '/cart/add',
+                        method: 'POST',
+                        data: { id:value, quantity:1 },
+                        success: function(response) {
+                            // Xử lý khi AJAX thành công
+                          console.log("thanh cong")
+                          var cartSizeText = '(' + response + ')';
+                            $('.cartSize').text(cartSizeText);
+                            // console.log(response);
+                        },
+                        error: function(xhr, status, error) {
+                            // Xử lý khi AJAX gặp lỗi
+                            console.log("error");
+                        }
+                    });
+                });
+            });
+        </script>
       <!-- Nouislider Config-->
       <script>
         var range = document.getElementById('range');
