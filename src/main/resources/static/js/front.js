@@ -97,18 +97,18 @@ document.addEventListener('DOMContentLoaded', function () {
 	/* ===============================================================
          PRODUCT QUNATITY
       =============================================================== */
-	document.querySelectorAll('.dec-btn').forEach((el) => {
-		el.addEventListener('click', () => {
-			var siblings = el.parentElement.querySelector('input');
-			if (parseInt(siblings.value, 10) >= 1) {
-				siblings.value = parseInt(siblings.value, 10) - 1;
-			}
-		});
-	});
-	document.querySelectorAll('.inc-btn').forEach((el) => {
-		el.addEventListener('click', () => {
-			var siblings = el.parentElement.querySelector('input');
-			siblings.value = parseInt(siblings.value, 10) + 1;
-		});
-	});
+	// document.querySelectorAll('.dec-btn').forEach((el) => {
+	// 	el.addEventListener('click', () => {
+	// 		var siblings = el.parentElement.querySelector('input');
+	// 		if (parseInt(siblings.value, 10) >= 1) {
+	// 			siblings.value = parseInt(siblings.value, 10) - 1;
+	// 		}
+	// 	});
+	// });
+	// document.querySelectorAll('.inc-btn').forEach((el) => {
+	// 	el.addEventListener('click', () => {
+	// 		var siblings = el.parentElement.querySelector('input');
+	// 		siblings.value = parseInt(siblings.value, 10) + 1;
+	// 	});
+	// });
 });

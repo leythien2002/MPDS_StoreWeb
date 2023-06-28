@@ -38,7 +38,7 @@
                   <!-- Link--><a class="nav-link" href="index.html">Home</a>
                 </li>
                 <li class="nav-item">
-                  <!-- Link--><a class="nav-link" href="shop.html">Shop</a>
+                  <!-- Link--><a class="nav-link" th:href="@{/shop}">Shop</a>
                 </li>
                 <li class="nav-item">
                   <!-- Link--><a class="nav-link" href="detail.html">Product detail</a>
@@ -48,7 +48,10 @@
                 </li>
               </ul>
               <ul class="navbar-nav ms-auto">               
-                <li class="nav-item"><a class="nav-link" href="cart.html"> <i class="fas fa-dolly-flatbed me-1 text-gray"></i>Cart<small class="text-gray fw-normal">(2)</small></a></li>
+                <li class="nav-item"><a class="nav-link" href="cart.html"> <i class="fas fa-dolly-flatbed me-1 text-gray"></i>Cart
+                  <small class="text-gray fw-normal cartSize" th:if="${session.cart}!=null"  th:text="'('+${session.cart.itemList.size()+')'}"></small>
+                  <small class="text-gray fw-normal cartSize" th:if="${session.cart}==null"  th:text="'('+0+')'"></small>
+                  </a></li>
                 <li class="nav-item"><a class="nav-link" href="#!"> <i class="far fa-heart me-1"></i><small class="text-gray fw-normal"> (0)</small></a></li>
                 <li class="nav-item"><a class="nav-link" href="#!"> <i class="fas fa-user me-1 text-gray fw-normal"></i>Login</a></li>
               </ul>
@@ -130,8 +133,8 @@
                       <th class="border-0 p-3" scope="col"> <strong class="text-sm text-uppercase"></strong></th>
                     </tr>
                   </thead>
-                  <tbody class="border-0">
-                    <tr th:each="item:${session.cart}">
+                  <tbody class="border-0" th:if="${session.cart}!=null">
+                    <tr th:each="item:${session.cart.itemList}">
                       <th class="ps-0 py-3 border-light" scope="row">
                         <div class="d-flex align-items-center"><a class="reset-anchor d-block animsition-link" href="detail.html"><img src="img/product-detail-3.jpg" alt="..." width="70"/></a>
                           <div class="ms-3"><strong class="h6"><a class="reset-anchor animsition-link" href="detail.html" th:text="${item.value.product.name}"></a></strong></div>
@@ -143,47 +146,27 @@
                       <td class="p-3 align-middle border-light">
                         <div class="border d-flex align-items-center justify-content-between px-3"><span class="small text-uppercase text-gray headings-font-family">Quantity</span>
                           <div class="quantity">
-                            <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button>
-                            <input class="form-control form-control-sm border-0 shadow-0 p-0" type="text" value="1"/>
-                            <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button>
+                            <button class="decrease-btn p-0 dec" th:attr="data-id=${item.value.product.getId()}"><i class="fas fa-caret-left"></i></button>
+                            <input class="form-control form-control-sm border-0 shadow-0 p-0 " type="number" th:value="${item.value.quantity}" th:id="'quantity-'+${item.value.product.getId()}"/>
+                            <button class="increase-btn p-0 inc" th:attr="data-id=${item.value.product.getId()}"><i class="fas fa-caret-right"></i></button>
                           </div>
                         </div>
                       </td>
                       <td class="p-3 align-middle border-light">
-                        <p class="mb-0 small">$250</p>
+                        <p class="mb-0 small price" th:id="'price-'+${item.value.product.getId()}" th:text="'$'+${item.value.product.price}"></p>
                       </td>
-                      <td class="p-3 align-middle border-light"><a class="reset-anchor" href="#!"><i class="fas fa-trash-alt small text-muted"></i></a></td>
+                      <td class="p-3 align-middle border-light">
+                        <a class="reset-anchor removeItem" th:attr="data-id=${item.value.product.getId()}">
+                          <i class="fas fa-trash-alt small text-muted"></i></a></td>
                     </tr>
-                    <tr>
-                      <th class="ps-0 py-3 border-0" scope="row">
-                        <div class="d-flex align-items-center"><a class="reset-anchor d-block animsition-link" href="detail.html"><img src="img/product-detail-2.jpg" alt="..." width="70"/></a>
-                          <div class="ms-3"><strong class="h6"><a class="reset-anchor animsition-link" href="detail.html">Apple watch</a></strong></div>
-                        </div>
-                      </th>
-                      <td class="p-3 align-middle border-0">
-                        <p class="mb-0 small">$250</p>
-                      </td>
-                      <td class="p-3 align-middle border-0">
-                        <div class="border d-flex align-items-center justify-content-between px-3"><span class="small text-uppercase text-gray headings-font-family">Quantity</span>
-                          <div class="quantity">
-                            <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button>
-                            <input class="form-control form-control-sm border-0 shadow-0 p-0" type="text" value="1"/>
-                            <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="p-3 align-middle border-0">
-                        <p class="mb-0 small">$250</p>
-                      </td>
-                      <td class="p-3 align-middle border-0"><a class="reset-anchor" href="#!"><i class="fas fa-trash-alt small text-muted"></i></a></td>
-                    </tr>
+
                   </tbody>
                 </table>
               </div>
               <!-- CART NAV-->
               <div class="bg-light px-4 py-3">
                 <div class="row align-items-center text-center">
-                  <div class="col-md-6 mb-3 mb-md-0 text-md-start"><a class="btn btn-link p-0 text-dark btn-sm" href="shop.html"><i class="fas fa-long-arrow-alt-left me-2"> </i>Continue shopping</a></div>
+                  <div class="col-md-6 mb-3 mb-md-0 text-md-start"><a class="btn btn-link p-0 text-dark btn-sm" th:href="@{/shop}"><i class="fas fa-long-arrow-alt-left me-2"> </i>Continue shopping</a></div>
                   <div class="col-md-6 text-md-end"><a class="btn btn-outline-dark btn-sm" href="checkout.html">Procceed to checkout<i class="fas fa-long-arrow-alt-right ms-2"></i></a></div>
                 </div>
               </div>
@@ -196,7 +179,9 @@
                   <ul class="list-unstyled mb-0">
                     <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Subtotal</strong><span class="text-muted small">$250</span></li>
                     <li class="border-bottom my-2"></li>
-                    <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong><span>$250</span></li>
+                    <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong>
+                      <span th:if="${session.cart}!=null" th:id="totalPrice" th:text="${session.cart.total}"></span>
+                    </li>
                     <li>
                       <form action="#">
                         <div class="input-group mb-0">
@@ -263,6 +248,89 @@
       <script src="vendor/swiper/swiper-bundle.min.js"></script>
       <script src="vendor/choices.js/public/assets/scripts/choices.min.js"></script>
       <script src="js/front.js"></script>
+      <!--      add jquery for ajax-->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--      change quantity-->
+      <script>
+        // Gắn sự kiện click vào nút "Add to cart"
+        $(document).ready(function() {
+          $('.inc').click(function() {
+            var productId=$(this).data('id');
+            var quantityInput = $('#quantity-' + productId); //tim phan tu input cung cap voi button
+            var price = $('#price-' + productId);
+            var quantity = quantityInput.val();//lay gia tri input
+            $.ajax({
+              url: '/cart/amount',
+              method: 'POST',
+              data: { id: productId, quantity: quantity,change:'inc' },
+              success: function(response) {
+                // Xử lý phản hồi từ máy chủ (nếu cần thiết)
+                console.log(response);
+                var number=response.quantityProduct;
+                quantityInput.val(number);
+                price.text(response.totalPrice);
+                $('#totalPrice').text(response.totalPriceOfCart);
+
+
+              },
+              error: function(xhr, status, error) {
+                // Xử lý lỗi (nếu có)
+                console.error(error);
+              }
+            });
+          });
+          $('.dec').click(function() {
+            var productId=$(this).data('id');
+            var quantityInput = $('#quantity-' + productId); //tim phan tu input cung cap voi button
+            var price = $('#price-' + productId);
+            // var quantityInput = $(this).siblings('input'); //tim phan tu input cung cap voi button
+            var quantity = quantityInput.val();//lay gia tri input
+            $.ajax({
+              url: '/cart/amount',
+              method: 'POST',
+              data: { id: productId, quantity: quantity,change:'dec' },
+              success: function(response) {
+                // Xử lý phản hồi từ máy chủ (nếu cần thiết)
+                console.log(response);
+                var number=response.quantityProduct;
+                quantityInput.val(number);
+                price.text(response.totalPrice);
+                $('#totalPrice').text(response.totalPriceOfCart);
+
+
+              },
+              error: function(xhr, status, error) {
+                // Xử lý lỗi (nếu có)
+                console.error(error);
+              }
+            });
+          });
+        });
+      </script>
+<!--      remove item-->
+      <script>
+        $(document).ready(function() {
+          $('a.removeItem').click(function(event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định khi click vào thẻ <a>
+
+            // var url = $(this).attr('href'); // Lấy URL từ thuộc tính href của thẻ <a>
+            var productId=$(this).data('id');
+
+            $.ajax({
+              url: '/cart/remove',
+              type: 'DELETE',
+              data: { id: productId },
+              success: function(response) {
+                // Xử lý phản hồi thành công nếu cần
+                location.reload();
+              },
+              error: function(xhr, status, error) {
+                // Xử lý lỗi nếu cần
+              }
+            });
+          });
+        });
+      </script>
       <script>
         // ------------------------------------------------------- //
         //   Inject SVG Sprite - 
@@ -288,6 +356,7 @@
         injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg'); 
         
       </script>
+
       <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </div>

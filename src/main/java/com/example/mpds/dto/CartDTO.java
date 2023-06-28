@@ -1,15 +1,26 @@
 package com.example.mpds.dto;
 
-import java.util.List;
+import java.util.HashMap;
+
 
 public class CartDTO {
-    private List<CartItemDTO> cart;
 
-    public List<CartItemDTO> getCart() {
-        return cart;
+    private HashMap<Integer,CartItemDTO> itemList;
+    private double total;
+
+    public HashMap<Integer, CartItemDTO> getItemList() {
+        return itemList;
     }
 
-    public void setCart(List<CartItemDTO> cart) {
-        this.cart = cart;
+    public void setItemList(HashMap<Integer, CartItemDTO> itemList) {
+        this.itemList = itemList;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 }

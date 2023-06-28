@@ -49,7 +49,7 @@
               </ul>
               <ul class="navbar-nav ms-auto">               
                 <li class="nav-item"><a class="nav-link" th:href="@{/cart}"> <i class="fas fa-dolly-flatbed me-1 text-gray"></i>Cart
-                  <small class="text-gray fw-normal cartSize" th:if="${session.cart}!=null"  th:text="'('+${session.cart.size()+')'}"></small>
+                  <small class="text-gray fw-normal cartSize" th:if="${session.cart}!=null"  th:text="'('+${session.cart.itemList.size()+')'}"></small>
                   <small class="text-gray fw-normal cartSize" th:if="${session.cart}==null"  th:text="'('+0+')'"></small>
                 </a></li>
                 <li class="nav-item"><a class="nav-link" href="#!"> <i class="far fa-heart me-1"></i><small class="text-gray fw-normal"> (0)</small></a></li>
@@ -368,7 +368,7 @@
                         success: function(response) {
                             // Xử lý khi AJAX thành công
                           console.log("thanh cong")
-                          var cartSizeText = '(' + response + ')';
+                          var cartSizeText = '(' + response.cartSize + ')';
                             $('.cartSize').text(cartSizeText);
                             // console.log(response);
                         },
