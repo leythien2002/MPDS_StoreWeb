@@ -9,6 +9,7 @@ import com.example.mpds.services.impl.ProductService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -116,8 +117,10 @@ public class CartAPI {
         return "cart";
     }
     @GetMapping(value = "/cart")
-    public String getCart(){
-
+    public String getCart(Model model){
+        //active class in html
+        String a="/cart";
+        model.addAttribute("query",a);
         return "cart";
     }
 }

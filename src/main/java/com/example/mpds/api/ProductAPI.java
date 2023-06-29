@@ -43,12 +43,18 @@ public class ProductAPI {
         result.setListResult(productService.findAll(pageable));
         //nen truyen them page hien tai vi co class active trong html
         model.addAttribute("listProduct",result);
+        //active class in html
+        String a="/shop";
+        model.addAttribute("query",a);
         return "shop";
     }
     @GetMapping(value = "/detail")
     public String detailProduct(@RequestParam(value = "name")String name,Model model){
         ProductDTO productDTO=productService.findOne(name);
         model.addAttribute("product",productDTO);
+        //active class in html
+        String a="/detail";
+        model.addAttribute("query",a);
         return "detail";
     }
 }

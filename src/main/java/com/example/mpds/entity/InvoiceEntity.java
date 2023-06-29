@@ -8,8 +8,11 @@ import java.util.List;
 @Entity
 @Table(name = "invoices")
 public class InvoiceEntity extends BaseEntity{
-    @Column(name = "userid",nullable = false)
-    private String userId;
+//    @Column(name = "userid",nullable = false)
+//    private String userId;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private UserEntity user;
     @Column(name = "totalmoney",nullable = false)
     private String totalMoney;
     @OneToMany(mappedBy = "idInvoice")
@@ -23,13 +26,14 @@ public class InvoiceEntity extends BaseEntity{
     @Column(nullable = false)
     private String address;
 
-    public String getUserId() {
-        return userId;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
+
 
     public String getTotalMoney() {
         return totalMoney;

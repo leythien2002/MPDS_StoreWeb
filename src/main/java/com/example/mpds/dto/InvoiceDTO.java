@@ -2,9 +2,9 @@ package com.example.mpds.dto;
 
 import jakarta.persistence.Column;
 
-public class InvoiceDTO {
+public class InvoiceDTO extends AbstractDTO{
 
-    private String userId;
+    private int userId;
 
     private String totalMoney;
 
@@ -12,11 +12,11 @@ public class InvoiceDTO {
 
     private String address;
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

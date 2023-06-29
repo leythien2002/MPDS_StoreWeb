@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface IProductService {
     List<ProductDTO> findAll(Pageable pageable);
+    List<ProductDTO> findAll();
+     ProductDTO findOne(int id);
+     int totalProduct();
+    ProductDTO findOne(String name);
 }
