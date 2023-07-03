@@ -7,6 +7,10 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
+<!--    token-->
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
     <!-- gLightbox gallery-->
     <link rel="stylesheet" th:href="@{/vendor/glightbox/css/glightbox.min.css}">
     <!-- Range slider-->
@@ -26,10 +30,11 @@
     <link rel="shortcut icon" th:href="@{/img/favicon.png}">
   </head>
   <body>
-  <div th:insert="preloading"></div>
+
+  <div th:insert="~{preloading}"></div>
     <div class="page-holder">
       <!-- navbar-->
-      <div th:insert="header :: header"></div>
+      <div th:insert="~{header :: header}"></div>
       <!--  Modal -->
       <div class="modal fade" id="productView" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -332,10 +337,15 @@
 
                   // Lấy giá trị của thuộc tính "value" bằng jQuery
                   var value = $(this).attr("value");
+                  var csrfToken = $("meta[name='_csrf']").attr("content");
+                  var csrfHeader = $("meta[name='_csrf_header']").attr("content");
                     $.ajax({
                         url: '/cart/add',
-                        method: 'POST',
+                        method: 'post',
                         data: { id:value, quantity:1 },
+                        beforeSend: function(xhr) {
+                          xhr.setRequestHeader(csrfHeader, csrfToken);
+                        },
                         success: function(response) {
                             // Xử lý khi AJAX thành công
                           console.log("thanh cong")

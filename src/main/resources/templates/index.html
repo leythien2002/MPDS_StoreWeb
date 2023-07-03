@@ -28,11 +28,11 @@
 
   </head>
   <body>
-  <div th:insert="preloading"></div>
+  <div th:insert="~{preloading}"></div>
   <!-- /End Preloader -->
     <div class="page-holder">
       <!-- navbar-->
-      <div th:insert="header :: header"></div>
+      <div th:insert="~{header :: header}"></div>
       <!--  Modal -->
       <div class="modal fade" id="productView" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">

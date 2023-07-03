@@ -17,7 +17,8 @@ public class InvoiceEntity extends BaseEntity{
     private String totalMoney;
     @OneToMany(mappedBy = "idInvoice")
     private List<InvoiceInfoEntity> listInvoiceInfo;
-
+    @Column(name="status")
+    private String status;
     @Column(name = "createdate")
     @CreatedDate
     private String createDate;

@@ -7,6 +7,9 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
+    <!--    token-->
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <!-- gLightbox gallery-->
     <link rel="stylesheet" th:href="@{/vendor/glightbox/css/glightbox.min.css}">
     <!-- Range slider-->
@@ -26,10 +29,10 @@
     <link rel="shortcut icon" th:href="@{/img/favicon.png}">
   </head>
   <body>
-  <div th:insert="preloading"></div>
+  <div th:insert="~{preloading}"></div>
     <div class="page-holder">
       <!-- navbar-->
-      <div th:insert="header :: header"></div>
+      <div th:insert="~{header :: header}"></div>
       <!--  Modal -->
       <div class="modal fade" id="productView" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -124,7 +127,7 @@
                         </div>
                       </td>
                       <td class="p-3 align-middle border-light">
-                        <p class="mb-0 small price" th:id="'price-'+${item.value.product.getId()}" th:text="'$'+${item.value.product.price}"></p>
+                        <p class="mb-0 small price" th:id="'price-'+${item.value.product.getId()}" th:text="'$'+${item.value.product.price*item.value.quantity}"></p>
                       </td>
                       <td class="p-3 align-middle border-light">
                         <a class="reset-anchor removeItem" th:attr="data-id=${item.value.product.getId()}">
@@ -151,7 +154,7 @@
                     <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Subtotal</strong><span class="text-muted small">$250</span></li>
                     <li class="border-bottom my-2"></li>
                     <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong>
-                      <span th:if="${session.cart}!=null" th:id="totalPrice" th:text="${session.cart.total}"></span>
+                      <span th:if="${session.cart}!=null" th:id="totalPrice" th:text="'$'+${session.cart.total}"></span>
                     </li>
                     <li>
                       <form action="#">
@@ -230,17 +233,23 @@
             var quantityInput = $('#quantity-' + productId); //tim phan tu input cung cap voi button
             var price = $('#price-' + productId);
             var quantity = quantityInput.val();//lay gia tri input
+
+            var csrfToken = $("meta[name='_csrf']").attr("content");
+            var csrfHeader = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
               url: '/cart/amount',
               method: 'POST',
               data: { id: productId, quantity: quantity,change:'inc' },
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+              },
               success: function(response) {
                 // Xử lý phản hồi từ máy chủ (nếu cần thiết)
                 console.log(response);
                 var number=response.quantityProduct;
                 quantityInput.val(number);
-                price.text(response.totalPrice);
-                $('#totalPrice').text(response.totalPriceOfCart);
+                price.text('$'+response.totalPrice);
+                $('#totalPrice').text('$'+response.totalPriceOfCart);
 
 
               },
@@ -256,17 +265,23 @@
             var price = $('#price-' + productId);
             // var quantityInput = $(this).siblings('input'); //tim phan tu input cung cap voi button
             var quantity = quantityInput.val();//lay gia tri input
+
+            var csrfToken = $("meta[name='_csrf']").attr("content");
+            var csrfHeader = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
               url: '/cart/amount',
               method: 'POST',
               data: { id: productId, quantity: quantity,change:'dec' },
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+              },
               success: function(response) {
                 // Xử lý phản hồi từ máy chủ (nếu cần thiết)
                 console.log(response);
                 var number=response.quantityProduct;
                 quantityInput.val(number);
-                price.text(response.totalPrice);
-                $('#totalPrice').text(response.totalPriceOfCart);
+                price.text('$'+response.totalPrice);
+                $('#totalPrice').text('$'+response.totalPriceOfCart);
 
 
               },

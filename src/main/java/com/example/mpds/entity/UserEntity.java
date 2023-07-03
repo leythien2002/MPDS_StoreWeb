@@ -1,20 +1,17 @@
 package com.example.mpds.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
     private String email;
-    @Column(name = "username",nullable = false)
+    @Column(name = "username",nullable = false,unique = true)
     private String userName;
     @Column(nullable = false)
     private String password;

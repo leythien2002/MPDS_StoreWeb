@@ -20,7 +20,7 @@ public class UserService implements IUserService {
 
     public UserDTO findOne(String username,String password){
         UserDTO userDTO=new UserDTO();
-        UserEntity entity=userRepository.findOneByUserNameAndPassword(username,password);
+        UserEntity entity=userRepository.findOneByUserName(username);
         userDTO=userMapper.toDTO(entity);
         return userDTO;
     }
