@@ -41,10 +41,13 @@
                 </p>
               </div>
             </div>
-            <form th:action="@{/authentication}"  th:method="POST" class="signin-form">
-              <div class="alert alert-${type}" role="alert" th:text="${mess}">
-
-              </div>
+            <div th:if="${param.error}" class="alert alert-danger" role="alert" >
+              Invalid username or password
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success" role="alert" >
+              You have been logout
+            </div>
+            <form th:action="@{/login}"  method="post" class="signin-form">
               <div class="form-group mb-3">
                 <label class="label" >Username</label>
                 <input type="text" class="form-control" placeholder="Username" th:name="username" required>
@@ -76,7 +79,7 @@
   </div>
 </section>
 <script>
-  var message='${message}';
+  var message='${param.error}';
   if(message){
     $('.alert').addClass("show");
     setTimeout(function () {

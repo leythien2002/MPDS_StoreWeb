@@ -4,7 +4,7 @@ import com.example.mpds.dto.UserDTO;
 
 public interface IUserService  {
 
-    UserDTO findOne(String username, String password);
+    UserDTO findOne(String username);
     UserDTO save(UserDTO dto);
 
 }

@@ -18,7 +18,7 @@ public class UserService implements IUserService {
     @Autowired
     private UserMapper userMapper;
 
-    public UserDTO findOne(String username,String password){
+    public UserDTO findOne(String username){
         UserDTO userDTO=new UserDTO();
         UserEntity entity=userRepository.findOneByUserName(username);
         userDTO=userMapper.toDTO(entity);
@@ -27,7 +27,7 @@ public class UserService implements IUserService {
     public UserDTO save(UserDTO dto){
         UserEntity entity=new UserEntity();
         //combine update and add.
-        if(dto.getId()==0){//can't compare int with null
+        if(dto.getId()!=0){//can't compare int with null
             Optional<UserEntity> tmp=userRepository.findById((long) dto.getId());
             UserEntity oldInfor=new UserEntity();
             if(tmp.isPresent()){

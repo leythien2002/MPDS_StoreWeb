@@ -15,7 +15,7 @@ public class ProductEntity extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "catergoryId")
     private CategoryEntity category;
-    @OneToMany(mappedBy = "idProduct")
+    @OneToMany(mappedBy = "product")
     private List<InvoiceInfoEntity> listInvoiceInfo;
     @Column
     private String image1;

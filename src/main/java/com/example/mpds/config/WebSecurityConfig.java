@@ -9,12 +9,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Collection;
@@ -25,7 +25,9 @@ public class WebSecurityConfig   {
     //khi su dung spring security thi session se mac dinh bi vo hieu hoa
     //SC cung su dung CSRF de tao token --> nhung cau query ajax se bi vo hieu
 @Autowired
-CustomUserDetailService customUserDetailService;
+private CustomAuthenticationSuccessHandler successHandler;
+@Autowired
+private CustomAuthenticationFailHandler failHandler;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -34,15 +36,19 @@ CustomUserDetailService customUserDetailService;
                         //cau hinh folder permission
                         .requestMatchers("/css/**", "/js/**" , "/vendor/**" , "/img/**", "/icons/**").permitAll()
                         .requestMatchers("/").permitAll()
-                        .requestMatchers("/shop").hasRole("ADMIN")
+                        .requestMatchers("/shop").hasRole("USER")
                         .requestMatchers("/cart/**").permitAll()
+                        .requestMatchers("/checkout/**").permitAll()
                         .requestMatchers("/authentication").permitAll()
                         .anyRequest().authenticated()
+//                        hasRole("ADMIN")
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
-                        .loginProcessingUrl("/authentication")
-                        .defaultSuccessUrl("/authentication")
+//                        .loginProcessingUrl("/authentication")
+                                .successHandler(successHandler)
+//                                .failureHandler(failHandler)
+//                        .failureUrl("/login?error=Login Fail")
                         .permitAll()
                 )
                 .logout((logout) -> logout.permitAll()
@@ -54,15 +60,7 @@ CustomUserDetailService customUserDetailService;
 
         return http.build();
     }
-//    @Bean
-//    public InMemoryUserDetailsManager userDetailsService() {
-////        UserDetails user = User.withDefaultPasswordEncoder()
-////                .username("user")
-////                .password("password")
-////                .roles("USER")
-////                .build();
-//        return new InMemoryUserDetailsManager();
-//    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder(){

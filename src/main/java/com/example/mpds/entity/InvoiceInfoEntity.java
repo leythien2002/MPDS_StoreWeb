@@ -7,10 +7,10 @@ import jakarta.persistence.*;
 public class InvoiceInfoEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name="idInvoice")
-    private InvoiceEntity idInvoice;
+    private InvoiceEntity invoice;
     @ManyToOne
     @JoinColumn(name="idProduct")
-    private ProductEntity idProduct;
+    private ProductEntity product;
     @Column(nullable = false)
     private int amount;
     @Column(nullable = false)
@@ -18,20 +18,20 @@ public class InvoiceInfoEntity extends BaseEntity {
     //neu khong co col price thì khi gia san pham thay doi, va luc tham chieu qua table khac de xac dinh gia thi se bi sai.
 
 
-    public InvoiceEntity getIdInvoice() {
-        return idInvoice;
+    public InvoiceEntity getInvoice() {
+        return invoice;
     }
 
-    public void setIdInvoice(InvoiceEntity idInvoice) {
-        this.idInvoice = idInvoice;
+    public void setInvoice(InvoiceEntity idInvoice) {
+        this.invoice = idInvoice;
     }
 
-    public ProductEntity getIdProduct() {
-        return idProduct;
+    public ProductEntity getProduct() {
+        return product;
     }
 
-    public void setIdProduct(ProductEntity idProduct) {
-        this.idProduct = idProduct;
+    public void setProduct(ProductEntity idProduct) {
+        this.product = idProduct;
     }
 
     public int getAmount() {

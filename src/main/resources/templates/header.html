@@ -44,7 +44,15 @@
             <li class="nav-item"><a class="nav-link" href="#!"> <i class="far fa-heart me-1"></i><small class="text-gray fw-normal"> (0)</small></a></li>
             <li class="nav-item"><a class="nav-link" th:if="${session.username}==null" th:href="@{/login}" th:text="Login"> <i class="fas fa-user me-1 text-gray fw-normal"></i></a></li>
             <li class="nav-item"><a class="nav-link" th:if="${session.username}!=null" href="#" th:text="${session.username}"> <i class="fas fa-user me-1 text-gray fw-normal"></i></a></li>
-            <li class="nav-item"><a class="nav-link" th:if="${session.username}!=null" th:href="@{/login}"th:text="Logout"> <i class="fas fa-user me-1 text-gray fw-normal"></i></a></li>
+            <li class="nav-item">
+              <form th:if="${session.username} != null" th:action="@{/logout}" method="post">
+                <button type="submit">
+                  <i class="fas fa-user me-1 text-gray fw-normal"></i>
+                  Logout
+                </button>
+              </form>
+            </li>
+            <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;"></form>
           </ul>
         </div>
       </nav>
@@ -68,5 +76,11 @@
   });
 
 
+</script>
+
+<script>
+  function submitForm() {
+    var form = document.getElementById('logoutForm');
+    form.submit();}
 </script>
 </html>

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ import java.util.List;
 public class CustomUserDetailService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -36,12 +39,13 @@ public class CustomUserDetailService implements UserDetailsService {
 //            UserDetails userDetails=new UserDetails(user.getUserName(),user.getPassword(),authorities);
 //            tao userDetails
             return User.withUsername(user.getUserName())
-                    .password(user.getPassword())
+                    .password(passwordEncoder.encode(user.getPassword()))
                     .authorities(authorities)
                     .build();
         }
         else{
-            return null;
+            throw new UsernameNotFoundException("Login Fail");
         }
+
     }
 }

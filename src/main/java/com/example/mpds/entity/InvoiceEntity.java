@@ -2,11 +2,13 @@ package com.example.mpds.entity;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.List;
 
 @Entity
 @Table(name = "invoices")
+@EntityListeners(AuditingEntityListener.class) // su dung cho annotation @CreateDate/ @CreateBy ...
 public class InvoiceEntity extends BaseEntity{
 //    @Column(name = "userid",nullable = false)
 //    private String userId;
@@ -14,11 +16,13 @@ public class InvoiceEntity extends BaseEntity{
     @JoinColumn(name = "userId")
     private UserEntity user;
     @Column(name = "totalmoney",nullable = false)
-    private String totalMoney;
-    @OneToMany(mappedBy = "idInvoice")
+    private double totalMoney;
+    @OneToMany(mappedBy = "invoice")
     private List<InvoiceInfoEntity> listInvoiceInfo;
     @Column(name="status")
     private String status;
+    @Column(name="email")
+    private String email;
     @Column(name = "createdate")
     @CreatedDate
     private String createDate;
@@ -26,6 +30,22 @@ public class InvoiceEntity extends BaseEntity{
     private String phone;
     @Column(nullable = false)
     private String address;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public UserEntity getUser() {
         return user;
@@ -36,11 +56,11 @@ public class InvoiceEntity extends BaseEntity{
     }
 
 
-    public String getTotalMoney() {
+    public double getTotalMoney() {
         return totalMoney;
     }
 
-    public void setTotalMoney(String totalMoney) {
+    public void setTotalMoney(double totalMoney) {
         this.totalMoney = totalMoney;
     }
 
@@ -75,4 +95,5 @@ public class InvoiceEntity extends BaseEntity{
     public void setAddress(String address) {
         this.address = address;
     }
+
 }

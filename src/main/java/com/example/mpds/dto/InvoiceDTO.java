@@ -6,12 +6,30 @@ public class InvoiceDTO extends AbstractDTO{
 
     private int userId;
 
-    private String totalMoney;
+    private double totalMoney;
+    private String email;
 
     private String phone;
 
     private String address;
     private String status;
+    private String createDate;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
 
     public String getStatus() {
         return status;
@@ -29,11 +47,11 @@ public class InvoiceDTO extends AbstractDTO{
         this.userId = userId;
     }
 
-    public String getTotalMoney() {
+    public double getTotalMoney() {
         return totalMoney;
     }
 
-    public void setTotalMoney(String totalMoney) {
+    public void setTotalMoney(double totalMoney) {
         this.totalMoney = totalMoney;
     }
 
