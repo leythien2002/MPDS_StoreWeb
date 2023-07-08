@@ -4,14 +4,17 @@ import com.example.mpds.dto.InvoiceDTO;
 import com.example.mpds.dto.InvoiceInfoDTO;
 import com.example.mpds.entity.InvoiceEntity;
 import com.example.mpds.entity.InvoiceInfoEntity;
+import com.example.mpds.entity.ProductEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 public class InvoiceInfoMapper {
-    public InvoiceInfoEntity toEntity(InvoiceInfoDTO dto){
+    public InvoiceInfoEntity toEntity(InvoiceInfoDTO dto,InvoiceEntity invoice, ProductEntity product){
         InvoiceInfoEntity entity=new InvoiceInfoEntity();
         entity.setAmount(dto.getAmount());
         entity.setPrice(dto.getPrice());
+        entity.setInvoice(invoice);
+        entity.setProduct(product);
 
         return entity;
 

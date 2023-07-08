@@ -24,6 +24,12 @@ public class UserService implements IUserService {
         userDTO=userMapper.toDTO(entity);
         return userDTO;
     }
+    public UserEntity findUser(String username){
+
+        UserEntity entity=userRepository.findOneByUserName(username);
+
+        return entity;
+    }
     public UserDTO save(UserDTO dto){
         UserEntity entity=new UserEntity();
         //combine update and add.

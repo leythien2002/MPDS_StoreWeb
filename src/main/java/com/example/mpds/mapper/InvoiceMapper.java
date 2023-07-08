@@ -4,11 +4,12 @@ import com.example.mpds.dto.InvoiceDTO;
 import com.example.mpds.dto.ProductDTO;
 import com.example.mpds.entity.InvoiceEntity;
 import com.example.mpds.entity.ProductEntity;
+import com.example.mpds.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 public class InvoiceMapper {
-    public InvoiceEntity toEntity(InvoiceDTO dto){
+    public InvoiceEntity toEntity(InvoiceDTO dto, UserEntity user){
         InvoiceEntity entity=new InvoiceEntity();
 //        CategoryEntity category=new CategoryEntity(); cai nay nen lay tu service ve roi dua vao entity sau
         entity.setTotalMoney(dto.getTotalMoney());
@@ -19,6 +20,8 @@ public class InvoiceMapper {
         entity.setCreateDate(dto.getCreateDate());
         //nen set khong hay de no default ??
         entity.setStatus(dto.getStatus());
+        //set user??
+        entity.setUser(user);
         return entity;
 
     }
