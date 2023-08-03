@@ -1,4 +1,4 @@
-# ShoesShopWeb
+# StoreWeb
 - This app allows customers to buy products. (Apart from that, administrator can manage the list of products on the website.)
 # Author
 - Le Y Thien
