@@ -1,5 +1,6 @@
 package com.example.mpds.services.impl;
 
+import com.example.mpds.api.admin.UpdateUserRequest;
 import com.example.mpds.dto.UserDTO;
 import com.example.mpds.entity.UserEntity;
 import com.example.mpds.mapper.UserMapper;
@@ -9,6 +10,7 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,6 +49,29 @@ public class UserService implements IUserService {
         entity=userRepository.save(entity);
         return userMapper.toDTO(entity);
     }
+    public List<UserEntity> getAllUsers() {
+        return userRepository.findAll();
+    }
 
+    public void deleteById(String email){
+//        userRepository.deleteById(Id);
+        UserEntity user = userRepository.findByEmail(email);
+        if (user != null) {
+            userRepository.delete(user);
+        }
+    }
+
+    public void updateUser(UpdateUserRequest user){
+
+        UserEntity existingUser = userRepository.findById((long) user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        existingUser.setEmail(user.getUserEmail());
+        existingUser.setPermission(user.getIsUser());
+        existingUser.setPhoneNumber(user.getPhoneNumber());
+        existingUser.setAddress(user.getAddress());
+
+        userRepository.save(existingUser);
+    }
 
 }

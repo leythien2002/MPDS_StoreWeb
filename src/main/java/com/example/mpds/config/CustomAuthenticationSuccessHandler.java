@@ -43,8 +43,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         session.setAttribute("username", username);
         if (hasUserRole) {
             redirectStrategy.sendRedirect(request, response, "/");
+            System.out.println("USER LOGGED IN");
         } else if (hasAdminRole) {
             redirectStrategy.sendRedirect(request, response, "/admin");
+            System.out.println("ADMIN LOGGED IN");
+
         } else {
             throw new IllegalStateException();
         }

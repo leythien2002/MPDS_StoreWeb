@@ -14,7 +14,7 @@ public class UserMapper {
         entity.setName(dto.getName());
         entity.setUserName(dto.getUserName());
         entity.setPermission(0);
-
+    entity.setPassword(dto.getPassword());
         return entity;
 
     }
@@ -36,4 +36,7 @@ public class UserMapper {
         oldEntity.setPermission(dto.getPermission());
         return oldEntity;
     }
+
+    //New user from register API
+
 }

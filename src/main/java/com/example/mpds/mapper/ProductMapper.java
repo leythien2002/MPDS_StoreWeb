@@ -30,7 +30,7 @@ public class ProductMapper {
         dto.setImage1(entity.getImage1());
         dto.setImage2(entity.getImage2());
         dto.setImage3(entity.getImage3());
-        dto.setcategoryName(entity.getCategory().getName());
+        dto.setCategoryName(entity.getCategory().getName());
         //
         dto.setStatus(entity.getStatus());
         return dto;

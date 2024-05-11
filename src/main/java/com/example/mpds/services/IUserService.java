@@ -7,4 +7,6 @@ public interface IUserService  {
     UserDTO findOne(String username);
     UserDTO save(UserDTO dto);
 
+    void deleteById(String email);
+
 }
