@@ -8,6 +8,7 @@ import java.util.List;
 @Entity
 @Table(name = "users",uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class UserEntity extends BaseEntity {
+
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
@@ -18,6 +19,13 @@ public class UserEntity extends BaseEntity {
     private String password;
     @Column(nullable = false)
     private int permission;
+    @Column(name = "phonenumber")
+    private String phoneNumber;
+
+    @Column(name="address")
+    private String address;
+
+
     @OneToMany(mappedBy = "user")
     private List<InvoiceEntity> listInvoice;
 
@@ -59,6 +67,20 @@ public class UserEntity extends BaseEntity {
 
     public void setPermission(int permission) {
         this.permission = permission;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public List<InvoiceEntity> getListInvoice() {

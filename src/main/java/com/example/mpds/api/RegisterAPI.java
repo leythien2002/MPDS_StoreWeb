@@ -26,11 +26,17 @@ public class RegisterAPI {
                            @RequestParam(value = "permission")int permission
 
                            ){
+        System.out.println(password);
+        System.out.println(name);
+        System.out.println(email);
+        System.out.println(userName);
+        System.out.println(permission);
+
         UserDTO userDTO= new UserDTO();
         userDTO.setUserName(userName);
         userDTO.setEmail(email);
         userDTO.setName(name);
-        userDTO.setPermission(permission);
+        userDTO.setPermission(0);
         userDTO.setPassword(password);
         userService.save(userDTO);
         return new RedirectView("/");

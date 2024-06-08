@@ -26,13 +26,21 @@
     <!-- Favicon-->
     <link rel="shortcut icon" th:href="@{/img/favicon.png}">
 
+    <link rel="stylesheet" th:href="@{/css/chatbotstyles.css}">
+    <meta name="viewprot" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <script th:src="@{/js/chatbotscript.js}" defer></script>
   </head>
   <body>
+
+
   <div th:insert="~{preloading}"></div>
   <!-- /End Preloader -->
     <div class="page-holder">
       <!-- navbar-->
       <div th:insert="~{header :: header}"></div>
+
       <!--  Modal -->
       <div class="modal fade" id="productView" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -91,11 +99,12 @@
             <h2 class="h5 text-uppercase mb-4">Browse our categories</h2>
           </header>
           <div class="row">
-            <div class="col-md-4"><a class="category-item" href="shop.html"><img class="img-fluid" src="img/cat-img-1.jpg" alt=""/><strong class="category-item-title">Clothes</strong></a>
+            <div class="col-md-4"><a class="category-item" href="shop"><img class="img-fluid" src="img/cat-img-1.jpg" alt=""/><strong class="category-item-title">Clothes</strong></a>
             </div>
-            <div class="col-md-4"><a class="category-item mb-4" href="shop.html"><img class="img-fluid" src="img/cat-img-2.jpg" alt=""/><strong class="category-item-title">Shoes</strong></a><a class="category-item" href="shop.html"><img class="img-fluid" src="img/cat-img-3.jpg" alt=""/><strong class="category-item-title">Watches</strong></a>
+            <div class="col-md-4"><a class="category-item mb-4" href="shop"><img class="img-fluid" src="img/cat-img-2.jpg" alt=""/><strong class="category-item-title">Shoes</strong></a>
+              <a class="category-item" href="shop"><img class="img-fluid" src="img/cat-img-3.jpg" alt=""/><strong class="category-item-title">Watches</strong></a>
             </div>
-            <div class="col-md-4"><a class="category-item" href="shop.html"><img class="img-fluid" src="img/cat-img-4.jpg" alt=""/><strong class="category-item-title">Electronics</strong></a>
+            <div class="col-md-4"><a class="category-item" href="shop"><img class="img-fluid" src="img/cat-img-4.jpg" alt=""/><strong class="category-item-title">Electronics</strong></a>
             </div>
           </div>
         </section>
@@ -244,6 +253,8 @@
             </div>
           </div>
         </section>
+
+
         <!-- SERVICES-->
         <section class="py-5 bg-light">
           <div class="container">
@@ -310,6 +321,9 @@
           </div>
         </section>
       </div>
+
+      <div th:replace="chatbot :: content"></div>
+
       <footer class="bg-dark text-white">
         <div class="container py-4">
           <div class="row py-5">

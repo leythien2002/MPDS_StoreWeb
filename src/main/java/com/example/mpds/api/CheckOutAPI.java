@@ -68,6 +68,9 @@ public class CheckOutAPI {
             infoDTO.setPrice(item.getValue().getPrice());
             invoiceInfoService.save(infoDTO);
         }
+        HashMap<Integer,CartItemDTO> newCart = new HashMap<Integer,CartItemDTO>();
+        cart.setItemList(newCart);
+        cart.setTotal(0);
         return new RedirectView("/");
     }
 

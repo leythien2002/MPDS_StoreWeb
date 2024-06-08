@@ -28,6 +28,23 @@ public class ProductEntity extends BaseEntity{
     private String description;
     @Column(nullable = false)
     private int status; // check if this product is deleted by admin
+    @Column
+    private String type;
+    @Column
+    private String dialSize;
+
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
+    public String getDialSize() {
+        return dialSize;
+    }
+    public void setDialSize(String dialSize) {
+        this.dialSize = dialSize;
+    }
 
     public String getName() {
         return name;

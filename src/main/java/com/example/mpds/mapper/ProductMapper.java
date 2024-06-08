@@ -16,6 +16,8 @@ public class ProductMapper {
         entity.setImage2(dto.getImage2());
         entity.setImage3(dto.getImage3());
         entity.setPrice(dto.getPrice());
+        entity.setType(dto.getType());
+        entity.setDialSize(dto.getDialSize());
         //nen set khong hay de no default ??
         entity.setStatus(dto.getStatus());
         return entity;
@@ -30,7 +32,9 @@ public class ProductMapper {
         dto.setImage1(entity.getImage1());
         dto.setImage2(entity.getImage2());
         dto.setImage3(entity.getImage3());
-        dto.setcategoryName(entity.getCategory().getName());
+        dto.setCategoryName(entity.getCategory().getName());
+        dto.setType(entity.getType());
+        dto.setDialSize(entity.getDialSize());
         //
         dto.setStatus(entity.getStatus());
         return dto;

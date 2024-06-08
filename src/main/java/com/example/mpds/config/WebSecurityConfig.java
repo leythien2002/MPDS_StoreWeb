@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.Collection;
 
@@ -31,17 +32,31 @@ private CustomAuthenticationFailHandler failHandler;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-//                .csrf().disable() //vo hieu hoa csrf de su dung ajax (hoac co the su dung the meta va tao token)
+                //Use token
+//                .csrf().ignoringRequestMatchers(
+//                        new AntPathRequestMatcher("/admin/**")
+//                )
+//                .and()
                 .authorizeHttpRequests((requests) -> requests
                         //cau hinh folder permission
                         .requestMatchers("/css/**", "/js/**" , "/vendor/**" , "/img/**", "/icons/**").permitAll()
                         .requestMatchers("/").permitAll()
-                        .requestMatchers("/shop").hasRole("USER")
+                        .requestMatchers("/shop").permitAll()
+
                         .requestMatchers("/cart/**").permitAll()
-                        .requestMatchers("/checkout/**").permitAll()
+                                .requestMatchers("/detail").permitAll()
+
+                                .requestMatchers("/checkout/**").permitAll()
+
                         .requestMatchers("/authentication").permitAll()
-                        .anyRequest().authenticated()
-//                        hasRole("ADMIN")
+                        .requestMatchers("/register/**").permitAll()
+                        //Only admin can access admin page
+                        .requestMatchers("/users/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/product/**").hasAuthority("ROLE_ADMIN")
+//                        .requestMatchers("/users/**").hasAuthority("ROLE_ADMIN")
+
+
+                                .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
@@ -56,7 +71,7 @@ private CustomAuthenticationFailHandler failHandler;
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // Kích hoạt lại session
                 )
-                .exceptionHandling().accessDeniedPage("/access");
+                .exceptionHandling().accessDeniedPage("/");
 
         return http.build();
     }

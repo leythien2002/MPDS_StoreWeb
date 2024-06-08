@@ -7,6 +7,8 @@ import jakarta.persistence.JoinColumn;
 
 
 public class ProductDTO extends AbstractDTO{
+
+//    private int  id;
     private String name;
     private Double price;
     private String categoryName;
@@ -15,10 +17,36 @@ public class ProductDTO extends AbstractDTO{
     private String image3;
     private String description;
 
+    private String type;
+    private String dialSize;
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDialSize() {
+        return dialSize;
+    }
+
+    public void setDialSize(String dialSize) {
+        this.dialSize = dialSize;
+    }
 
     //co can status ko ?
     private int status; // check if this product is deleted by admin
+
+//    @Override
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;
@@ -36,11 +64,11 @@ public class ProductDTO extends AbstractDTO{
         this.price = price;
     }
 
-    public String getcategoryName() {
+    public String getCategoryName() {
         return categoryName;
     }
 
-    public void setcategoryName(String categoryName) {
+    public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
 
