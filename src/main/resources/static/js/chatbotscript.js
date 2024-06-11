@@ -6,7 +6,7 @@ const chatbotCloseBtn = document.querySelector(".close-btn");
 
 let userMessage;
 
-const API_KEY = "sk-proj-riBtRFeJhDy0VeRMdo7WT3BlbkFJmHpvvDU2ZS8VjV4ZqPKY";
+const API_KEY = "sk-proj-I5yCGrJwfxPnaNjLfX94T3BlbkFJnR0YC1Ag4zOU2nnRohUR";
 
 const inputIniHeight = chatInput.scrollHeight;
 
@@ -18,7 +18,7 @@ const generateResponse = (incomingChatLi) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${API_KEY}`,
+      "Authorization": `Bearer ${API_KEY}`,
     },
     body: JSON.stringify({
       model: "gpt-3.5-turbo",
@@ -26,7 +26,7 @@ const generateResponse = (incomingChatLi) => {
         {
           role: "user",
           content: userMessage,
-        },
+        }
       ],
     }),
   };

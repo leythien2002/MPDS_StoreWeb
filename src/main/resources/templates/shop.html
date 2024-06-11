@@ -31,11 +31,17 @@
     <!-- Favicon-->
     <link rel="shortcut icon" th:href="@{/img/favicon.png}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+<!-- chatbot-->
+    <link rel="stylesheet" th:href="@{/css/chatbotstyles.css}">
+    <meta name="viewprot" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <script th:src="@{/js/chatbotscript.js}" defer></script>
 </head>
 <body>
 
 <div th:insert="~{preloading}"></div>
+
 <div class="page-holder">
     <!-- navbar-->
     <div th:insert="~{header :: header}"></div>
@@ -411,6 +417,7 @@
                 </div>
             </div>
         </section>
+
     </div>
     <footer class="bg-dark text-white">
         <div class="container py-4">
@@ -446,18 +453,17 @@
             <div class="border-top pt-4" style="border-color: #1d1d1d !important">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start">
-                        <p class="small text-muted mb-0">&copy; 2021 All rights reserved.</p>
+                        <p class="small text-muted mb-0">&copy; 2024 All rights reserved.</p>
                     </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <p class="small text-muted mb-0">Template designed by <a class="text-white reset-anchor"
-                                                                                 href="https://bootstrapious.com/p/boutique-bootstrap-e-commerce-template">Bootstrapious</a>
-                        </p>
-                        <!-- If you want to remove the backlink, please purchase the Attribution-Free License. See details in readme.txt or license.txt. Thanks!-->
-                    </div>
+
                 </div>
             </div>
         </div>
+
     </footer>
+    <div th:replace="chatbot :: content"></div>
+
+
     <!-- JavaScript files-->
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/glightbox/js/glightbox.min.js"></script>

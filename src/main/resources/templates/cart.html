@@ -301,7 +301,8 @@
 
             // var url = $(this).attr('href'); // Lấy URL từ thuộc tính href của thẻ <a>
             var productId=$(this).data('id');
-
+            var csrfToken = $("meta[name='_csrf']").attr("content");
+            var csrfHeader = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
               url: '/cart/remove',
               type: 'DELETE',
@@ -309,6 +310,9 @@
               success: function(response) {
                 // Xử lý phản hồi thành công nếu cần
                 location.reload();
+              },
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
               },
               error: function(xhr, status, error) {
                 // Xử lý lỗi nếu cần
