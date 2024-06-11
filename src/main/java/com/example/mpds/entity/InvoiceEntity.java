@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -13,19 +14,19 @@ import java.util.List;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class) // su dung cho annotation @CreateDate/ @CreateBy ...
-public class InvoiceEntity extends BaseEntity{
-//    @Column(name = "userid",nullable = false)
+public class InvoiceEntity extends BaseEntity {
+    //    @Column(name = "userid",nullable = false)
 //    private String userId;
     @ManyToOne
     @JoinColumn(name = "userId")
     private UserEntity user;
-    @Column(name = "totalmoney",nullable = false)
+    @Column(name = "totalmoney", nullable = false)
     private double totalMoney;
     @OneToMany(mappedBy = "invoice")
     private List<InvoiceInfoEntity> listInvoiceInfo;
-    @Column(name="status")
+    @Column(name = "status")
     private String status;
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
     @Column(name = "createdate")
     @CreatedDate
@@ -35,6 +36,10 @@ public class InvoiceEntity extends BaseEntity{
     @Column(nullable = false)
     private String address;
 
+    @PrePersist
+    public void prePersist() {
+        createDate = createDate != null ? createDate : new Date().toString();
+    }
 
 
 }

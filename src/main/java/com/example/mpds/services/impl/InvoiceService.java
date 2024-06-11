@@ -6,14 +6,18 @@ import com.example.mpds.entity.InvoiceEntity;
 import com.example.mpds.entity.UserEntity;
 import com.example.mpds.mapper.InvoiceMapper;
 import com.example.mpds.mapper.UserMapper;
+import com.example.mpds.model.UserInvoiceResult;
 import com.example.mpds.repository.InvoiceRepository;
 import com.example.mpds.services.IInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class InvoiceService implements IInvoiceService {
@@ -33,13 +37,14 @@ public class InvoiceService implements IInvoiceService {
         }
         return result;
     }
-    public List<InvoiceDTO> findAllByUserId(long userId){
+    public UserInvoiceResult findAllByUserId(long userId, Pageable pageable){
         List<InvoiceDTO> result=new ArrayList<>();
-        for(InvoiceEntity item: invoiceRepository.findByUser(userId)){
-            result.add(invoiceMapper.toDTO(item));
+        Page<InvoiceEntity> lst=invoiceRepository.findByUserId(userId,pageable);
+        List<InvoiceDTO> dtoList = lst.stream()
+                .map(invoiceMapper::toDTO)
+                .toList();
 
-        }
-        return result;
+        return new UserInvoiceResult(lst.getTotalElements(), dtoList);
     }
 
 

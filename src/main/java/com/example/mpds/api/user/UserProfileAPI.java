@@ -3,28 +3,55 @@ package com.example.mpds.api.user;
 import com.example.mpds.api.output.CartOutput;
 import com.example.mpds.dto.InvoiceDTO;
 import com.example.mpds.dto.UserDTO;
+import com.example.mpds.model.UserInvoiceResult;
 import com.example.mpds.services.impl.InvoiceService;
 import com.example.mpds.services.impl.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
 public class UserProfileAPI {
     private final UserService userService;
     private final InvoiceService invoiceService;
-    @PostMapping(value = "/profile")
-    public String loginPage(@RequestBody Long userId, Model model){
+    @GetMapping(value = "/profile/{userId}")
+    public String loginPage(@PathVariable Long userId, Model model){
         UserDTO userDTO=userService.findByUserId(userId);
-        List<InvoiceDTO> invoiceDTOS= invoiceService.findAllByUserId(userId);
+//        List<InvoiceDTO> invoiceDTOS= invoiceService.findAllByUserId(userId);
         model.addAttribute("user",userDTO);
-        model.addAttribute("invoices",invoiceDTOS);
+        Pageable pageable = Pageable.ofSize(2).withPage(0);
+        UserInvoiceResult invoicePage = invoiceService.findAllByUserId(userId,pageable);
+
+        Map<String, Object> response = new HashMap<>();
+        model.addAttribute("invoices", invoicePage.getInvoices());
+        model.addAttribute("totalPage", invoicePage.getTotalPage());
+        model.addAttribute("currentPage", 1);
+//        model.addAttribute("invoices",invoiceDTOS);
         return "userProfile";
+    }
+    @GetMapping(value = "/profile/{userId}/invoices")
+    @ResponseBody
+    public Map<String, Object> getInvoices(@RequestParam("page") int page, @PathVariable Long userId) {
+        int pageSize = 2; // Số lượng mục mỗi trang
+        Pageable pageable = Pageable.ofSize(pageSize).withPage(page);
+        UserInvoiceResult invoicePage = invoiceService.findAllByUserId(userId,pageable);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("invoice", invoicePage.getInvoices());
+        response.put("totalPages", invoicePage.getTotalPage());
+        response.put("currentPage", page);
+        return response;
     }
 //    @PostMapping(value = "/profile")
 //    public ResponseEntity<UserDTO> updateUserProfile(@RequestBody UserDTO userDTO){

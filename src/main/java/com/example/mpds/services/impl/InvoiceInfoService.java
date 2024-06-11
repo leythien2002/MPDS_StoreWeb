@@ -15,6 +15,8 @@ import com.example.mpds.services.IInvoiceInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,6 +29,15 @@ public class InvoiceInfoService implements IInvoiceInfoService {
     private ProductService productService;
     @Autowired
     private InvoiceService invoiceService;
+
+    public List<ProductEntity> getInfo(long id) {
+        List<InvoiceInfoEntity> invoiceInfo=invoiceInfoRepository.findByInvoiceId(id);
+        List<ProductEntity> products= new ArrayList<>();
+        for (InvoiceInfoEntity invoiceInfoEntity : invoiceInfo) {
+            products.add(invoiceInfoEntity.getProduct());
+        }
+        return products;
+    };
 
     public void save(InvoiceInfoDTO dto){
         InvoiceInfoEntity entity=new InvoiceInfoEntity();

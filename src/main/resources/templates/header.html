@@ -43,15 +43,9 @@
             </a></li>
             <li class="nav-item"><a class="nav-link" href="#!"> <i class="far fa-heart me-1"></i><small class="text-gray fw-normal"> (0)</small></a></li>
             <li class="nav-item"><a class="nav-link" th:if="${session.username}==null" th:href="@{/login}" th:text="Login"> <i class="fas fa-user me-1 text-gray fw-normal"></i></a></li>
-            <script>
-              function submitHiddenForm() {
-                document.getElementById('profileForm').submit();
-              }
-            </script>
-            <li class="nav-item"><a class="nav-link" id="profileLink"  href="javascript:void(0);" onclick="submitHiddenForm()"  th:if="${session.username}!=null"  th:text="${session.username}"> <i class="fas fa-user me-1 text-gray fw-normal"></i></a></li>
-            <form id="profileForm" th:action="@{/profile}" method="post" style="display: none;">
-              <input type="hidden" name="userName" th:value="${session.userId}" />
-            </form>
+
+            <li class="nav-item"><a class="nav-link" id="profileLink"  th:href="@{'/profile/' + ${session.userId}}"   th:if="${session.username}!=null"  th:text="${session.username}"> <i class="fas fa-user me-1 text-gray fw-normal"></i></a></li>
+
             <li class="nav-item">
               <form th:if="${session.username} != null" th:action="@{/logout}" method="post">
                 <button type="submit">
