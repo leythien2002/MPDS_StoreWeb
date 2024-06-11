@@ -33,6 +33,14 @@ public class InvoiceService implements IInvoiceService {
         }
         return result;
     }
+    public List<InvoiceDTO> findAllByUserId(long userId){
+        List<InvoiceDTO> result=new ArrayList<>();
+        for(InvoiceEntity item: invoiceRepository.findByUser(userId)){
+            result.add(invoiceMapper.toDTO(item));
+
+        }
+        return result;
+    }
 
 
 

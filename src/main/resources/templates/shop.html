@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Boutique | Ecommerce bootstrap template</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
-    <!--    token-->
+<!--    token-->
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
 
@@ -20,10 +20,8 @@
     <!-- Swiper slider-->
     <link rel="stylesheet" th:href="@{/vendor/swiper/swiper-bundle.min.css}">
     <!-- Google fonts-->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;700&amp;display=swap">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@300;400;800&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@300;400;800&amp;display=swap">
     <!-- theme stylesheet-->
     <link rel="stylesheet" th:href="@{/css/style.default.css}">
     <!-- Custom stylesheet - for your changes-->
@@ -499,34 +497,34 @@
                 // // Lấy giá trị của thuộc tính "value"
                 // var value = addToCartButton.value;
 
-                // Lấy giá trị của thuộc tính "value" bằng jQuery
-                var value = $(this).attr("value");
-                var csrfToken = $("meta[name='_csrf']").attr("content");
-                var csrfHeader = $("meta[name='_csrf_header']").attr("content");
-                $.ajax({
-                    url: '/cart/add',
-                    method: 'post',
-                    data: {id: value, quantity: 1},
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader(csrfHeader, csrfToken);
-                    },
-                    success: function (response) {
-                        // Xử lý khi AJAX thành công
-                        console.log("thanh cong")
-                        var cartSizeText = '(' + response.cartSize + ')';
-                        $('.cartSize').text(cartSizeText);
-                        // console.log(response);
-                    },
-                    error: function (xhr, status, error) {
-                        // Xử lý khi AJAX gặp lỗi
-                        console.log("error");
-                    }
+                  // Lấy giá trị của thuộc tính "value" bằng jQuery
+                  var value = $(this).attr("value");
+                  // var csrfToken = $("meta[name='_csrf']").attr("content");
+                  // var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+                    $.ajax({
+                        url: '/cart/add',
+                        method: 'post',
+                        data: { id:value, quantity:1 },
+                        beforeSend: function(xhr) {
+                          xhr.setRequestHeader(csrfHeader, csrfToken);
+                        },
+                        success: function(response) {
+                            // Xử lý khi AJAX thành công
+                          console.log("thanh cong")
+                          var cartSizeText = '(' + response.cartSize + ')';
+                            $('.cartSize').text(cartSizeText);
+                            // console.log(response);
+                        },
+                        error: function(xhr, status, error) {
+                            // Xử lý khi AJAX gặp lỗi
+                            console.log("error");
+                        }
+                    });
                 });
             });
-        });
-    </script>
-    <!-- Nouislider Config-->
-    <script>
+        </script>
+      <!-- Nouislider Config-->
+      <script>
         var range = document.getElementById('range');
         noUiSlider.create(range, {
             range: {
@@ -571,8 +569,7 @@
                 document.body.insertBefore(div, document.body.childNodes[0]);
             }
         }
-
-        // this is set to BootstrapTemple website as you cannot
+        // this is set to BootstrapTemple website as you cannot 
         // inject local SVG sprite (using only 'icons/orion-svg-sprite.svg' path)
         // while using file:// protocol
         // pls don't forget to change to your domain :)

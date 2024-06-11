@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <!--    token-->
-    <meta name="_csrf" th:content="${_csrf.token}">
-    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+<!--    <meta name="_csrf" th:content="${_csrf.token}">-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}">-->
     <!-- gLightbox gallery-->
     <link rel="stylesheet" th:href="@{/vendor/glightbox/css/glightbox.min.css}">
     <!-- Range slider-->
@@ -234,8 +234,8 @@
             var price = $('#price-' + productId);
             var quantity = quantityInput.val();//lay gia tri input
 
-            var csrfToken = $("meta[name='_csrf']").attr("content");
-            var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+            // var csrfToken = $("meta[name='_csrf']").attr("content");
+            // var csrfHeader = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
               url: '/cart/amount',
               method: 'POST',
@@ -266,8 +266,8 @@
             // var quantityInput = $(this).siblings('input'); //tim phan tu input cung cap voi button
             var quantity = quantityInput.val();//lay gia tri input
 
-            var csrfToken = $("meta[name='_csrf']").attr("content");
-            var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+            // var csrfToken = $("meta[name='_csrf']").attr("content");
+            // var csrfHeader = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
               url: '/cart/amount',
               method: 'POST',
