@@ -38,6 +38,7 @@ public class InvoiceAPI {
         private int productId;
         private String review;
         private int userId;
+        private String userName;
     }
     @GetMapping(value = "/invoice/{id}")
     public String loginPage(@PathVariable Long id, Model model){
@@ -58,7 +59,7 @@ public class InvoiceAPI {
     @PostMapping(value = "/review")
     public ResponseEntity<ProductReviewEntity> test(@RequestBody Review review){
         return ResponseEntity.ok(productReviewRepository.save(new ProductReviewEntity
-                (review.getProductId(),review.getUserId(),review.getReview())));
+                (review.getProductId(),review.getUserId(),review.getReview(),review.getUserName())));
 
     }
 

@@ -110,7 +110,7 @@
                   <tbody class="border-0" th:if="${session.cart}!=null">
                     <tr th:each="item:${session.cart.itemList}">
                       <th class="ps-0 py-3 border-light" scope="row">
-                        <div class="d-flex align-items-center"><a class="reset-anchor d-block animsition-link" href="detail.html"><img src="img/product-detail-3.jpg" alt="..." width="70"/></a>
+                        <div class="d-flex align-items-center"><a class="reset-anchor d-block animsition-link" href="detail.html"><img th:src="${item.value.product.getImage1()}" alt="..." width="70"/></a>
                           <div class="ms-3"><strong class="h6"><a class="reset-anchor animsition-link" href="detail.html" th:text="${item.value.product.name}"></a></strong></div>
                         </div>
                       </th>
@@ -151,7 +151,7 @@
                 <div class="card-body">
                   <h5 class="text-uppercase mb-4">Cart total</h5>
                   <ul class="list-unstyled mb-0">
-                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Subtotal</strong><span class="text-muted small">$250</span></li>
+                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold" >Subtotal</strong><span class="text-muted small" th:text="'$'+${session.cart.total}"></span></li>
                     <li class="border-bottom my-2"></li>
                     <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong>
                       <span th:if="${session.cart}!=null" th:id="totalPrice" th:text="'$'+${session.cart.total}"></span>
@@ -240,9 +240,9 @@
               url: '/cart/amount',
               method: 'POST',
               data: { id: productId, quantity: quantity,change:'inc' },
-              beforeSend: function(xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-              },
+              // beforeSend: function(xhr) {
+              //   xhr.setRequestHeader(csrfHeader, csrfToken);
+              // },
               success: function(response) {
                 // Xử lý phản hồi từ máy chủ (nếu cần thiết)
                 console.log(response);
@@ -272,9 +272,9 @@
               url: '/cart/amount',
               method: 'POST',
               data: { id: productId, quantity: quantity,change:'dec' },
-              beforeSend: function(xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-              },
+              // beforeSend: function(xhr) {
+              //   xhr.setRequestHeader(csrfHeader, csrfToken);
+              // },
               success: function(response) {
                 // Xử lý phản hồi từ máy chủ (nếu cần thiết)
                 console.log(response);

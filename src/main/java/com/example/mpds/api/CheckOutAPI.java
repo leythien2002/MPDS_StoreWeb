@@ -41,22 +41,24 @@ public class CheckOutAPI {
                                     @RequestParam(value = "address")String address,
                                     @RequestParam(value = "email")String email,
                                     @RequestParam(value = "status")String status,
-
+                                    @RequestParam(value = "vnPayChecked") boolean vnPayChecked,
                                     HttpSession session
     ){
         CartDTO cart= (CartDTO) session.getAttribute("cart");
         HashMap<Integer,CartItemDTO> list=cart.getItemList();
-//        String userName= (String) session.getAttribute("username");
+        int userId= (int) session.getAttribute("userId");
 
         InvoiceDTO dto=new InvoiceDTO();
 
         dto.setPhone(phone);
+        if(vnPayChecked) status="VNPay";
         dto.setStatus(status);
+
         dto.setEmail(email);
         dto.setTotalMoney(total);
         dto.setAddress(address);
         //setUserId-->setUserName de controller nhan duoc.
-        InvoiceEntity entity=invoiceService.save(dto);
+        InvoiceEntity entity=invoiceService.save(dto,userId);
         //detail invoice
         for(Map.Entry<Integer,CartItemDTO> item: list.entrySet()){
             InvoiceInfoDTO infoDTO=new InvoiceInfoDTO();
@@ -71,6 +73,10 @@ public class CheckOutAPI {
         HashMap<Integer,CartItemDTO> newCart = new HashMap<Integer,CartItemDTO>();
         cart.setItemList(newCart);
         cart.setTotal(0);
+        if(vnPayChecked){
+            String onlinePaymentUrl = "/create_payment?totalMoney=" + total;
+            return new RedirectView(onlinePaymentUrl);
+        }
         return new RedirectView("/");
     }
 

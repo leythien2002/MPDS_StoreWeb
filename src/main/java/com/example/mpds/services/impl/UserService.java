@@ -33,6 +33,12 @@ public class UserService implements IUserService {
         return userMapper.toDTO(entity);
 
     }
+    public UserEntity findUserById(Long id){
+
+        UserEntity entity=userRepository.findById(id).orElseThrow(()->new RuntimeException("Entity Not Found"));
+        return entity;
+
+    }
     public UserEntity findUser(String username){
 
         UserEntity entity=userRepository.findOneByUserName(username).orElseThrow(()->new RuntimeException("Entity Not Found"));

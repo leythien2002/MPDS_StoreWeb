@@ -22,7 +22,7 @@ public class InvoiceEntity extends BaseEntity {
     private UserEntity user;
     @Column(name = "totalmoney", nullable = false)
     private double totalMoney;
-    @OneToMany(mappedBy = "invoice")
+    @OneToMany(mappedBy = "invoice",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InvoiceInfoEntity> listInvoiceInfo;
     @Column(name = "status")
     private String status;

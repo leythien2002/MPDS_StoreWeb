@@ -32,6 +32,10 @@ document.getElementsByClassName('closeBtn')[0].onclick = function() {
     document.getElementById('productFormPopup').style.display = 'none';
 }
 
+
+
+
+
 // window.onclick = function(event) {
 //     let popup = document.getElementById('productFormPopup');
 //     if (event.target == popup) {

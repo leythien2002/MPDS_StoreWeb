@@ -3,6 +3,8 @@ package com.example.mpds.api;
 import com.example.mpds.api.output.ProductOutput;
 import com.example.mpds.dto.CategoryDTO;
 import com.example.mpds.dto.ProductDTO;
+import com.example.mpds.entity.ProductReviewEntity;
+import com.example.mpds.repository.ProductReviewRepository;
 import com.example.mpds.services.impl.CategoryService;
 import com.example.mpds.services.impl.ProductService;
 import com.example.mpds.services.impl.FilterProductResult;
@@ -26,6 +28,7 @@ public class ProductAPI {
 
     @Autowired
     private CategoryService categoryService;
+
 
 //    @GetMapping(value = "/shop")
 //    //limit se tu set, chu khong lay tu request
@@ -111,10 +114,19 @@ public String shop(@RequestParam(value = "page", defaultValue = "1") int page,
     @GetMapping(value = "/detail")
     public String detailProduct(@RequestParam(value = "name")String name,Model model){
         ProductDTO productDTO=productService.findOne(name);
+
+        System.out.println("ID CUA PRODUCT DA CHON: "+productDTO.getId());
+
+        List<ProductReviewEntity> lstReview =productService.getReviewsByProductId(productDTO.getId());
+
+
         model.addAttribute("product",productDTO);
+        model.addAttribute("lstReviews",lstReview);
+
         //active class in html
         String a="/detail";
         model.addAttribute("query",a);
+
         return "detail";
     }
 

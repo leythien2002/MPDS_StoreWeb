@@ -21,7 +21,7 @@
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" th:href="@{/product}">Group 20</a>
+    <a class="navbar-brand ps-3" th:href="@{/admin}">Group 20</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
             class="fas fa-bars"></i></button>
@@ -99,8 +99,14 @@
                             <label for="productPrice">Price:</label><br>
                             <input type="number" id="productPrice" name="productPrice" placeholder="Product Price"><br>
 
-                            <label for="categoryName">Type:</label><br>
-                            <input type="text" id="categoryName" name="categoryName" placeholder="Category Name"><br>
+                            <label for="categoryName">Brand Name:</label><br>
+                            <input type="text" id="categoryName" name="categoryName" placeholder="Brand Name"><br>
+
+                            <label for="type">Type:</label><br>
+                            <input type="text" id="type" name="type" placeholder="type"><br>
+
+                            <label for="dialSize">Type:</label><br>
+                            <input type="text" id="dialSize" name="type" placeholder="dialSize"><br>
 
                             <label for="productImageUrl1">Image URL:</label><br>
                             <input type="text" id="productImageUrl1" name="productImageUrl1"
@@ -136,7 +142,7 @@
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Price</th>
-                                <th>Type</th>
+                                <th>Brand</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -146,7 +152,7 @@
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Price</th>
-                                <th>Category</th>
+                                <th>Brand</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>
@@ -161,14 +167,18 @@
                                 <td>
                                     <button class="delete-btn" th:value="${product.id}">Delete</button>
                                     <button class="details-btn"
+
                                             th:data-id="${product.id}"
                                             th:data-name="${product.name}"
                                             th:data-description="${product.description}"
                                             th:data-price="${product.price}"
-                                            th:data-type="${product.categoryName}"
+                                            th:data-type="${product.type}"
                                             th:data-imageUrl1="${product.image1}"
                                             th:data-imageUrl2="${product.image2}"
                                             th:data-imageUrl3="${product.image3}"
+                                            th:data-categoryName="${product.categoryName}"
+                                            th:data-dialsize="${product.dialSize}"
+
 
                                     >Details
                                     </button>
@@ -183,19 +193,23 @@
                                     <input id="pId"></input>
                                     <label>Product Name:</label>
                                     <input id="pName"></input>
+                                    <label>Product Brand Name:</label>
+                                    <input id="pCategoryName"></input>
                                     <label>Product Description:</label>
                                     <input id="pDescription"></input>
                                     <label>Product Price:</label>
                                     <input id="pPrice"></input>
-                                    <label>Product Category:</label>
+                                    <label>Product Type:</label>
                                     <input id="pType"></input>
+                                    <label>Product DialSize:</label>
+                                    <input id="pDialSize"></input>
                                     <label>Product Image URL 1:</label>
                                     <input id="pImage1"></input>
                                     <label>Product Image URL 2:</label>
                                     <input id="pImage2"></input>
                                     <label>Product Image URL 3:</label>
                                     <input id="pImage3"></input>
-                                    <button id="submitProductUpdate">Update</button>
+                                    <button id="submitProductUpdate" >Update</button>
 
                                 </div>
                             </div>
@@ -226,6 +240,9 @@
             var image1 = document.getElementById('pImage1').value;
             var image2 = document.getElementById('pImage2').value;
             var image3 = document.getElementById('pImage3').value;
+            var dialSize = document.getElementById('pDialSize').value;
+            var categoryName = document.getElementById('pCategoryName').value;
+
 
 
             let formData = {
@@ -233,10 +250,12 @@
                 name: name,
                 description: description,
                 price: price,
-                categoryName: type,
+                type: type,
                 image1: image1,
                 image2: image2,
-                image3: image3
+                image3: image3,
+                dialSize:dialSize,
+                categoryName: categoryName
 
             };
 
@@ -250,11 +269,13 @@
 
                 success: function (response) {
                     // Handle success
-                    $('#successMessage').show().text('Updated successfully!');
-                    setTimeout(function () {
-                        $('#successMessage').hide();
-                        window.location.reload()
-                    }, 200);
+                    // $('#successMessage').show().text('Updated successfully!');
+                    // setTimeout(function () {
+                    //     $('#successMessage').hide();
+                    //     window.location.reload()
+                    // }, 200);
+                    alert(response);
+                    window.location.reload()
                 },
                 error: function () {
                     // Handle error
@@ -278,22 +299,27 @@
                 var imageUrl1 = button.getAttribute('data-imageUrl1');
                 var imageUrl2 = button.getAttribute('data-imageUrl2');
                 var imageUrl3 = button.getAttribute('data-imageUrl3');
+                var categoryName = button.getAttribute('data-categoryName');
+                var dialSize = button.getAttribute('data-dialsize');
 
 
-                showUserDetails(id, name, description, price, type, imageUrl1, imageUrl2, imageUrl3);
+                showUserDetails(id,categoryName, name, description, price, type, imageUrl1, imageUrl2, imageUrl3, dialSize);
             }
         });
 
         // When the user clicks on a row button, open the modal and populate it with data
-        function showUserDetails(id, name, description, price, type, imageUrl1, imageUrl2, imageUrl3) {
+        function showUserDetails(id, categoryName, name, description, price, type, imageUrl1, imageUrl2, imageUrl3, dialSize) {
+
             document.getElementById('pId').value = id;
             document.getElementById('pName').value = name;
             document.getElementById('pDescription').value = description;
             document.getElementById('pPrice').value = price;
             document.getElementById('pType').value = type;
+            document.getElementById('pDialSize').value = dialSize;
             document.getElementById('pImage1').value = imageUrl1;
             document.getElementById('pImage2').value = imageUrl2;
             document.getElementById('pImage3').value = imageUrl3;
+            document.getElementById('pCategoryName').value = categoryName;
 
 
             document.getElementById('productModal').style.display = "block";
@@ -331,7 +357,9 @@
                     image1: $('#productImageUrl1').val(),
                     image2: $('#productImageUrl2').val(),
                     image3: $('#productImageUrl3').val(),
-                    description: $('#productDescription').val()
+                    description: $('#productDescription').val(),
+                    type: $('#type').val(),
+                    dialSize: $('#dialSize').val()
                 };
 
 
@@ -344,12 +372,14 @@
 
                     success: function (response) {
                         // Handle success
-                        $('#successMessage').show().text('Product created successfully!');
-                        $('#createProductForm')[0].reset();
-                        setTimeout(function () {
-                            $('#successMessage').hide();
-                            window.location.reload()
-                        }, 200);
+                        // $('#successMessage').show().text('Product created successfully!');
+                        // $('#createProductForm')[0].reset();
+                        // setTimeout(function () {
+                        //     $('#successMessage').hide();
+                        //     window.location.reload()
+                        // }, 200);
+                        alert(response);
+                        window.location.reload()
                     },
                     error: function () {
                         // Handle error
@@ -372,7 +402,7 @@
                     url: '/product/' + productId,
                     method: 'delete',
                     success: function (result) {
-                        alert("Product Deleted Successfully");
+                        alert(result);
                         window.location.reload()
                         // Additional logic to remove the row from the table
                     },

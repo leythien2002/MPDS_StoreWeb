@@ -54,6 +54,7 @@
             <textarea id="review" placeholder="Enter your review" name="review" required></textarea>
             <input type="hidden" id="productId" name="productId">
             <input type="hidden" id="userId" name="userId" th:value="${session.userId}">
+            <input type="hidden" id="userName" name="userName" th:value="${session.username}">
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
             <button type="button" class="btn submit-btn">Submit</button>
         </form>
@@ -69,7 +70,7 @@
             var review = $('#review').val();
             var productId = $('#productId').val();
             var userId = $('#userId').val();
-
+            var userName = $('#userName').val();
             // Gửi dữ liệu bằng AJAX
             $.ajax({
                 type: 'POST',
@@ -78,7 +79,8 @@
                 data: JSON.stringify({
                     review: review,
                     productId: productId,
-                    userId: userId
+                    userId: userId,
+                    userName: userName
                 }),
 
                 success: function(response){

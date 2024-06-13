@@ -32,4 +32,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity,Long>, Jp
 //    );
     Page<ProductEntity> findAll(Specification<ProductEntity> spec, Pageable pageable);
 
+    List<ProductEntity> findByCategory_Id(int CategoryId);
+
+
+
 }

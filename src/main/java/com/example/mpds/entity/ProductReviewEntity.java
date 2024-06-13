@@ -19,4 +19,7 @@ public class ProductReviewEntity extends BaseEntity {
     private int userId;
     @Column(name = "review")
     private String review;
+    @Column(name="user_name")
+    private String userName;
+
 }

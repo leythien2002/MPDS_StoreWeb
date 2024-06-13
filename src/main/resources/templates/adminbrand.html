@@ -7,7 +7,7 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <title>Dashboard - SB Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet">
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
     <link th:href="@{/css/popup.css}" rel="stylesheet"/>
     <link th:href="@{/css/invoice.css}" rel="stylesheet"/>
@@ -21,7 +21,7 @@
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" th:href="@{/product}">Group 20</a>
+    <a class="navbar-brand ps-3" th:href="@{/admin}">Group 20</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
             class="fas fa-bars"></i></button>
@@ -77,46 +77,36 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">List Product</h1>
+                <h1 class="mt-4">List Brand</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">List Product</li>
+                    <li class="breadcrumb-item active">List Brand</li>
                 </ol>
 
-                <Button id="createProductBtn" style="margin-bottom:1%">Create New Product</Button>
+                <Button id="createProductBtn" style="margin-bottom:1%">Create New Brand</Button>
                 <div id="successMessage" style="display:none; color: green;"></div>
+                <div id="productModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Category Details</h2>
+                        <label>Category Id:</label>
+                        <input id="pId"></input>
+                        <label>Category Name:</label>
+                        <input id="pName"></input>
+                        <button id="submitProductUpdate">Update</button>
 
+                    </div>
+                </div>
                 <div id="productFormPopup" class="popup">
                     <div class="popup-content">
                         <span class="closeBtn">&times;</span>
                         <form id="createProductForm" method="post">
-                            <h2>Create Product</h2>
+                            <h2>Create Brand</h2>
                             <label for="productId">Id:</label><br>
-                            <input type="text" id="productId" name="productId" placeholder="Product Id"><br>
+                            <input type="text" id="productId" name="productId" placeholder="Brand Id"><br>
 
                             <label for="productName">Name:</label><br>
-                            <input type="text" id="productName" name="productName" placeholder="Product Name"><br>
+                            <input type="text" id="productName" name="productName" placeholder="Brand Name"><br>
 
-                            <label for="productPrice">Price:</label><br>
-                            <input type="number" id="productPrice" name="productPrice" placeholder="Product Price"><br>
-
-                            <label for="categoryName">Type:</label><br>
-                            <input type="text" id="categoryName" name="categoryName" placeholder="Category Name"><br>
-
-                            <label for="productImageUrl1">Image URL:</label><br>
-                            <input type="text" id="productImageUrl1" name="productImageUrl1"
-                                   placeholder="Product Image URL 1"><br>
-
-                            <label for="productImageUrl2">Image URL:</label><br>
-                            <input type="text" id="productImageUrl2" name="productImageUrl2"
-                                   placeholder="Product Image URL 2"><br>
-
-                            <label for="productImageUrl3">Image URL:</label><br>
-                            <input type="text" id="productImageUrl3" name="productImageUrl3"
-                                   placeholder="Product Image URL 3"><br>
-
-                            <label for="productDescription">Description:</label><br>
-                            <textarea id="productDescription" name="productDescription"
-                                      placeholder="Product Description"></textarea><br>
 
                             <input type="submit" value="Submit">
                         </form>
@@ -134,73 +124,31 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Name</th>
-                                <th>Description</th>
-                                <th>Price</th>
-                                <th>Type</th>
-                                <th>Action</th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
                                 <th>Id</th>
                                 <th>Name</th>
-                                <th>Description</th>
-                                <th>Price</th>
-                                <th>Category</th>
-                                <th>Action</th>
+                                <th>Actions</th>
                             </tr>
                             </tfoot>
                             <tbody>
 
-                            <tr th:each="product:${listProduct}">
-                                <td th:text="${product.id}"></td>
-                                <td th:text="${product.name}"></td>
-                                <td th:text="${product.description}"></td>
-                                <td th:text="${product.price}"></td>
-                                <td th:text="${product.categoryName}"></td>
+                            <tr th:each="category:${listCategory}">
+                                <td th:text="${category.id}"></td>
+                                <td th:text="${category.name}"></td>
                                 <td>
-                                    <button class="delete-btn" th:value="${product.id}">Delete</button>
+                                    <button class="delete-btn" th:value="${category.id}">Delete</button>
                                     <button class="details-btn"
-                                            th:data-id="${product.id}"
-                                            th:data-name="${product.name}"
-                                            th:data-description="${product.description}"
-                                            th:data-price="${product.price}"
-                                            th:data-type="${product.categoryName}"
-                                            th:data-imageUrl1="${product.image1}"
-                                            th:data-imageUrl2="${product.image2}"
-                                            th:data-imageUrl3="${product.image3}"
-
+                                            th:data-id="${category.id}"
+                                            th:data-name="${category.name}"
                                     >Details
                                     </button>
                                 </td>
 
                             </tr>
-                            <div id="productModal" class="modal">
-                                <div class="modal-content">
-                                    <span class="close">&times;</span>
-                                    <h2>Product Details</h2>
-                                    <label>Product Id:</label>
-                                    <input id="pId"></input>
-                                    <label>Product Name:</label>
-                                    <input id="pName"></input>
-                                    <label>Product Description:</label>
-                                    <input id="pDescription"></input>
-                                    <label>Product Price:</label>
-                                    <input id="pPrice"></input>
-                                    <label>Product Category:</label>
-                                    <input id="pType"></input>
-                                    <label>Product Image URL 1:</label>
-                                    <input id="pImage1"></input>
-                                    <label>Product Image URL 2:</label>
-                                    <input id="pImage2"></input>
-                                    <label>Product Image URL 3:</label>
-                                    <input id="pImage3"></input>
-                                    <button id="submitProductUpdate">Update</button>
-
-                                </div>
-                            </div>
-
-
                             </tbody>
                         </table>
                     </div>
@@ -220,29 +168,18 @@
         document.getElementById('submitProductUpdate').addEventListener('click', function () {
             var id = document.getElementById('pId').value;
             var name = document.getElementById('pName').value;
-            var description = document.getElementById('pDescription').value;
-            var price = document.getElementById('pPrice').value;
-            var type = document.getElementById('pType').value;
-            var image1 = document.getElementById('pImage1').value;
-            var image2 = document.getElementById('pImage2').value;
-            var image3 = document.getElementById('pImage3').value;
+
 
 
             let formData = {
                 id: id,
-                name: name,
-                description: description,
-                price: price,
-                categoryName: type,
-                image1: image1,
-                image2: image2,
-                image3: image3
+                name: name
 
             };
 
 
             $.ajax({
-                url: '/product',
+                url: '/brand',
                 method: 'put',
                 // Replace with your API endpoint
                 data: JSON.stringify(formData),
@@ -272,29 +209,17 @@
 
                 var id = button.getAttribute('data-id');
                 var name = button.getAttribute('data-name');
-                var description = button.getAttribute('data-description');
-                var price = button.getAttribute('data-price');
-                var type = button.getAttribute('data-type');
-                var imageUrl1 = button.getAttribute('data-imageUrl1');
-                var imageUrl2 = button.getAttribute('data-imageUrl2');
-                var imageUrl3 = button.getAttribute('data-imageUrl3');
 
 
-                showUserDetails(id, name, description, price, type, imageUrl1, imageUrl2, imageUrl3);
+
+                showUserDetails(id, name);
             }
         });
 
         // When the user clicks on a row button, open the modal and populate it with data
-        function showUserDetails(id, name, description, price, type, imageUrl1, imageUrl2, imageUrl3) {
+        function showUserDetails(id, name) {
             document.getElementById('pId').value = id;
             document.getElementById('pName').value = name;
-            document.getElementById('pDescription').value = description;
-            document.getElementById('pPrice').value = price;
-            document.getElementById('pType').value = type;
-            document.getElementById('pImage1').value = imageUrl1;
-            document.getElementById('pImage2').value = imageUrl2;
-            document.getElementById('pImage3').value = imageUrl3;
-
 
             document.getElementById('productModal').style.display = "block";
         }
@@ -325,18 +250,12 @@
 
                 let formData = {
                     id: $('#productId').val(),
-                    name: $('#productName').val(),
-                    price: $('#productPrice').val(),
-                    categoryName: $('#categoryName').val(),
-                    image1: $('#productImageUrl1').val(),
-                    image2: $('#productImageUrl2').val(),
-                    image3: $('#productImageUrl3').val(),
-                    description: $('#productDescription').val()
+                    name: $('#productName').val()
                 };
 
 
                 $.ajax({
-                    url: '/product',
+                    url: '/brand',
                     method: 'post',
                     // Replace with your API endpoint
                     data: JSON.stringify(formData),
@@ -344,7 +263,7 @@
 
                     success: function (response) {
                         // Handle success
-                        $('#successMessage').show().text('Product created successfully!');
+                        $('#successMessage').show().text('Brand created successfully!');
                         $('#createProductForm')[0].reset();
                         setTimeout(function () {
                             $('#successMessage').hide();
@@ -353,7 +272,7 @@
                     },
                     error: function () {
                         // Handle error
-                        alert('Failed to create product. Please try again.');
+                        alert('Failed to create Brand. Please try again.');
                     }
                 });
 
@@ -369,10 +288,10 @@
                 var productId = $(this).attr("value");
 
                 $.ajax({
-                    url: '/product/' + productId,
+                    url: '/brand/' + productId,
                     method: 'delete',
                     success: function (result) {
-                        alert("Product Deleted Successfully");
+                        alert(result);
                         window.location.reload()
                         // Additional logic to remove the row from the table
                     },

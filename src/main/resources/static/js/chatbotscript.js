@@ -6,7 +6,7 @@ const chatbotCloseBtn = document.querySelector(".close-btn");
 
 let userMessage;
 
-const API_KEY = "sk-proj-riBtRFeJhDy0VeRMdo7WT3BlbkFJmHpvvDU2ZS8VjV4ZqPKY";
+const API_KEY = "sk-proj-nqDcZwoTg8vHgt4U6i6zT3BlbkFJ0nb2dVWQHq7tflDIcNAb";
 
 const inputIniHeight = chatInput.scrollHeight;
 
@@ -18,7 +18,7 @@ const generateResponse = (incomingChatLi) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${API_KEY}`,
+      "Authorization": `Bearer ${API_KEY}`,
     },
     body: JSON.stringify({
       model: "gpt-3.5-turbo",
@@ -26,16 +26,16 @@ const generateResponse = (incomingChatLi) => {
         {
           role: "user",
           content: userMessage,
-        },
-      ],
-    }),
+        }
+      ]
+    })
   };
   fetch(API_URL, requestOptions).then(res =>res.json()).then(data => {
     console.log(data);
     messageElement.textContent = data.choices[0].message.content;
   }).catch((error)=>{
     console.log(error)
-        messageElement.classList.add("error");
+    messageElement.classList.add("error");
 
     messageElement.textContent = "Something went wrong!";
 
@@ -47,9 +47,9 @@ const createChatLi = (message, className) => {
   const chatLi = document.createElement("li");
   chatLi.classList.add("chat", className);
   let chatContent =
-    className === "outgoing"
-      ? `<p></p>`
-      : `<span class="material-symbols-outlined">smart_toy</span><p></p>`;
+      className === "outgoing"
+          ? `<p></p>`
+          : `<span class="material-symbols-outlined">smart_toy</span><p></p>`;
   chatLi.innerHTML = chatContent;
   chatLi.querySelector("p").textContent = message;
   return chatLi;
@@ -88,6 +88,3 @@ chatInput.addEventListener("keydown", (e)=>{
 sendChatBtn.addEventListener("click", handleChat);
 chatbotCloseBtn.addEventListener("click", ()=> document.body.classList.remove("show-chatbot"));
 chatbotToggle.addEventListener("click", ()=> document.body.classList.toggle("show-chatbot"));
-
-
-
