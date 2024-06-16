@@ -6,6 +6,7 @@ import com.example.mpds.entity.InvoiceInfoEntity;
 import com.example.mpds.entity.ProductEntity;
 import com.example.mpds.entity.ProductReviewEntity;
 import com.example.mpds.mapper.ProductMapper;
+import com.example.mpds.model.TotalProductByType;
 import com.example.mpds.repository.*;
 import com.example.mpds.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +102,10 @@ public class ProductService implements IProductService {
 
     public int totalProduct() {
         return (int) productRepository.count();
+    }
+    public List<TotalProductByType> getTotalProducType(){
+        return categoryRepository.findAll().stream().map(
+                category->{return new TotalProductByType(category.getName(),productRepository.findByCategory_Id(category.getId()).size());}).collect(Collectors.toList());
     }
 
     public String deleteById(Long id) {

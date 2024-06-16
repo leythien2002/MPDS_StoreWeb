@@ -30,7 +30,7 @@ public class InvoiceEntity extends BaseEntity {
     private String email;
     @Column(name = "createdate")
     @CreatedDate
-    private String createDate;
+    private Date createDate;
     @Column(nullable = false)
     private String phone;
     @Column(nullable = false)
@@ -39,7 +39,7 @@ public class InvoiceEntity extends BaseEntity {
     private String paymentMethod;
     @PrePersist
     public void prePersist() {
-        createDate = createDate != null ? createDate : new Date().toString();
+        createDate = createDate != null ? createDate : new Date();
     }
 
 
