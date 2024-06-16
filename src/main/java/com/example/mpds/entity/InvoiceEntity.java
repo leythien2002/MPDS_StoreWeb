@@ -35,7 +35,8 @@ public class InvoiceEntity extends BaseEntity {
     private String phone;
     @Column(nullable = false)
     private String address;
-
+    @Column(nullable = false)
+    private String paymentMethod;
     @PrePersist
     public void prePersist() {
         createDate = createDate != null ? createDate : new Date().toString();

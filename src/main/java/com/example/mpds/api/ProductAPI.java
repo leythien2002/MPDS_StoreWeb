@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -119,13 +120,28 @@ public String shop(@RequestParam(value = "page", defaultValue = "1") int page,
 
         List<ProductReviewEntity> lstReview =productService.getReviewsByProductId(productDTO.getId());
 
-
+        System.out.println(productDTO.getDialSize());
         model.addAttribute("product",productDTO);
         model.addAttribute("lstReviews",lstReview);
 
+
+        List<ProductDTO> allproduct = productService.findAll();
+        List<ProductDTO> suggestedList = new ArrayList<>();
+        Collections.shuffle(allproduct);
+
+
+        int count = 0;
+
+        for (ProductDTO prod : allproduct) {
+            if (prod.getId() != productDTO.getId() && count < 4) {
+                suggestedList.add(prod);
+                count++;
+            }
+        }
         //active class in html
         String a="/detail";
         model.addAttribute("query",a);
+        model.addAttribute("suggestedList",suggestedList);
 
         return "detail";
     }

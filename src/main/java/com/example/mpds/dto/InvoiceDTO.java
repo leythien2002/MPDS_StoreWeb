@@ -22,6 +22,8 @@ public class InvoiceDTO extends AbstractDTO{
     private String address;
     private String status;
     private String createDate;
+    private String paymentMethod;
+
 
 
 

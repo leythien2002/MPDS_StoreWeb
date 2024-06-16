@@ -181,6 +181,7 @@ body{
 .form-popup {
     display: none; /* Hide form when page first loads */
     position: fixed;
+    width: 70%; /* Adjust width as needed */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -192,8 +193,8 @@ body{
     background-color: #fefefe;
     padding: 20px;
     border: 1px solid #888;
-    width: 70%; /* Adjust width as needed */
-    max-width: 500px; /* Adjust max-width as needed */
+    width: 100%; /* Adjust width as needed */
+    /*max-width: 500px; !* Adjust max-width as needed *!*/
     text-align: left; /* Left-align text */
 }
 

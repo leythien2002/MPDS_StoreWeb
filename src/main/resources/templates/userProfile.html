@@ -14,12 +14,13 @@
 
 </head>
 <body>
+
 <div class="container">
 
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="main-breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
             <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
             <li class="breadcrumb-item active" aria-current="page">Profile Settings</li>
         </ol>
@@ -140,6 +141,8 @@
                         <h6>YOUR PROFILE INFORMATION</h6>
                         <hr>
                         <form th:action="@{/profile}" method="post">
+                            <input type="hidden" id="userIdPro" name ="userId" th:value="${session.userId}">
+
                             <input type="hidden" id="userName" th:value="${session.username}">
                             <div class="form-group">
                                 <label for="displayName">Full Name</label>
@@ -194,14 +197,23 @@
                     <div class="tab-pane" id="security">
                         <h6>SECURITY SETTINGS</h6>
                         <hr>
-                        <form>
+                        <form id="changePasswordForm" th:action="@{/profile/changepassword}" method="post">
+                            <input type="hidden" id="userIdSec" name ="userId" th:value="${session.userId}">
+
                             <div class="form-group">
                                 <label class="d-block">Change Password</label>
-                                <input type="text" class="form-control" placeholder="Enter your old password">
-                                <input type="text" class="form-control mt-1" placeholder="New password">
-                                <input type="text" class="form-control mt-1" placeholder="Confirm new password">
+                                <input type="password" name="oldPassword" class="form-control" placeholder="Enter your old password">
+                                <input type="password" name="newPassword" class="form-control mt-1" placeholder="New password">
+                                <input type="password" name="confirmPassword" class="form-control mt-1" placeholder="Confirm new password">
                             </div>
-                            <button type="button" class="btn btn-primary">Update Password</button>
+                            <div id="successDiv" class="alert alert-success" role="alert" style="display: none;">
+                                <span th:text="${param.success}"></span>
+                            </div>
+
+                            <div id="errorDiv" class="alert alert-danger" role="alert" style="display: none;">
+                                <span th:text="${param.error}"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Password</button>
                         </form>
                         <hr>
 <!--                        <form>-->
@@ -365,6 +377,40 @@
 
 </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#changePasswordForm').submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            var formData = $(this).serialize(); // Serialize form data
+            var url = '/profile/changepassword'
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                success: function(response) {
+                    console.log("Success response:", response); // Log success response for debugging
+                    $('#successDiv').text(response); // Display success message
+                    $('#errorDiv').hide(); // Hide any previous error message
+                    $('#successDiv').show(); // Show success message
+                    $('#changePasswordForm')[0].reset(); // Reset form fields
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.responseText; // Get error message from response body
+
+                    console.error("Error:", errorMessage); // Log error message for debugging
+
+                    var errorMessage = xhr.responseText; // Get error message from response body
+                    $('#errorDiv').text(errorMessage); // Display error message
+                    $('#successDiv').hide(); // Hide any previous success message
+                    $('#errorDiv').show(); // Show error message
+                }
+            });
+        });
+    });
+</script>
 <script>
     $(document).ready(function(){
 

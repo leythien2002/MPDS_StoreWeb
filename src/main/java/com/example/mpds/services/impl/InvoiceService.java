@@ -89,6 +89,7 @@ public class InvoiceService implements IInvoiceService {
         existingInvoice.setPhone(invoiceDTO.getPhone());
         existingInvoice.setAddress(invoiceDTO.getAddress());
         existingInvoice.setTotalMoney(invoiceDTO.getTotalMoney());
+        existingInvoice.setPaymentMethod(invoiceDTO.getPaymentMethod());
         invoiceRepository.save(existingInvoice);
     }
 

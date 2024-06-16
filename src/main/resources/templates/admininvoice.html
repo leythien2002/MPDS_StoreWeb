@@ -94,7 +94,19 @@
                         <label>Create Date:</label>
                         <input id="createDate"readonly></input>
                         <label>Status:</label>
-                        <input id="status" ></input>
+                        <select id="status">
+                            <!-- You can add more options as needed -->
+                            <option value="Pending">Pending</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Cancelled">Cancelled</option>
+                            <option value="Delivered">Delivered</option>
+                        </select>
+                        <label>Payment Method:</label>
+                        <select id="paymentMethod">
+                            <!-- You can add more options as needed -->
+                            <option value="COD">COD</option>
+                            <option value="VNPay">VNPay</option>
+                        </select>
                         <label>Email:</label>
                         <input id="email" ></input>
                         <label>PhoneNumber:</label>
@@ -120,6 +132,7 @@
                                 <th>User Id</th>
                                 <th>Create Date</th>
                                 <th>Status</th>
+                                <th>Payment Method</th>
                                 <th>Email</th>
                                 <th>Address</th>
                                 <th>Phone Number</th>
@@ -135,6 +148,7 @@
                                 <td th:text="${invoice.userId}"></td>
                                 <td th:text="${invoice.createDate}"></td>
                                 <td th:text="${invoice.status}"></td>
+                                <td th:text="${invoice.paymentMethod}"></td>
                                 <td th:text="${invoice.email}"></td>
                                 <td th:text="${invoice.address}"></td>
                                 <td th:text="${invoice.phone}"></td>
@@ -145,6 +159,7 @@
                                             th:data-userid="${invoice.userId}"
                                             th:data-createDate="${invoice.createDate}"
                                             th:data-status="${invoice.status}"
+                                            th:data-paymentMethod="${invoice.paymentMethod}"
                                             th:data-email="${invoice.email}"
                                             th:data-address="${invoice.address}"
                                             th:data-phoneNumber="${invoice.phone}"
@@ -153,9 +168,6 @@
                                 </td>
 
                             </tr>
-
-
-
                             </tbody>
                         </table>
                     </div>
@@ -174,13 +186,11 @@
     <!--    update user-->
     <script>
         document.getElementById('submitUserUpdate').addEventListener('click', function() {
-
-
-
             var id = document.getElementById('id').value;
             var userId = document.getElementById('userId').value;
             var createDate = document.getElementById('createDate').value;
             var status = document.getElementById('status').value;
+            var paymentMethod = document.getElementById('paymentMethod').value;
             var email = document.getElementById('email').value;
             var phone = document.getElementById('phone').value;
             var address = document.getElementById('address').value;
@@ -193,6 +203,7 @@
                 phone:phone,
                 address:address,
                 status:status,
+                paymentMethod:paymentMethod,
                 createDate: createDate
             };
             $.ajax({
@@ -230,11 +241,13 @@
                 var phone = button.getAttribute('data-phoneNumber');
                 var address = button.getAttribute('data-address');
                 var totalMoney = button.getAttribute('data-totalMoney');
-                showUserDetails(id , userId,createDate,status,email, phone, address, totalMoney);
+                var paymentMethod = button.getAttribute('data-paymentMethod');
+
+                showUserDetails(id , userId,createDate,status,email, phone, address, totalMoney, paymentMethod);
             }
         });
         // When the user clicks on a row button, open the modal and populate it with data
-        function showUserDetails(id , userId,createDate,status,email, phone, address, totalMoney) {
+        function showUserDetails(id , userId,createDate,status,email, phone, address, totalMoney,paymentMethod) {
             document.getElementById('id').value =  id;
             document.getElementById('userId').value =  userId;
             document.getElementById('createDate').value = createDate;
@@ -243,6 +256,7 @@
             document.getElementById('phone').value =  phone;
             document.getElementById('address').value = address;
             document.getElementById('totalMoney').value = totalMoney;
+            document.getElementById('paymentMethod').value = paymentMethod;
             document.getElementById('userModal').style.display = "block";
         }
 

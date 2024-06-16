@@ -26,6 +26,7 @@ public class UserMapper {
         dto.setPermission(entity.getPermission());
         dto.setUserName(entity.getUserName());
         dto.setAddress(entity.getAddress());
+        dto.setPassword(entity.getPassword());
         return dto;
     }
     //using for update ( store previous information)

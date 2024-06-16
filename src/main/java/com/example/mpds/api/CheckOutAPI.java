@@ -42,6 +42,7 @@ public class CheckOutAPI {
                                     @RequestParam(value = "email")String email,
                                     @RequestParam(value = "status")String status,
                                     @RequestParam(value = "vnPayChecked") boolean vnPayChecked,
+
                                     HttpSession session
     ){
         CartDTO cart= (CartDTO) session.getAttribute("cart");
@@ -51,12 +52,17 @@ public class CheckOutAPI {
         InvoiceDTO dto=new InvoiceDTO();
 
         dto.setPhone(phone);
-        if(vnPayChecked) status="VNPay";
+
         dto.setStatus(status);
 
         dto.setEmail(email);
         dto.setTotalMoney(total);
         dto.setAddress(address);
+
+        if(vnPayChecked) dto.setPaymentMethod("VNPay");
+        else dto.setPaymentMethod("COD");
+
+
         //setUserId-->setUserName de controller nhan duoc.
         InvoiceEntity entity=invoiceService.save(dto,userId);
         //detail invoice

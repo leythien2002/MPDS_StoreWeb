@@ -60,6 +60,12 @@ public class UserService implements IUserService {
                 });
         return userMapper.toDTO(userRepository.save(entity));
     }
+    public void updatePassword(UserDTO dto){
+        UserEntity entity=userRepository.findOneByUserName(dto.getUserName()).orElseThrow(()->new RuntimeException("Entity Not Found"));
+        updateIfNotNull(dto.getPassword(), entity::setPassword);
+        userRepository.save(entity);
+    }
+
     public UserDTO save(UserDTO dto){
         UserEntity entity=new UserEntity();
         //combine update and add.

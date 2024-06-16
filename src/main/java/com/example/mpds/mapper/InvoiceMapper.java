@@ -22,6 +22,7 @@ public class InvoiceMapper {
         entity.setStatus(dto.getStatus());
         //set user??
         entity.setUser(user);
+        entity.setPaymentMethod(dto.getPaymentMethod());
         return entity;
 
     }
@@ -35,6 +36,7 @@ public class InvoiceMapper {
         dto.setUserId(entity.getUser().getId());
         dto.setStatus(entity.getStatus());
         dto.setPhone(entity.getPhone());
+        dto.setPaymentMethod(entity.getPaymentMethod());
         return dto;
     }
 }

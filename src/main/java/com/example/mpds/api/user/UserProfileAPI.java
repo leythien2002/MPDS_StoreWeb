@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,8 +54,42 @@ public class UserProfileAPI {
         response.put("currentPage", page);
         return response;
     }
-//    @PostMapping(value = "/profile")
-//    public ResponseEntity<UserDTO> updateUserProfile(@RequestBody UserDTO userDTO){
-//        return ResponseEntity.ok(userService.updateProfile(userDTO));
-//    }
+
+    @PostMapping("/profile/changepassword")
+    public ResponseEntity<?> changePassword(@RequestParam("oldPassword") String oldPassword,
+                                 @RequestParam("newPassword") String newPassword,
+                                 @RequestParam("confirmPassword") String confirmPassword,
+                                 @RequestParam("userId") Long userId
+                                 ) {
+        System.out.println(oldPassword);
+        System.out.println(newPassword);
+        System.out.println(confirmPassword);
+
+        if (!newPassword.equals(confirmPassword)) {
+            System.out.println("Confirm password do not match");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("New password and confirm password do not match");
+        }
+
+        UserDTO userDTO=userService.findByUserId(userId);
+        System.out.println(userDTO.getUserName());
+        System.out.println(userDTO.getPassword());
+
+
+        if (!userDTO.getPassword().equals(oldPassword)) {
+            System.out.println("Old password is incorrect");
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Old password is incorrect");
+        }
+        userDTO.setPassword(newPassword);
+        userService.updatePassword(userDTO);
+        System.out.println("success");
+
+        return ResponseEntity.ok("Password updated successfully");
+    }
+        @PostMapping(value = "/profile")
+    public ResponseEntity<UserDTO> updateUserProfile(@RequestBody UserDTO userDTO){
+//            System.out.println("hereeeee"+userDTO.getUserName());
+
+            return ResponseEntity.ok(userService.updateProfile(userDTO));
+    }
 }
