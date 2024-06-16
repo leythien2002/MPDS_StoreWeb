@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,7 +23,7 @@ public class InvoiceDTO extends AbstractDTO{
 
     private String address;
     private String status;
-    private String createDate;
+    private Date createDate;
 
 
 

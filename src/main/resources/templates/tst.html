@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thống Kê Cửa Hàng</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .section {
+        background-color: #fff;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        margin-top: 0;
+    }
+
+    .info p {
+        font-size: 18px;
+    }
+
+    .charts {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .charts > div {
+        width: 45%;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    ul li {
+        font-size: 16px;
+        margin: 5px 0;
+    }
+
+</style>
+<body>
+<div class="container">
+    <!-- Phần 1: Thông tin tổng quát -->
+    <div class="section">
+        <h2>Thông Tin Tổng Quát</h2>
+        <div class="info">
+            <p>Tổng Số Sản Phẩm: <span th:text="${totalProducts}">0</span></p>
+            <p>Tổng Số Hóa Đơn: <span th:text="${totalInvoices}">0</span></p>
+            <p>Tổng Doanh Thu: <span th:text="${totalRevenue}">0</span></p>
+        </div>
+    </div>
+
+    <!-- Phần 2: Biểu đồ -->
+    <div class="section">
+        <h2>Biểu Đồ</h2>
+        <div class="charts">
+            <div>
+                <h3>Biểu Đồ Tròn - Số Lượng Hóa Đơn Theo Trạng Thái</h3>
+                <canvas id="pieChart"></canvas>
+            </div>
+            <div>
+                <h3>Biểu Đồ Đường - Số Lượng Doanh Thu Theo Ngày Trong Tuần</h3>
+                <canvas id="lineChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phần 3: Số Lượng Từng Sản Phẩm -->
+    <div class="section">
+        <h2>Số Lượng Từng Sản Phẩm</h2>
+        <ul>
+            <li th:each="product : ${products}">
+                <span th:text="${product.name}">Tên Sản Phẩm</span>: <span th:text="${product.quantity}">0</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    // Data for Pie Chart
+    var pieChartData = [[${invoiceStatusData}]];
+
+    var pieCtx = document.getElementById('pieChart').getContext('2d');
+    var pieChart = new Chart(pieCtx, {
+        type: 'pie',
+        data: {
+            labels: pieChartData.map(data => data.status),
+            datasets: [{
+                data: pieChartData.map(data => data.count),
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+            }]
+        }
+    });
+
+    // Data for Line Chart
+    var lineChartData = [[${revenueByDayData}]];
+
+    var lineCtx = document.getElementById('lineChart').getContext('2d');
+    var lineChart = new Chart(lineCtx, {
+        type: 'line',
+        data: {
+            labels: lineChartData.map(data => data.day),
+            datasets: [{
+                label: 'Doanh Thu',
+                data: lineChartData.map(data => data.revenue),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+</body>
+</html>
