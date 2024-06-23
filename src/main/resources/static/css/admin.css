@@ -27,16 +27,21 @@ h2 {
 }
 
 .charts {
+
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 .charts > div {
     width: 45%;
 }
 .pie-chart {
-    width: 65% !important; /* Chiều rộng 100% của phần tử cha */
-    height: 65% !important; /* Chiều cao tự động, để tỷ lệ với chiều rộng */
+    width: 80vmin; /* Đặt kích thước cha theo chiều nhỏ nhất của viewport */
+    height: 80vmin; /* Đảm bảo rằng phần tử cha luôn là hình vuông */
+    /*width: 65% !important; !* Chiều rộng 100% của phần tử cha *!*/
+    /*height: 65% !important; !* Chiều cao tự động, để tỷ lệ với chiều rộng *!*/
+    align-items: center;
+
 }
 
 ul {

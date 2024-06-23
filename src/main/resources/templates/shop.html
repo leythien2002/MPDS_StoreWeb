@@ -46,6 +46,7 @@
     <!-- navbar-->
     <div th:insert="~{header :: header}"></div>
     <!--  Modal -->
+    <input id="userIdShopPage"  type ="hidden" th:value="${session.userId}">
     <div class="container">
         <!-- HERO SECTION-->
         <section class="py-5 bg-light">
@@ -388,6 +389,9 @@
         $(document).ready(function () {
 
             $('.addToCart').click(function () {
+
+                var userId = document.getElementById('userIdShopPage').value;
+
                 // Thực hiện xử lý AJAX ở đây
                 // //Javascript thuần
                 // var addToCartButton = document.getElementById("addToCart");
@@ -398,6 +402,11 @@
                 var value = $(this).attr("value");
                 // var csrfToken = $("meta[name='_csrf']").attr("content");
                 // var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+                if (userId === null || userId === "") {
+                    window.location.href = "/login";
+                    return; // Kết thúc sự kiện click để ngăn chặn AJAX request tiếp tục
+                }
+
                 $.ajax({
                     url: '/cart/add',
                     method: 'post',

@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -47,20 +48,30 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         http.authorizeHttpRequests((requests) -> requests
                                 //cau hinh folder permission
                                 .requestMatchers("/css/**", "/js/**", "/vendor/**", "/img/**", "/icons/**").permitAll()
-                                .requestMatchers("/**").permitAll()
-//                        .requestMatchers("/shop").permitAll()
-//                        .requestMatchers("/cart/**").permitAll()
-//                        .requestMatchers("/checkout/**").permitAll()
-//
-//                        .requestMatchers("/authentication").permitAll()
-//                        .requestMatchers("/register/**").permitAll()
-//                        //Only admin can access admin page
-//                        .requestMatchers("/users/**").hasAuthority("ROLE_ADMIN")
-//                        .requestMatchers("/product/**").hasAuthority("ROLE_ADMIN")
-//                        .requestMatchers("/users/**").hasAuthority("ROLE_ADMIN")
 
+                        .requestMatchers("/").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
+                        .requestMatchers("/shop").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
+                        .requestMatchers("/checkout").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
+                        .requestMatchers("/checkout/**").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
+                        .requestMatchers("/authentication").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
+                        .requestMatchers("/register").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
+                        .requestMatchers("/register/**").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
+                        .requestMatchers("/detail/**").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
 
-//                                .anyRequest().authenticated()
+                        //Only admin can access admin page
+
+                        .requestMatchers("/admin").hasAuthority("ROLE_ADMIN")
+
+                        .requestMatchers("/users").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/users/**").hasAuthority("ROLE_ADMIN")
+
+                        .requestMatchers("/product").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/product/**").hasAuthority("ROLE_ADMIN")
+
+                        .requestMatchers("/brand").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/brand/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/invoice").hasAuthority("ROLE_ADMIN")
+                        .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                                 .loginPage("/login")

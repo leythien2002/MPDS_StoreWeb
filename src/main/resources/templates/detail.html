@@ -37,6 +37,8 @@
     <div class="page-holder bg-light">
       <!-- navbar-->
       <div th:insert="~{header :: header}"></div>
+      <input id="userIdDetailPage"  type ="hidden" th:value="${session.userId}">
+
       <!--  Modal -->
       <div class="modal fade" id="productView" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -86,8 +88,8 @@
                   <div class="swiper product-slider-thumbs">
                     <div class="swiper-wrapper">
                       <div class="swiper-slide h-auto swiper-thumb-item mb-3"><img class="w-100" th:src="${product.image1}" alt="..."></div>
-                      <div class="swiper-slide h-auto swiper-thumb-item mb-3"><img class="w-100" th:src="${product.image1}" alt="..."></div>
-                      <div class="swiper-slide h-auto swiper-thumb-item mb-3"><img class="w-100" th:src="${product.image1}" alt="..."></div>
+                      <div class="swiper-slide h-auto swiper-thumb-item mb-3"><img class="w-100" th:src="${product.image2}" alt="..."></div>
+                      <div class="swiper-slide h-auto swiper-thumb-item mb-3"><img class="w-100" th:src="${product.image3}" alt="..."></div>
                     </div>
                   </div>
                 </div>
@@ -95,8 +97,8 @@
                   <div class="swiper product-slider">
                     <div class="swiper-wrapper">
                       <div class="swiper-slide h-auto"><a class="glightbox product-view" th:ref="${product.image1}" data-gallery="gallery2" data-glightbox="Product item 1"><img class="img-fluid" th:src="${product.image1}" alt="..."></a></div>
-                      <div class="swiper-slide h-auto"><a class="glightbox product-view"  th:ref="${product.image1}" data-gallery="gallery2" data-glightbox="Product item 2"><img class="img-fluid" th:src="${product.image1}" alt="..."></a></div>
-                      <div class="swiper-slide h-auto"><a class="glightbox product-view" th:ref="${product.image1}" data-gallery="gallery2" data-glightbox="Product item 3"><img class="img-fluid" th:src="${product.image1}" alt="..."></a></div>
+                      <div class="swiper-slide h-auto"><a class="glightbox product-view"  th:ref="${product.image2}" data-gallery="gallery2" data-glightbox="Product item 2"><img class="img-fluid" th:src="${product.image2}" alt="..."></a></div>
+                      <div class="swiper-slide h-auto"><a class="glightbox product-view" th:ref="${product.image3}" data-gallery="gallery2" data-glightbox="Product item 3"><img class="img-fluid" th:src="${product.image3}" alt="..."></a></div>
                     </div>
                   </div>
                 </div>
@@ -302,11 +304,16 @@
             // var addToCartButton = document.getElementById("addToCart");
             // // Lấy giá trị của thuộc tính "value"
             // var value = addToCartButton.value;
+            var userId = document.getElementById('userIdDetailPage').value;
 
             // Lấy giá trị của thuộc tính "value" bằng jQuery
             var value = $(this).attr("value");
             // var csrfToken = $("meta[name='_csrf']").attr("content");
             // var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+            if (userId === null || userId === "") {
+              window.location.href = "/login";
+              return; // Kết thúc sự kiện click để ngăn chặn AJAX request tiếp tục
+            }
             $.ajax({
               url: '/cart/add',
               method: 'post',

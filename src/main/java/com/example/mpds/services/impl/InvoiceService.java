@@ -53,10 +53,12 @@ public class InvoiceService implements IInvoiceService {
         return invoiceRepository.findAll(spec);
     }
     public TotalStatusInvoice getTotalStatusInvoice(Date startDate, Date endDate){
-        Integer pending=findInvoices("PENDING", startDate, endDate).size();
-        Integer paid=findInvoices("PAID", startDate, endDate).size();
-        Integer cancelled=findInvoices("CANCELLED", startDate, endDate).size();
-        return new TotalStatusInvoice(pending,paid,cancelled);
+        Integer pending=findInvoices("Pending", startDate, endDate).size();
+        Integer paid=findInvoices("Paid", startDate, endDate).size();
+        Integer cancelled=findInvoices("Cancelled", startDate, endDate).size();
+        Integer delivered=findInvoices("delivered", startDate, endDate).size();
+
+        return new TotalStatusInvoice(pending,paid,cancelled, delivered );
 
     }
     public Integer getInvoicesForJulyAndAugust(int year, Month month) {
@@ -122,8 +124,6 @@ public class InvoiceService implements IInvoiceService {
     {
         InvoiceEntity existingInvoice = invoiceRepository.findById((long) invoiceDTO.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Invoice not found"));
-
-
         existingInvoice.setStatus(invoiceDTO.getStatus());
         existingInvoice.setEmail(invoiceDTO.getEmail());
         existingInvoice.setPhone(invoiceDTO.getPhone());

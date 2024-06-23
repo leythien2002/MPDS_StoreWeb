@@ -78,33 +78,32 @@
             </div>
         </nav>
     </div>
-    <div id="layoutSidenav_content">
+    <div class="mt-4" id="layoutSidenav_content">
         <div class="container">
-            <form action="/statistics" method="GET">
-                <label for="start_date">Ngày bắt đầu:</label>
+            <form action="/admin" method="GET">
+                <label for="start_date">Start Date:</label>
                 <input type="date" id="start_date" name="startDate">
 
-                <label for="end_date">Ngày kết thúc:</label>
+                <label for="end_date">End Date:</label>
                 <input type="date" id="end_date" name="endDate">
 
-                <input type="submit" value="Chọn">
+                <button class="details-btn" type="submit"  > Select</button>
             </form>
             <!-- Phần 1: Thông tin tổng quát -->
 
 
             <div class="section">
-                <h2>Thông Tin Tổng Quát</h2>
                 <div class="charts">
                     <div >
-                        <h3>Biểu Đồ Đường - Số Lượng Doanh Thu</h3>
+                        <h3>Line Chart - Revenue</h3>
                         <canvas id="lineChart"></canvas>
                     </div>
                     <div>
-                        <p>Tổng Số Sản Phẩm: <span th:text="${totalProducts}">0</span></p>
-                        <h2>Số Lượng Từng Sản Phẩm</h2>
+                        <h2>Total products: <span th:text="${totalProducts}">0</span></h2>
+                        <h2>Number of each product</h2>
                         <ul>
                             <li th:each="product : ${products}">
-                                <span th:text="${product.name}">Tên Sản Phẩm</span>: <span th:text="${product.total}">0</span>
+                                <span th:text="${product.name}">Product Name</span>: <span th:text="${product.total}">0</span>
                             </li>
                         </ul>
                     </div>
@@ -115,23 +114,22 @@
 
             <!-- Phần 2: Biểu đồ -->
             <div class="section">
-                <h2>Biểu Đồ</h2>
                 <div class="charts">
                     <div>
-                        <h3>Biểu Đồ Tròn - Số Lượng Hóa Đơn Theo Trạng Thái</h3>
+                        <h3>Pie Chart - Number Of Invoices</h3>
                         <canvas id="pieChart" class="pie-chart"></canvas>
                     </div>
                     <div class="info">
-                        <p>Tổng Số Hóa Đơn: <span th:text="${totalInvoices}">0</span></p>
-                        <p>Tổng Doanh Thu: <span th:text="${totalRevenue}">0</span></p>
+                        <p>Total Invoice: <span th:text="${totalInvoices}">0</span></p>
+                        <p>Total Revenue: <span th:text="${totalRevenue}">0</span></p>
                     </div>
                 </div>
             </div>
 
             <!-- Phần 3: Số Lượng Từng Sản Phẩm -->
-            <div class="section">
+<!--            <div class="section">-->
 
-            </div>
+<!--            </div>-->
         </div>
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">

@@ -13,4 +13,5 @@ public class TotalStatusInvoice {
     private Integer pendingStatus;
     private Integer paidStatus;
     private Integer cancelledStatus;
+    private Integer deliveredStatus;
 }
