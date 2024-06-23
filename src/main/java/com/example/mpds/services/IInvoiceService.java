@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface IInvoiceService {
     List<InvoiceDTO> findAll();
-    InvoiceEntity save(InvoiceDTO dto);
+    InvoiceEntity save(InvoiceDTO dto, int userId);
 }

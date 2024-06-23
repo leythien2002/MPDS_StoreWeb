@@ -1,26 +1,20 @@
 package com.example.mpds.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.HashMap;
 
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CartDTO {
 
     private HashMap<Integer,CartItemDTO> itemList;
     private double total;
 
-    public HashMap<Integer, CartItemDTO> getItemList() {
-        return itemList;
-    }
 
-    public void setItemList(HashMap<Integer, CartItemDTO> itemList) {
-        this.itemList = itemList;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
 }

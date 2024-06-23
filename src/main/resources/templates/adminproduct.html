@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Dashboard - SB Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link th:href="@{/css/popup.css}" rel="stylesheet"/>
+    <link th:href="@{/css/invoice.css}" rel="stylesheet"/>
+    <!--    <meta name="_csrf" th:content="${_csrf.token}">-->
+    <!--    <meta name="_csrf_header" th:content="${_csrf.headerName}">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+</head>
+<body class="sb-nav-fixed">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" th:href="@{/admin}">Group 20</a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+            class="fas fa-bars"></i></button>
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+        <div class="input-group">
+        </div>
+    </form>
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+
+                    <div class="sb-sidenav-menu-heading">Manage</div>
+
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+                       aria-expanded="false" aria-controls="collapsePages">
+                        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                        Mangagement
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" th:href="@{/users}">User</a>
+                            <a class="nav-link" th:href="@{/invoice}">Invoice</a>
+                            <a class="nav-link" th:href="@{/product}">Product</a>
+                            <a class="nav-link" th:href="@{/brand}">Brand</a>
+
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+            <div class="sb-sidenav-footer">
+                <div class="small">Logged in as:</div>
+                Group 20
+            </div>
+        </nav>
+    </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">List Product</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">List Product</li>
+                </ol>
+
+                <Button id="createProductBtn" style="margin-bottom:1%">Create New Product</Button>
+                <div id="successMessage" style="display:none; color: green;"></div>
+
+                <div id="productFormPopup" class="popup">
+                    <div class="popup-content">
+                        <span class="closeBtn">&times;</span>
+                        <form id="createProductForm" method="post">
+                            <h2>Create Product</h2>
+                            <label for="productId">Id:</label><br>
+                            <input type="text" id="productId" name="productId" placeholder="Product Id"><br>
+
+                            <label for="productName">Name:</label><br>
+                            <input type="text" id="productName" name="productName" placeholder="Product Name"><br>
+
+                            <label for="productPrice">Price:</label><br>
+                            <input type="number" id="productPrice" name="productPrice" placeholder="Product Price"><br>
+
+                            <label for="categoryName">Brand Name:</label><br>
+                            <input type="text" id="categoryName" name="categoryName" placeholder="Brand Name"><br>
+
+                            <label for="type">Type:</label><br>
+                            <input type="text" id="type" name="type" placeholder="type"><br>
+
+                            <label for="dialSize">Type:</label><br>
+                            <input type="text" id="dialSize" name="type" placeholder="dialSize"><br>
+
+                            <label for="productImageUrl1">Image URL:</label><br>
+                            <input type="text" id="productImageUrl1" name="productImageUrl1"
+                                   placeholder="Product Image URL 1"><br>
+
+                            <label for="productImageUrl2">Image URL:</label><br>
+                            <input type="text" id="productImageUrl2" name="productImageUrl2"
+                                   placeholder="Product Image URL 2"><br>
+
+                            <label for="productImageUrl3">Image URL:</label><br>
+                            <input type="text" id="productImageUrl3" name="productImageUrl3"
+                                   placeholder="Product Image URL 3"><br>
+
+                            <label for="productDescription">Description:</label><br>
+                            <textarea id="productDescription" name="productDescription"
+                                      placeholder="Product Description"></textarea><br>
+
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        DataTable
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Brand</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Brand</th>
+                                <th>Action</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+
+                            <tr th:each="product:${listProduct}">
+                                <td th:text="${product.id}"></td>
+                                <td th:text="${product.name}"></td>
+                                <td th:text="${product.description}"></td>
+                                <td th:text="${product.price}"></td>
+                                <td th:text="${product.categoryName}"></td>
+                                <td>
+                                    <button class="delete-btn" th:value="${product.id}">Delete</button>
+                                    <button class="details-btn"
+
+                                            th:data-id="${product.id}"
+                                            th:data-name="${product.name}"
+                                            th:data-description="${product.description}"
+                                            th:data-price="${product.price}"
+                                            th:data-type="${product.type}"
+                                            th:data-imageUrl1="${product.image1}"
+                                            th:data-imageUrl2="${product.image2}"
+                                            th:data-imageUrl3="${product.image3}"
+                                            th:data-categoryName="${product.categoryName}"
+                                            th:data-dialsize="${product.dialSize}"
+
+
+                                    >Details
+                                    </button>
+                                </td>
+
+                            </tr>
+                            <div id="productModal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <h2>Product Details</h2>
+                                    <label>Product Id:</label>
+                                    <input id="pId"></input>
+                                    <label>Product Name:</label>
+                                    <input id="pName"></input>
+                                    <label>Product Brand Name:</label>
+                                    <input id="pCategoryName"></input>
+                                    <label>Product Description:</label>
+                                    <input id="pDescription"></input>
+                                    <label>Product Price:</label>
+                                    <input id="pPrice"></input>
+                                    <label>Product Type:</label>
+                                    <input id="pType"></input>
+                                    <label>Product DialSize:</label>
+                                    <input id="pDialSize"></input>
+                                    <label>Product Image URL 1:</label>
+                                    <input id="pImage1"></input>
+                                    <label>Product Image URL 2:</label>
+                                    <input id="pImage2"></input>
+                                    <label>Product Image URL 3:</label>
+                                    <input id="pImage3"></input>
+                                    <button id="submitProductUpdate" >Update</button>
+
+                                </div>
+                            </div>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Your Website 2023</div>
+
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        document.getElementById('submitProductUpdate').addEventListener('click', function () {
+            var id = document.getElementById('pId').value;
+            var name = document.getElementById('pName').value;
+            var description = document.getElementById('pDescription').value;
+            var price = document.getElementById('pPrice').value;
+            var type = document.getElementById('pType').value;
+            var image1 = document.getElementById('pImage1').value;
+            var image2 = document.getElementById('pImage2').value;
+            var image3 = document.getElementById('pImage3').value;
+            var dialSize = document.getElementById('pDialSize').value;
+            var categoryName = document.getElementById('pCategoryName').value;
+
+
+
+            let formData = {
+                id: id,
+                name: name,
+                description: description,
+                price: price,
+                type: type,
+                image1: image1,
+                image2: image2,
+                image3: image3,
+                dialSize:dialSize,
+                categoryName: categoryName
+
+            };
+
+
+            $.ajax({
+                url: '/product',
+                method: 'put',
+                // Replace with your API endpoint
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+
+                success: function (response) {
+                    // Handle success
+                    // $('#successMessage').show().text('Updated successfully!');
+                    // setTimeout(function () {
+                    //     $('#successMessage').hide();
+                    //     window.location.reload()
+                    // }, 200);
+                    alert(response);
+                    window.location.reload()
+                },
+                error: function () {
+                    // Handle error
+                    alert('Failed to Update Please try again.');
+                }
+            });
+            $('#productModal').hide();
+        });
+    </script>
+    <script>
+        document.addEventListener('click', function (event) {
+            // Check if the clicked element has the class 'details-btn'
+            if (event.target.classList.contains('details-btn')) {
+                var button = event.target;
+
+                var id = button.getAttribute('data-id');
+                var name = button.getAttribute('data-name');
+                var description = button.getAttribute('data-description');
+                var price = button.getAttribute('data-price');
+                var type = button.getAttribute('data-type');
+                var imageUrl1 = button.getAttribute('data-imageUrl1');
+                var imageUrl2 = button.getAttribute('data-imageUrl2');
+                var imageUrl3 = button.getAttribute('data-imageUrl3');
+                var categoryName = button.getAttribute('data-categoryName');
+                var dialSize = button.getAttribute('data-dialsize');
+
+
+                showUserDetails(id,categoryName, name, description, price, type, imageUrl1, imageUrl2, imageUrl3, dialSize);
+            }
+        });
+
+        // When the user clicks on a row button, open the modal and populate it with data
+        function showUserDetails(id, categoryName, name, description, price, type, imageUrl1, imageUrl2, imageUrl3, dialSize) {
+
+            document.getElementById('pId').value = id;
+            document.getElementById('pName').value = name;
+            document.getElementById('pDescription').value = description;
+            document.getElementById('pPrice').value = price;
+            document.getElementById('pType').value = type;
+            document.getElementById('pDialSize').value = dialSize;
+            document.getElementById('pImage1').value = imageUrl1;
+            document.getElementById('pImage2').value = imageUrl2;
+            document.getElementById('pImage3').value = imageUrl3;
+            document.getElementById('pCategoryName').value = categoryName;
+
+
+            document.getElementById('productModal').style.display = "block";
+        }
+
+        // Get the modal
+        var modal = document.getElementById('productModal');
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#createProductForm').submit(function (event) {
+                event.preventDefault();
+
+                let formData = {
+                    id: $('#productId').val(),
+                    name: $('#productName').val(),
+                    price: $('#productPrice').val(),
+                    categoryName: $('#categoryName').val(),
+                    image1: $('#productImageUrl1').val(),
+                    image2: $('#productImageUrl2').val(),
+                    image3: $('#productImageUrl3').val(),
+                    description: $('#productDescription').val(),
+                    type: $('#type').val(),
+                    dialSize: $('#dialSize').val()
+                };
+
+
+                $.ajax({
+                    url: '/product',
+                    method: 'post',
+                    // Replace with your API endpoint
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json',
+
+                    success: function (response) {
+                        // Handle success
+                        // $('#successMessage').show().text('Product created successfully!');
+                        // $('#createProductForm')[0].reset();
+                        // setTimeout(function () {
+                        //     $('#successMessage').hide();
+                        //     window.location.reload()
+                        // }, 200);
+                        alert(response);
+                        window.location.reload()
+                    },
+                    error: function () {
+                        // Handle error
+                        alert('Failed to create product. Please try again.');
+                    }
+                });
+
+                $('#productFormPopup').hide();
+            });
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.delete-btn').click(function () {
+                var productId = $(this).attr("value");
+
+                $.ajax({
+                    url: '/product/' + productId,
+                    method: 'delete',
+                    success: function (result) {
+                        alert(result);
+                        window.location.reload()
+                        // Additional logic to remove the row from the table
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error: " + error);
+                    }
+                });
+            });
+        });
+    </script>
+    <!--    editBtn-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.editProductBtn').forEach(item => {
+                console.log("each Item")
+                item.addEventListener('click', function () {
+                    console.log("aloalo")
+
+                    // Open the popup
+                    var popup = document.getElementById('editPopupForm');
+                    if (popup) {
+                        popup.style.display = 'block';
+
+                        // Fill the form with product data
+                        var row = this.closest('tr');
+                        if (row) {
+                            document.getElementById('productId1').value = row.cells[0].innerText;
+
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/ajax.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+            crossorigin="anonymous"></script>
+    <script src="js/datatables-simple-demo.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</div>
+
+</body>
+</html>

@@ -38,13 +38,18 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         UserEntity principal = (UserEntity) authentication.getPrincipal();
         //nen encode roi hien thi hay la encode trong du lieu luon ?
-        String username=principal.getName();
-
-        session.setAttribute("username", username);
+        String name=principal.getUserName();
+        Integer userId=principal.getId();
+//Cho nay la name ko phai username
+        session.setAttribute("username", name);
+        session.setAttribute("userId", userId);
         if (hasUserRole) {
             redirectStrategy.sendRedirect(request, response, "/");
+            System.out.println("USER LOGGED IN");
         } else if (hasAdminRole) {
             redirectStrategy.sendRedirect(request, response, "/admin");
+            System.out.println("ADMIN LOGGED IN");
+
         } else {
             throw new IllegalStateException();
         }

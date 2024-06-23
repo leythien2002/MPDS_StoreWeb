@@ -26,7 +26,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        UserEntity user = userRepository.findOneByUserName(username);
+        UserEntity user = userRepository.findOneByUserName(username).orElseThrow(()->new RuntimeException("Entity Not Found"));
         if (user == null || !password.equals(user.getPassword())) {
             throw new BadCredentialsException("Invalid username or password");
         }

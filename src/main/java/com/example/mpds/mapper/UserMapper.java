@@ -14,7 +14,7 @@ public class UserMapper {
         entity.setName(dto.getName());
         entity.setUserName(dto.getUserName());
         entity.setPermission(0);
-
+    entity.setPassword(dto.getPassword());
         return entity;
 
     }
@@ -25,6 +25,8 @@ public class UserMapper {
         dto.setName(entity.getName());
         dto.setPermission(entity.getPermission());
         dto.setUserName(entity.getUserName());
+        dto.setAddress(entity.getAddress());
+        dto.setPassword(entity.getPassword());
         return dto;
     }
     //using for update ( store previous information)
@@ -36,4 +38,7 @@ public class UserMapper {
         oldEntity.setPermission(dto.getPermission());
         return oldEntity;
     }
+
+    //New user from register API
+
 }

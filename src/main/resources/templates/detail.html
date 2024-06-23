@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Boutique | Ecommerce bootstrap template</title>
+    <title th:text="${product.name}"></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -24,12 +24,21 @@
     <link rel="stylesheet" th:href="@{/css/custom.css}">
     <!-- Favicon-->
     <link rel="shortcut icon" th:href="@{/img/favicon.png}">
+
+    <!--      chatbot-->
+    <link rel="stylesheet" th:href="@{/css/chatbotstyles.css}">
+    <meta name="viewprot" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    <script th:src="@{/js/chatbotscript.js}" defer></script>
   </head>
   <body>
   <div th:insert="~{preloading}"></div>
     <div class="page-holder bg-light">
       <!-- navbar-->
       <div th:insert="~{header :: header}"></div>
+      <input id="userIdDetailPage"  type ="hidden" th:value="${session.userId}">
+
       <!--  Modal -->
       <div class="modal fade" id="productView" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -79,19 +88,17 @@
                   <div class="swiper product-slider-thumbs">
                     <div class="swiper-wrapper">
                       <div class="swiper-slide h-auto swiper-thumb-item mb-3"><img class="w-100" th:src="${product.image1}" alt="..."></div>
-                      <div class="swiper-slide h-auto swiper-thumb-item mb-3"><img class="w-100" src="img/product-detail-2.jpg" alt="..."></div>
-                      <div class="swiper-slide h-auto swiper-thumb-item mb-3"><img class="w-100" src="img/product-detail-3.jpg" alt="..."></div>
-                      <div class="swiper-slide h-auto swiper-thumb-item mb-3"><img class="w-100" src="img/product-detail-4.jpg" alt="..."></div>
+                      <div class="swiper-slide h-auto swiper-thumb-item mb-3"><img class="w-100" th:src="${product.image2}" alt="..."></div>
+                      <div class="swiper-slide h-auto swiper-thumb-item mb-3"><img class="w-100" th:src="${product.image3}" alt="..."></div>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-10 order-1 order-sm-2">
                   <div class="swiper product-slider">
                     <div class="swiper-wrapper">
-                      <div class="swiper-slide h-auto"><a class="glightbox product-view" href="img/product-detail-1.jpg" data-gallery="gallery2" data-glightbox="Product item 1"><img class="img-fluid" src="img/product-detail-1.jpg" alt="..."></a></div>
-                      <div class="swiper-slide h-auto"><a class="glightbox product-view" href="img/product-detail-2.jpg" data-gallery="gallery2" data-glightbox="Product item 2"><img class="img-fluid" src="img/product-detail-2.jpg" alt="..."></a></div>
-                      <div class="swiper-slide h-auto"><a class="glightbox product-view" href="img/product-detail-3.jpg" data-gallery="gallery2" data-glightbox="Product item 3"><img class="img-fluid" src="img/product-detail-3.jpg" alt="..."></a></div>
-                      <div class="swiper-slide h-auto"><a class="glightbox product-view" href="img/product-detail-4.jpg" data-gallery="gallery2" data-glightbox="Product item 4"><img class="img-fluid" src="img/product-detail-4.jpg" alt="..."></a></div>
+                      <div class="swiper-slide h-auto"><a class="glightbox product-view" th:ref="${product.image1}" data-gallery="gallery2" data-glightbox="Product item 1"><img class="img-fluid" th:src="${product.image1}" alt="..."></a></div>
+                      <div class="swiper-slide h-auto"><a class="glightbox product-view"  th:ref="${product.image2}" data-gallery="gallery2" data-glightbox="Product item 2"><img class="img-fluid" th:src="${product.image2}" alt="..."></a></div>
+                      <div class="swiper-slide h-auto"><a class="glightbox product-view" th:ref="${product.image3}" data-gallery="gallery2" data-glightbox="Product item 3"><img class="img-fluid" th:src="${product.image3}" alt="..."></a></div>
                     </div>
                   </div>
                 </div>
@@ -110,21 +117,22 @@
               <p class="text-muted lead" th:text="${product.price}"></p>
               <p class="text-sm mb-4" th:text="${product.description}"></p>
               <div class="row align-items-stretch mb-4">
-                <div class="col-sm-5 pr-sm-0">
-                  <div class="border d-flex align-items-center justify-content-between py-1 px-3 bg-white border-white"><span class="small text-uppercase text-gray mr-4 no-select">Quantity</span>
-                    <div class="quantity">
-                      <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button>
-                      <input class="form-control border-0 shadow-0 p-0" type="text" value="1">
-                      <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-3 pl-sm-0"><a class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0" href="cart.html">Add to cart</a></div>
-              </div><a class="text-dark p-0 mb-4 d-inline-block" href="#!"><i class="far fa-heart me-2"></i>Add to wish list</a><br>
+<!--                <div class="col-sm-5 pr-sm-0">-->
+<!--                  <div class="border d-flex align-items-center justify-content-between py-1 px-3 bg-white border-white"><span class="small text-uppercase text-gray mr-4 no-select">Quantity</span>-->
+<!--                    <div class="quantity">-->
+<!--                      <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button>-->
+<!--                      <input class="form-control border-0 shadow-0 p-0" type="text" value="1">-->
+<!--                      <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+                <div class="col-sm-3 pl-sm-0"><a class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0 addToCart" th:value="${product.getId()}">Add to cart</a></div>
+              </div>
               <ul class="list-unstyled small d-inline-block">
-                <li class="px-3 py-2 mb-1 bg-white"><strong class="text-uppercase">SKU:</strong><span class="ms-2 text-muted">039</span></li>
-                <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Category:</strong><a class="reset-anchor ms-2" href="#!" th:text="${product.getcategoryName()}"></a></li>
-                <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Tags:</strong><a class="reset-anchor ms-2" href="#!">Innovation</a></li>
+                <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Brand:</strong><a class="reset-anchor ms-2" href="#!" th:text="${product.getCategoryName()}"></a></li>
+                <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Type:</strong><a class="reset-anchor ms-2" th:text="${product.getType()}"></a></li>
+                <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Dial Size:</strong><a class="reset-anchor ms-2" th:text="${product.getDialSize()}"></a></li>
+
               </ul>
             </div>
           </div>
@@ -144,11 +152,13 @@
               <div class="p-4 p-lg-5 bg-white">
                 <div class="row">
                   <div class="col-lg-8">
-                    <div class="d-flex mb-3">
-                      <div class="flex-shrink-0"><img class="rounded-circle" src="img/customer-1.png" alt="" width="50"/></div>
+                    <div class="d-flex mb-3" th:each="review: ${lstReviews}">
+
+                      <div class="flex-shrink-0">
+                        <img class="rounded-circle" src="img/customer-1.png" alt="" width="50"/></div>
                       <div class="ms-3 flex-shrink-1">
-                        <h6 class="mb-0 text-uppercase">Jason Doe</h6>
-                        <p class="small text-muted mb-0 text-uppercase">20 May 2020</p>
+                        <h6 class="mb-0 text-uppercase"  th:text="${review.getUserName()}"></h6>
+                        <p class="small text-muted mb-0 text-uppercase">20 May 2024</p>
                         <ul class="list-inline mb-1 text-xs">
                           <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
                           <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
@@ -156,96 +166,51 @@
                           <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
                           <li class="list-inline-item m-0"><i class="fas fa-star-half-alt text-warning"></i></li>
                         </ul>
-                        <p class="text-sm mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <p class="text-sm mb-0 text-muted" th:text="${review.getReview()}"></p>
                       </div>
                     </div>
-                    <div class="d-flex">
-                      <div class="flex-shrink-0"><img class="rounded-circle" src="img/customer-2.png" alt="" width="50"/></div>
-                      <div class="ms-3 flex-shrink-1">
-                        <h6 class="mb-0 text-uppercase">Jane Doe</h6>
-                        <p class="small text-muted mb-0 text-uppercase">20 May 2020</p>
-                        <ul class="list-inline mb-1 text-xs">
-                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
-                          <li class="list-inline-item m-0"><i class="fas fa-star-half-alt text-warning"></i></li>
-                        </ul>
-                        <p class="text-sm mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                      </div>
-                    </div>
+<!--                    <div class="d-flex">-->
+<!--                      <div class="flex-shrink-0"><img class="rounded-circle" src="img/customer-2.png" alt="" width="50"/></div>-->
+<!--                      <div class="ms-3 flex-shrink-1">-->
+<!--                        <h6 class="mb-0 text-uppercase">Jane Doe</h6>-->
+<!--                        <p class="small text-muted mb-0 text-uppercase">20 May 2020</p>-->
+<!--                        <ul class="list-inline mb-1 text-xs">-->
+<!--                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>-->
+<!--                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>-->
+<!--                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>-->
+<!--                          <li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>-->
+<!--                          <li class="list-inline-item m-0"><i class="fas fa-star-half-alt text-warning"></i></li>-->
+<!--                        </ul>-->
+<!--                        <p class="text-sm mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>-->
+<!--                      </div>-->
+<!--                    </div>-->
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <!-- RELATED PRODUCTS-->
-          <h2 class="h5 text-uppercase mb-4">Related products</h2>
-          <div class="row">
+          <h2 class="h5 text-uppercase mb-4">Other products</h2>
+          <div class="row" >
             <!-- PRODUCT-->
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-3 col-sm-6" th:each="productS: ${suggestedList}">
               <div class="product text-center skel-loader">
-                <div class="d-block mb-3 position-relative"><a class="d-block" href="detail.html"><img class="img-fluid w-100" src="img/product-1.jpg" alt="..."></a>
+                <div class="d-block mb-3 position-relative"><a class="d-block" th:href="@{/detail(name=${productS.name})}"><img class="img-fluid w-100" th:src="${productS.image1}" alt="..."></a>
                   <div class="product-overlay">
                     <ul class="mb-0 list-inline">
-                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#!"><i class="far fa-heart"></i></a></li>
-                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="#!">Add to cart</a></li>
-                      <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#productView" data-bs-toggle="modal"><i class="fas fa-expand"></i></a></li>
+                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark addToCart" th:value="${productS.getId()}" >Add to cart</a></li>
                     </ul>
                   </div>
                 </div>
-                <h6> <a class="reset-anchor" href="detail.html">Kui Ye Chen’s AirPods</a></h6>
-                <p class="small text-muted">$250</p>
+                <h6> <a class="reset-anchor" th:href="@{/detail(name=${productS.name})}" th:text="${productS.name}"></a></h6>
+                <p class="small text-muted" th:text="${productS.price}"></p>
               </div>
             </div>
             <!-- PRODUCT-->
-            <div class="col-lg-3 col-sm-6">
-              <div class="product text-center skel-loader">
-                <div class="d-block mb-3 position-relative"><a class="d-block" href="detail.html"><img class="img-fluid w-100" src="img/product-2.jpg" alt="..."></a>
-                  <div class="product-overlay">
-                    <ul class="mb-0 list-inline">
-                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#!"><i class="far fa-heart"></i></a></li>
-                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="#!">Add to cart</a></li>
-                      <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#productView" data-bs-toggle="modal"><i class="fas fa-expand"></i></a></li>
-                    </ul>
-                  </div>
-                </div>
-                <h6> <a class="reset-anchor" href="detail.html">Air Jordan 12 gym red</a></h6>
-                <p class="small text-muted">$300</p>
-              </div>
-            </div>
+
+
             <!-- PRODUCT-->
-            <div class="col-lg-3 col-sm-6">
-              <div class="product text-center skel-loader">
-                <div class="d-block mb-3 position-relative"><a class="d-block" href="detail.html"><img class="img-fluid w-100" src="img/product-3.jpg" alt="..."></a>
-                  <div class="product-overlay">
-                    <ul class="mb-0 list-inline">
-                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#!"><i class="far fa-heart"></i></a></li>
-                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="#!">Add to cart</a></li>
-                      <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#productView" data-bs-toggle="modal"><i class="fas fa-expand"></i></a></li>
-                    </ul>
-                  </div>
-                </div>
-                <h6> <a class="reset-anchor" href="detail.html">Cyan cotton t-shirt</a></h6>
-                <p class="small text-muted">$25</p>
-              </div>
-            </div>
-            <!-- PRODUCT-->
-            <div class="col-lg-3 col-sm-6">
-              <div class="product text-center skel-loader">
-                <div class="d-block mb-3 position-relative"><a class="d-block" href="detail.html"><img class="img-fluid w-100" src="img/product-4.jpg" alt="..."></a>
-                  <div class="product-overlay">
-                    <ul class="mb-0 list-inline">
-                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#!"><i class="far fa-heart"></i></a></li>
-                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="#!">Add to cart</a></li>
-                      <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#productView" data-bs-toggle="modal"><i class="fas fa-expand"></i></a></li>
-                    </ul>
-                  </div>
-                </div>
-                <h6> <a class="reset-anchor" href="detail.html">Timex Unisex Originals</a></h6>
-                <p class="small text-muted">$351</p>
-              </div>
-            </div>
+
           </div>
         </div>
       </section>
@@ -293,6 +258,8 @@
           </div>
         </div>
       </footer>
+      <div th:replace="chatbot :: content"></div>
+
       <!-- JavaScript files-->
       <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
       <script src="vendor/glightbox/js/glightbox.min.js"></script>
@@ -300,6 +267,8 @@
       <script src="vendor/swiper/swiper-bundle.min.js"></script>
       <script src="vendor/choices.js/public/assets/scripts/choices.min.js"></script>
       <script src="js/front.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
       <script>
         // ------------------------------------------------------- //
         //   Inject SVG Sprite - 
@@ -324,6 +293,48 @@
         // pls don't forget to change to your domain :)
         injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg'); 
         
+      </script>
+      <script>
+        // Gắn sự kiện click vào nút "Add to cart"
+        $(document).ready(function () {
+
+          $('.addToCart').click(function () {
+            // Thực hiện xử lý AJAX ở đây
+            // //Javascript thuần
+            // var addToCartButton = document.getElementById("addToCart");
+            // // Lấy giá trị của thuộc tính "value"
+            // var value = addToCartButton.value;
+            var userId = document.getElementById('userIdDetailPage').value;
+
+            // Lấy giá trị của thuộc tính "value" bằng jQuery
+            var value = $(this).attr("value");
+            // var csrfToken = $("meta[name='_csrf']").attr("content");
+            // var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+            if (userId === null || userId === "") {
+              window.location.href = "/login";
+              return; // Kết thúc sự kiện click để ngăn chặn AJAX request tiếp tục
+            }
+            $.ajax({
+              url: '/cart/add',
+              method: 'post',
+              data: {id: value, quantity: 1},
+              // beforeSend: function (xhr) {
+              //     xhr.setRequestHeader(csrfHeader, csrfToken);
+              // },
+              success: function (response) {
+                // Xử lý khi AJAX thành công
+                console.log("thanh cong")
+                var cartSizeText = '(' + response.cartSize + ')';
+                $('.cartSize').text(cartSizeText);
+                // console.log(response);
+              },
+              error: function (xhr, status, error) {
+                // Xử lý khi AJAX gặp lỗi
+                console.log("error");
+              }
+            });
+          });
+        });
       </script>
       <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
