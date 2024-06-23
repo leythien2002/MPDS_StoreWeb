@@ -6,8 +6,8 @@ const chatbotCloseBtn = document.querySelector(".close-btn");
 
 let userMessage;
 
-const API_KEY = "sk-proj-qTwT1z1O38EGGXAP8LQ0T3BlbkFJTrIXGhDxy3HQReiepP7P";
-const ASSISTANT_ID = "asst_BODEyHM1GfUwLFT9UKsRvy9u";  // Replace with your actual assistant ID
+const API_KEY = "";
+const ASSISTANT_ID = "";  // Replace with your actual assistant ID
 
 const inputIniHeight = chatInput.scrollHeight;
 const apiUrl = 'https://api.openai.com/v1/beta/threads';
