@@ -149,52 +149,61 @@
                                 th:each="category: ${listCategory}">
                                 <li class="mb-2">
                                     <input class="form-check-input" type="checkbox" name="category"
-                                           th:value="${category.getId()}"
+                                           th:value="${category.getName()}"
                                            th:id="'brand' + ${category.getName()}"
-                                           th:checked="${#lists.contains(currentCategories, category.getId())}">
+                                           th:checked="${#lists.contains(currentCategories, category.getName())}">
                                     <label th:for="'brand' + ${category.getName()}" class="reset-anchor"
                                            th:text="${category.getName()}"> </label>
                                 </li>
                             </ul>
-
+                            <div class="py-2 px-4 bg-light mb-3">
+                                <strong class="small text-uppercase fw-bold">GENDER</strong>
+                            </div>
+                            <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal"  >
+                                <li class="mb-2">
+                                    <input class="form-check-input" type="checkbox" name="gender"
+                                           id="genderMale" value="Male"
+                                           th:checked="${#lists.contains(currentGenders, 'Male')}">
+                                    <label th:for="genderMale" class="reset-anchor" >Male</label>
+                                </li>
+                                <li class="mb-2">
+                                    <input class="form-check-input" type="checkbox" name="gender"
+                                           id="genderFemale" value="Female"
+                                           th:checked="${#lists.contains(currentGenders, 'Female')}">
+                                    <label th:for="genderFemale" class="reset-anchor" >Female</label>
+                                </li>
+                            </ul>
                             <div class="py-2 px-4 bg-light mb-3">
                                 <strong class="small text-uppercase fw-bold">WATCH TYPE</strong>
                             </div>
-                            <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal">
+                            <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal"  th:each="type: ${listType}">
                                 <li class="mb-2">
-                                    <input class="form-check-input" type="checkbox" name="type" value="Analogue"
-                                           id="typeAnalogue"
-                                           th:checked="${#lists.contains(currentTypes, 'Analogue')}">
-                                    <label for="typeAnalogue" class="reset-anchor">Analogue</label>
+                                    <input class="form-check-input" type="checkbox" name="type" th:value="${type.getName()}"
+                                           th:id="'type'+${type.getName()}"
+                                           th:checked="${#lists.contains(currentTypes, type.getName())}">
+                                    <label th:for="'type'+${type.getName()}" class="reset-anchor" th:text="${type.getName()}"></label>
                                 </li>
+                            </ul>
+                            <div class="py-2 px-4 bg-light mb-3">
+                                <strong class="small text-uppercase fw-bold">WATCH STRAP</strong>
+                            </div>
+                            <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal"  th:each="strap: ${listStrap}">
                                 <li class="mb-2">
-                                    <input class="form-check-input" type="checkbox" name="type" value="Digital"
-                                           id="typeDigital"
-                                           th:checked="${#lists.contains(currentTypes, 'Digital')}">
-                                    <label for="typeDigital" class="reset-anchor">Digital</label>
+                                    <input class="form-check-input" type="checkbox" name="strap" th:value="${strap.getName()}"
+                                           th:id="'strap'+${strap.getName()}"
+                                           th:checked="${#lists.contains(currentStraps, strap.getName())}">
+                                    <label th:for="'strap'+${strap.getName()}" class="reset-anchor" th:text="${strap.getName()}"></label>
                                 </li>
                             </ul>
                             <div class="py-2 px-4 bg-light mb-3">
                                 <strong class="small text-uppercase fw-bold">WATCH DIAL SIZE</strong>
                             </div>
-                            <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal mb-5">
+                            <ul class="list-unstyled small text-muted ps-lg-4 font-weight-normal" th:each="dialSize: ${listDialSize}">
                                 <li class="mb-2">
-                                    <input class="form-check-input" type="checkbox" name="dialSize" value="42mm"
-                                           id="dial42mm"
-                                           th:checked="${#lists.contains(currentDialSizes, '42mm')}">
-                                    <label for="dial42mm" class="reset-anchor">42mm</label>
-                                </li>
-                                <li class="mb-2">
-                                    <input class="form-check-input" type="checkbox" name="dialSize" value="45mm"
-                                           id="dial45mm"
-                                           th:checked="${#lists.contains(currentDialSizes, '45mm')}">
-                                    <label for="dial45mm" class="reset-anchor">45mm</label>
-                                </li>
-                                <li class="mb-2">
-                                    <input class="form-check-input" type="checkbox" name="dialSize" value="50mm"
-                                           id="dial50mm"
-                                           th:checked="${#lists.contains(currentDialSizes, '50mm')}">
-                                    <label for="dial50mm" class="reset-anchor">50mm</label>
+                                    <input class="form-check-input" type="checkbox" name="dialSize" th:value="${dialSize.getName()}"
+                                           th:id="'dial'+${dialSize.getName()}"
+                                           th:checked="${#lists.contains(currentDialSizes, dialSize.getName())}">
+                                    <label th:for="'dial'+${dialSize.getName()}" class="reset-anchor" th:text="${dialSize.getName()}"> </label>
                                 </li>
                             </ul>
                             <button type="submit" class="btn btn-primary">Filter</button>
@@ -280,7 +289,7 @@
                                     th:classappend="${listProduct.currentPage == 1} ? 'disabled'">
                                     <a class="page-link" th:href="@{'/shop?page=' + (${listProduct.currentPage > 1 ? listProduct.currentPage - 1 : 1}) + '&sort=' + ${currentSort} + '&category='
                             + ${#strings.arrayJoin(currentCategories, ',')} + '&type=' + ${#strings.arrayJoin(currentTypes, ',')} + '&dialSize='
-                            + ${#strings.arrayJoin(currentDialSizes, ',')} + '&searchText=' + ${currentSearch}}"
+                            + ${#strings.arrayJoin(currentDialSizes, ',')} + '&strap=' +${#strings.arrayJoin(currentStraps, ',')} + '&gender=' +${#strings.arrayJoin(currentGenders, ',')} +'&searchText=' + ${currentSearch}}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">«</span>
                                     </a>
@@ -289,13 +298,13 @@
                                     th:each="page: ${#numbers.sequence(1, listProduct.totalPage)}"
                                     th:classappend="${page == listProduct.currentPage} ? 'active' : ''">
                                     <a class="page-link"
-                                       th:href="@{'/shop?page=' + ${page} + '&sort=' + ${currentSort} + '&category=' + ${#strings.arrayJoin(currentCategories, ',')} + '&type=' + ${#strings.arrayJoin(currentTypes, ',')} + '&dialSize=' + ${#strings.arrayJoin(currentDialSizes, ',')}+ '&searchText=' + ${currentSearch}}"
+                                       th:href="@{'/shop?page=' + ${page} + '&sort=' + ${currentSort} + '&category=' + ${#strings.arrayJoin(currentCategories, ',')} + '&type=' + ${#strings.arrayJoin(currentTypes, ',')} + '&dialSize=' + ${#strings.arrayJoin(currentDialSizes, ',')}+ '&strap=' +${#strings.arrayJoin(currentStraps, ',')} + '&gender=' +${#strings.arrayJoin(currentGenders, ',')} +'&searchText=' + ${currentSearch}}"
                                        th:text="${page}"></a>
                                 </li>
                                 <li class="page-item ms-1"
                                     th:classappend="${listProduct.currentPage == listProduct.totalPage} ? 'disabled'">
                                     <a class="page-link"
-                                       th:href="@{'/shop?page=' + (${listProduct.currentPage < listProduct.totalPage ? listProduct.currentPage + 1 : listProduct.totalPage}) + '&sort=' + ${currentSort} + '&category=' + ${#strings.arrayJoin(currentCategories, ',')} + '&type=' + ${#strings.arrayJoin(currentTypes, ',')} + '&dialSize=' + ${#strings.arrayJoin(currentDialSizes, ',')}+ '&searchText=' + ${currentSearch}}"
+                                       th:href="@{'/shop?page=' + (${listProduct.currentPage < listProduct.totalPage ? listProduct.currentPage + 1 : listProduct.totalPage}) + '&sort=' + ${currentSort} + '&category=' + ${#strings.arrayJoin(currentCategories, ',')} + '&type=' + ${#strings.arrayJoin(currentTypes, ',')} + '&dialSize=' + ${#strings.arrayJoin(currentDialSizes, ',')}+ '&strap=' +${#strings.arrayJoin(currentStraps, ',')} + '&gender=' +${#strings.arrayJoin(currentGenders, ',')} +'&searchText=' + ${currentSearch}}"
                                        aria-label="Next">
                                         <span aria-hidden="true">»</span>
                                     </a>

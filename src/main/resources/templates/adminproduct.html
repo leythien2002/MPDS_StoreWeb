@@ -62,6 +62,9 @@
                             <a class="nav-link" th:href="@{/invoice}"  th:if="${session.role == 'ROLE_SELLER' or session.role == 'ROLE_ADMIN'}"> Invoice</a>
                             <a class="nav-link" th:href="@{/product}"  th:if="${session.role == 'ROLE_ADMIN'}">Product</a>
                             <a class="nav-link" th:href="@{/brand}"  th:if="${session.role == 'ROLE_ADMIN'}">Brand</a>
+                            <a class="nav-link" th:href="@{/strap}"th:if="${session.role == 'ROLE_ADMIN'}">Strap</a>
+                            <a class="nav-link" th:href="@{/type}" th:if="${session.role == 'ROLE_ADMIN'}">Type</a>
+                            <a class="nav-link" th:href="@{/dialsize}"th:if="${session.role == 'ROLE_ADMIN'} ">Dial-Size</a>
 
                         </nav>
                     </div>
@@ -99,14 +102,20 @@
                             <label for="productPrice">Price:</label><br>
                             <input type="number" id="productPrice" name="productPrice" placeholder="Product Price"><br>
 
+                            <label for="gender">Gender:</label><br>
+                            <input type="text" id="gender" name="gender" placeholder="Gender"><br>
+
                             <label for="categoryName">Brand Name:</label><br>
                             <input type="text" id="categoryName" name="categoryName" placeholder="Brand Name"><br>
 
                             <label for="type">Type:</label><br>
                             <input type="text" id="type" name="type" placeholder="type"><br>
 
-                            <label for="dialSize">Type:</label><br>
-                            <input type="text" id="dialSize" name="type" placeholder="dialSize"><br>
+                            <label for="dialSize">Dial Size:</label><br>
+                            <input type="text" id="dialSize" name="dialSize" placeholder="dialSize"><br>
+
+                            <label for="strap">Strap:</label><br>
+                            <input type="text" id="strap" name="strap" placeholder="strap"><br>
 
                             <label for="productImageUrl1">Image URL:</label><br>
                             <input type="text" id="productImageUrl1" name="productImageUrl1"
@@ -178,7 +187,8 @@
                                             th:data-imageUrl3="${product.image3}"
                                             th:data-categoryName="${product.categoryName}"
                                             th:data-dialsize="${product.dialSize}"
-
+                                            th:data-strap="${product.strap}"
+                                            th:data-gender="${product.gender}"
 
                                     >Details
                                     </button>
@@ -193,8 +203,12 @@
                                     <input id="pId"></input>
                                     <label>Product Name:</label>
                                     <input id="pName"></input>
+                                    <label>Product Gender:</label>
+                                    <input id="pGender"></input>
                                     <label>Product Brand Name:</label>
                                     <input id="pCategoryName"></input>
+                                    <label>Product Strap:</label>
+                                    <input id="pStrap"></input>
                                     <label>Product Description:</label>
                                     <input id="pDescription"></input>
                                     <label>Product Price:</label>
@@ -242,6 +256,8 @@
             var image3 = document.getElementById('pImage3').value;
             var dialSize = document.getElementById('pDialSize').value;
             var categoryName = document.getElementById('pCategoryName').value;
+            var gender = document.getElementById('pGender').value;
+            var strap = document.getElementById('pStrap').value;
 
 
 
@@ -255,7 +271,9 @@
                 image2: image2,
                 image3: image3,
                 dialSize:dialSize,
-                categoryName: categoryName
+                categoryName: categoryName,
+                gender:gender,
+                strap:strap
 
             };
 
@@ -301,14 +319,16 @@
                 var imageUrl3 = button.getAttribute('data-imageUrl3');
                 var categoryName = button.getAttribute('data-categoryName');
                 var dialSize = button.getAttribute('data-dialsize');
+                var gender = button.getAttribute('data-gender');
+                var strap = button.getAttribute('data-strap');
 
 
-                showUserDetails(id,categoryName, name, description, price, type, imageUrl1, imageUrl2, imageUrl3, dialSize);
+                showUserDetails(id,categoryName, name, description, price, type, imageUrl1, imageUrl2, imageUrl3, dialSize, gender, strap);
             }
         });
 
         // When the user clicks on a row button, open the modal and populate it with data
-        function showUserDetails(id, categoryName, name, description, price, type, imageUrl1, imageUrl2, imageUrl3, dialSize) {
+        function showUserDetails(id, categoryName, name, description, price, type, imageUrl1, imageUrl2, imageUrl3, dialSize, gender, strap) {
 
             document.getElementById('pId').value = id;
             document.getElementById('pName').value = name;
@@ -320,6 +340,8 @@
             document.getElementById('pImage2').value = imageUrl2;
             document.getElementById('pImage3').value = imageUrl3;
             document.getElementById('pCategoryName').value = categoryName;
+            document.getElementById('pGender').value = gender;
+            document.getElementById('pStrap').value = strap;
 
 
             document.getElementById('productModal').style.display = "block";
@@ -359,7 +381,10 @@
                     image3: $('#productImageUrl3').val(),
                     description: $('#productDescription').val(),
                     type: $('#type').val(),
-                    dialSize: $('#dialSize').val()
+                    dialSize: $('#dialSize').val(),
+                    gender: $('#gender').val(),
+                    strap: $('#strap').val()
+
                 };
 
 

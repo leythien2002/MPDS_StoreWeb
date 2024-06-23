@@ -1,10 +1,7 @@
 package com.example.mpds.services.impl;
 
 import com.example.mpds.dto.ProductDTO;
-import com.example.mpds.entity.CategoryEntity;
-import com.example.mpds.entity.InvoiceInfoEntity;
-import com.example.mpds.entity.ProductEntity;
-import com.example.mpds.entity.ProductReviewEntity;
+import com.example.mpds.entity.*;
 import com.example.mpds.mapper.ProductMapper;
 import com.example.mpds.model.TotalProductByType;
 import com.example.mpds.repository.*;
@@ -27,6 +24,13 @@ public class ProductService implements IProductService {
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
+    private TypeRepository typeRepository;
+    @Autowired
+    private DialSizeRepository dialSizeRepository;
+    @Autowired
+    private StrapRepository strapRepository;
+
+    @Autowired
     private ProductMapper mapper;
     @Autowired
     private ProductReviewRepository productReviewRepository;
@@ -35,18 +39,16 @@ public class ProductService implements IProductService {
     private InvoiceInfoRepository invoiceInfoRepository;
 
     @Override
-    public FilterProductResult findAll(List<Integer> categories, List<String> types, List<String> dialSizes, Pageable pageable, String searchText) {
+    public FilterProductResult findAll(List<String> categories, List<String> types, List<String> dialSizes,List<String> straps,List<String> gender, Pageable pageable, String searchText) {
 
 
         Page<ProductEntity> productEntities;
-
-//        productEntities = productRepository.findByCategoriesAndTypesAndDialSizes(categories, types, dialSizes, pageable);
-
         Specification<ProductEntity> spec = Specification.where(ProductSpecifications.hasCategories(categories))
                 .and(ProductSpecifications.hasTypes(types))
                 .and(ProductSpecifications.hasDialSizes(dialSizes))
+                .and(ProductSpecifications.hasStraps(straps))
+                .and(ProductSpecifications.hasGenders(gender))
                 .and(ProductSpecifications.nameContains(searchText));
-
 
         productEntities = productRepository.findAll(spec, pageable);
         productEntities.getContent();
@@ -93,11 +95,20 @@ public class ProductService implements IProductService {
     public String insertProduct(ProductDTO product) {
         ProductEntity newProd = mapper.toEntity(product);
         CategoryEntity category = categoryRepository.findByName(product.getCategoryName());
-        if (category != null) {
+        TypeEntity type = typeRepository.findByName(product.getType());
+        StrapEntity strap = strapRepository.findByName(product.getStrap());
+        DialSizeEntity dialSize = dialSizeRepository.findByName(product.getDialSize());
+
+        if (category != null &type != null & strap != null & dialSize!=null) {
             newProd.setCategory(category);
+            newProd.setType(type);
+            newProd.setStrap(strap);
+            newProd.setDialSize(dialSize);
             productRepository.save(newProd);
             return "Insert Product Suscessfully";
-        } else return "Brand name: " + product.getCategoryName() + " does not exist!";
+        } else return "Insert Failed";
+
+
     }
 
     public int totalProduct() {
@@ -131,6 +142,18 @@ public class ProductService implements IProductService {
         if (category == null){
             return "Update Failed! Brand "+product.getCategoryName()+" does not exist!";
         }
+        TypeEntity type = typeRepository.findByName(product.getType());
+        if (type == null){
+            return "Update Failed! Type "+product.getType()+" does not exist!";
+        }
+        StrapEntity strap = strapRepository.findByName(product.getStrap());
+        if (strap == null){
+            return "Update Failed! Strap "+product.getStrap()+" does not exist!";
+        }
+        DialSizeEntity dialSize = dialSizeRepository.findByName(product.getDialSize());
+        if (dialSize == null){
+            return "Update Failed! Dial-Size "+product.getDialSize()+" does not exist!";
+        }
 
         existingProduct.setCategory(category);
         existingProduct.setName(product.getName());
@@ -139,6 +162,11 @@ public class ProductService implements IProductService {
         existingProduct.setImage2(product.getImage2());
         existingProduct.setImage3(product.getImage3());
         existingProduct.setDescription(product.getDescription());
+        existingProduct.setGender(product.getGender());
+        existingProduct.setType(type);
+        existingProduct.setStrap(strap);
+        existingProduct.setDialSize(dialSize);
+
         productRepository.save(existingProduct);
         return "Update Suscessfully";
     }

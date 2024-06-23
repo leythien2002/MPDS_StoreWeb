@@ -33,16 +33,21 @@ public class ProductEntity extends BaseEntity{
     private String image2;
     @Column
     private String image3;
-
     @Column
     private String description;
     @Column(nullable = false)
     private int status; // check if this product is deleted by admin
+    @ManyToOne
+    @JoinColumn(name = "typeId")
+    private TypeEntity type;
+
+    @ManyToOne
+    @JoinColumn(name = "dialSizeId")
+    private DialSizeEntity dialSize;
     @Column
-    private String type;
-    @Column
-    private String dialSize;
+    private String gender;
 
-
-
+    @ManyToOne
+    @JoinColumn(name = "strapId")
+    private StrapEntity strap;
 }

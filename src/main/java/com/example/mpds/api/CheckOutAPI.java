@@ -68,6 +68,7 @@ public class CheckOutAPI {
         for(Map.Entry<Integer,CartItemDTO> item: list.entrySet()){
             InvoiceInfoDTO infoDTO=new InvoiceInfoDTO();
 
+
             infoDTO.setProductId(item.getValue().getProduct().getId());
             infoDTO.setInvoiceId(entity.getId());
             infoDTO.setAmount(item.getValue().getQuantity());

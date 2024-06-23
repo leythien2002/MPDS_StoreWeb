@@ -62,6 +62,9 @@
                             <a class="nav-link" th:href="@{/invoice}"  th:if="${session.role == 'ROLE_SELLER' or session.role == 'ROLE_ADMIN'}"> Invoice</a>
                             <a class="nav-link" th:href="@{/product}"  th:if="${session.role == 'ROLE_ADMIN'}">Product</a>
                             <a class="nav-link" th:href="@{/brand}"  th:if="${session.role == 'ROLE_ADMIN'}">Brand</a>
+                            <a class="nav-link" th:href="@{/strap}"th:if="${session.role == 'ROLE_ADMIN'}">Strap</a>
+                            <a class="nav-link" th:href="@{/type}" th:if="${session.role == 'ROLE_ADMIN'}">Type</a>
+                            <a class="nav-link" th:href="@{/dialsize}"th:if="${session.role == 'ROLE_ADMIN'} ">Dial-Size</a>
 
                         </nav>
                     </div>
