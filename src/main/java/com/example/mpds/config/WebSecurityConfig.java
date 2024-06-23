@@ -57,6 +57,8 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                         .requestMatchers("/register").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
                         .requestMatchers("/register/**").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
                         .requestMatchers("/detail/**").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
+                        .requestMatchers("/update-password").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
+                        .requestMatchers("/update-password/**").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
 
                         //Only admin can access admin page
 
@@ -70,7 +72,19 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 
                         .requestMatchers("/brand").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/brand/**").hasAuthority("ROLE_ADMIN")
+
                         .requestMatchers("/invoice").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/invoice/**").hasAuthority("ROLE_ADMIN")
+
+                        .requestMatchers("/strap").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/strap/**").hasAuthority("ROLE_ADMIN")
+
+                        .requestMatchers("/type").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/type/**").hasAuthority("ROLE_ADMIN")
+
+                        .requestMatchers("/dialsize").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/dialsize/**").hasAuthority("ROLE_ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

@@ -39,11 +39,17 @@ public class UserService implements IUserService {
         return entity;
 
     }
-    public UserEntity findUser(String username){
+    public UserEntity findUser(String username) {
 
-        UserEntity entity=userRepository.findOneByUserName(username).orElseThrow(()->new RuntimeException("Entity Not Found"));
+            UserEntity entity = userRepository.findOneByUserName(username).orElseThrow(() -> new RuntimeException("Entity Not Found"));
+            return entity;
 
-        return entity;
+    }
+    public UserDTO findUserByUserName(String username) {
+
+        UserEntity entity = userRepository.findOneByUserName(username).orElseThrow(() -> new RuntimeException("Entity Not Found"));
+        return userMapper.toDTO(entity);
+
     }
     public UserDTO updateProfile(UserDTO dto){
         UserEntity entity=userRepository.findOneByUserName(dto.getUserName()).orElseThrow(()->new RuntimeException("Entity Not Found"));

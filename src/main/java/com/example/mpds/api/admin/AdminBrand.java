@@ -24,9 +24,6 @@ public class AdminBrand {
     @Autowired
     private CategoryService categoryService;
 
-    @Autowired
-    private CategoryMapper categoryMapper;
-
     @GetMapping
     public String getCategory(Model model) throws ExecutionException, InterruptedException {
         List<CategoryDTO> tmp = categoryService.getAll();
@@ -34,13 +31,6 @@ public class AdminBrand {
         return "adminbrand";
     }
 
-    //    @DeleteMapping(value = "/{id}")
-//    @ResponseBody
-//    public void deleteCategoryById(@PathVariable(value ="id") Long id) throws ExecutionException, InterruptedException {
-//        System.out.println("CO CHAY VAO DELETE "+ id);
-//        categoryService.deleteById(id);
-//
-//    }
     @DeleteMapping(value = "/{id}")
     @ResponseBody
     public ResponseEntity<String> deleteCategoryById(@PathVariable(value = "id") Long id) {

@@ -64,7 +64,7 @@
                             <a class="nav-link" th:href="@{/brand}">Brand</a>
                             <a class="nav-link" th:href="@{/strap}">Strap</a>
                             <a class="nav-link" th:href="@{/type}">Type</a>
-                            <a class="nav-link" th:href="@{/dialsize}">Dial-Size</a>
+                            <a class="nav-link" th:href="@{/dialsize}">Type</a>
 
                         </nav>
                     </div>
@@ -80,20 +80,20 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">List Brand</h1>
+                <h1 class="mt-4">List Dial-Sizes</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">List Brand</li>
+                    <li class="breadcrumb-item active">List Dial-Size</li>
                 </ol>
 
-                <Button id="createProductBtn" style="margin-bottom:1%">Create New Brand</Button>
+                <Button id="createProductBtn" style="margin-bottom:1%">Create New Dial-Size</Button>
                 <div id="successMessage" style="display:none; color: green;"></div>
                 <div id="productModal" class="modal">
                     <div class="modal-content">
                         <span class="close">&times;</span>
-                        <h2>Category Details</h2>
-                        <label>Category Id:</label>
+                        <h2>Dial-Size Details</h2>
+                        <label>Dial-Size Id:</label>
                         <input id="pId"></input>
-                        <label>Category Name:</label>
+                        <label>Dial-Size Name:</label>
                         <input id="pName"></input>
                         <button id="submitProductUpdate">Update</button>
 
@@ -103,14 +103,11 @@
                     <div class="popup-content">
                         <span class="closeBtn">&times;</span>
                         <form id="createProductForm" method="post">
-                            <h2>Create Brand</h2>
+                            <h2>Type Strap</h2>
                             <label for="productId">Id:</label><br>
-                            <input type="text" id="productId" name="productId" placeholder="Brand Id"><br>
-
+                            <input type="text" id="productId" name="productId" placeholder="Type Id"><br>
                             <label for="productName">Name:</label><br>
-                            <input type="text" id="productName" name="productName" placeholder="Brand Name"><br>
-
-
+                            <input type="text" id="productName" name="productName" placeholder="Type Name"><br>
                             <input type="submit" value="Submit">
                         </form>
                     </div>
@@ -139,18 +136,17 @@
                             </tfoot>
                             <tbody>
 
-                            <tr th:each="category:${listCategory}">
-                                <td th:text="${category.id}"></td>
-                                <td th:text="${category.name}"></td>
+                            <tr th:each="dialSize:${listDialSize}">
+                                <td th:text="${dialSize.id}"></td>
+                                <td th:text="${dialSize.name}"></td>
                                 <td>
-                                    <button class="delete-btn" th:value="${category.id}">Delete</button>
+                                    <button class="delete-btn" th:value="${dialSize.id}">Delete</button>
                                     <button class="details-btn"
-                                            th:data-id="${category.id}"
-                                            th:data-name="${category.name}"
+                                            th:data-id="${dialSize.id}"
+                                            th:data-name="${dialSize.name}"
                                     >Details
                                     </button>
                                 </td>
-
                             </tr>
                             </tbody>
                         </table>
@@ -171,18 +167,13 @@
         document.getElementById('submitProductUpdate').addEventListener('click', function () {
             var id = document.getElementById('pId').value;
             var name = document.getElementById('pName').value;
-
-
-
             let formData = {
                 id: id,
                 name: name
 
             };
-
-
             $.ajax({
-                url: '/brand',
+                url: '/dialsize',
                 method: 'put',
                 // Replace with your API endpoint
                 data: JSON.stringify(formData),
@@ -209,12 +200,8 @@
             // Check if the clicked element has the class 'details-btn'
             if (event.target.classList.contains('details-btn')) {
                 var button = event.target;
-
                 var id = button.getAttribute('data-id');
                 var name = button.getAttribute('data-name');
-
-
-
                 showUserDetails(id, name);
             }
         });
@@ -223,7 +210,6 @@
         function showUserDetails(id, name) {
             document.getElementById('pId').value = id;
             document.getElementById('pName').value = name;
-
             document.getElementById('productModal').style.display = "block";
         }
 
@@ -258,7 +244,7 @@
 
 
                 $.ajax({
-                    url: '/brand',
+                    url: '/dialsize',
                     method: 'post',
                     // Replace with your API endpoint
                     data: JSON.stringify(formData),
@@ -266,7 +252,7 @@
 
                     success: function (response) {
                         // Handle success
-                        $('#successMessage').show().text('Brand created successfully!');
+                        $('#successMessage').show().text('Strap created successfully!');
                         $('#createProductForm')[0].reset();
                         setTimeout(function () {
                             $('#successMessage').hide();
@@ -275,7 +261,7 @@
                     },
                     error: function () {
                         // Handle error
-                        alert('Failed to create Brand. Please try again.');
+                        alert('Failed to create Dial-Size. Please try again.');
                     }
                 });
 
@@ -291,7 +277,7 @@
                 var productId = $(this).attr("value");
 
                 $.ajax({
-                    url: '/brand/' + productId,
+                    url: '/dialsize/' + productId,
                     method: 'delete',
                     success: function (result) {
                         alert(result);

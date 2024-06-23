@@ -21,6 +21,9 @@ public class ProductDTO extends AbstractDTO{
     private String description;
     private String type;
     private String dialSize;
+    private String gender;
+    private String strap;
+
     //co can status ko ?
     private int status; // check if this product is deleted by admin
 

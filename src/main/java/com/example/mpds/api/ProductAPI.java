@@ -1,13 +1,10 @@
 package com.example.mpds.api;
 
 import com.example.mpds.api.output.ProductOutput;
-import com.example.mpds.dto.CategoryDTO;
-import com.example.mpds.dto.ProductDTO;
+import com.example.mpds.dto.*;
 import com.example.mpds.entity.ProductReviewEntity;
 import com.example.mpds.repository.ProductReviewRepository;
-import com.example.mpds.services.impl.CategoryService;
-import com.example.mpds.services.impl.ProductService;
-import com.example.mpds.services.impl.FilterProductResult;
+import com.example.mpds.services.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +27,12 @@ public class ProductAPI {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private TypeService typeService;
+    @Autowired
+    private StrapService strapService;
+    @Autowired
+    private DialSizeService dialSizeService;
 
 //    @GetMapping(value = "/shop")
 //    //limit se tu set, chu khong lay tu request
@@ -64,9 +67,11 @@ public class ProductAPI {
 @GetMapping(value = "/shop")
 public String shop(@RequestParam(value = "page", defaultValue = "1") int page,
                    @RequestParam(value = "sort", defaultValue = "default") String sort,
-                   @RequestParam(value = "category", required = false) List<Integer> categories,
+                   @RequestParam(value = "category", required = false) List<String> categories,
                    @RequestParam(value = "type", required = false) List<String> types,
                    @RequestParam(value = "dialSize", required = false) List<String> dialSizes,
+                   @RequestParam(value = "strap", required = false) List<String> straps,
+                   @RequestParam(value = "gender", required = false) List<String> genders,
                    @RequestParam(value = "searchText", required = false) String searchText,
 
                    Model model) {
@@ -85,7 +90,8 @@ public String shop(@RequestParam(value = "page", defaultValue = "1") int page,
     }
     if (searchText==null) searchText="";
 
-    FilterProductResult filterProductResult = productService.findAll(categories, types, dialSizes, pageable,searchText);
+    FilterProductResult filterProductResult = productService.findAll(categories, types, dialSizes,straps, genders, pageable,searchText);
+
     List<ProductDTO> productList= filterProductResult.getListProductDTO();
 
     ProductOutput result = new ProductOutput();
@@ -96,15 +102,24 @@ public String shop(@RequestParam(value = "page", defaultValue = "1") int page,
     System.out.println("TOTAL PAGE: "+result.getTotalPage());
     System.out.println("TOTAL PRODUCT WITH FILTER: "+ filterProductResult.getTotalElements());
 
-    //Get All Category (brands)
+    //Get All Filter
     List<CategoryDTO> lstCategoryDTO = categoryService.getAll();
-
+    List<TypeDTO> lstTypeDTO = typeService.getAll();
+    List<DialSizeDTO> lstDialSizeDTO = dialSizeService.getAll();
+    List<StrapDTO> lstStrapDTO = strapService.getAll();
 
     model.addAttribute("listCategory", lstCategoryDTO);
+    model.addAttribute("listType", lstTypeDTO);
+    model.addAttribute("listDialSize", lstDialSizeDTO);
+    model.addAttribute("listStrap", lstStrapDTO);
+
     model.addAttribute("listProduct", result);
     model.addAttribute("currentCategories", categories != null ? categories : new ArrayList<>());
     model.addAttribute("currentTypes", types != null ? types : new ArrayList<>());
     model.addAttribute("currentDialSizes", dialSizes != null ? dialSizes : new ArrayList<>());
+    model.addAttribute("currentStraps", straps != null ? straps : new ArrayList<>());
+    model.addAttribute("currentGenders", genders != null ? genders : new ArrayList<>());
+
     model.addAttribute("currentSort", sort);
     model.addAttribute("currentSearch", searchText);
 
