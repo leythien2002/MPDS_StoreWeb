@@ -95,7 +95,7 @@
                         <input id="userPhoneNumber" ></input>
                         <label>Address:</label>
                         <input id="userAddress" ></input>
-                        <label>Permission:</label>
+                        <label>Role Name:</label>
                         <input id="userPermission" ></input>
 
                         <button id="submitUserUpdate">Submit</button>
@@ -116,7 +116,7 @@
                                 <th>Email</th>
                                 <th>PhoneNumber</th>
                                 <th>Address</th>
-                                <th>Permission</th>
+                                <th>Role Name</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -128,7 +128,7 @@
                                     <td th:text="${user.email}"></td>
                                     <td th:text="${user.phoneNumber}"></td>
                                     <td th:text="${user.address}"></td>
-                                    <td th:text="${user.permission}"></td>
+                                    <td th:text="${user.role.roleName}"></td>
 
                                     <td>
                                         <button class="delete-btn" th:value="${user.email}">Delete</button>
@@ -137,7 +137,7 @@
                                                 th:data-email="${user.email}"
                                                 th:data-phoneNumber="${user.phoneNumber}"
                                                 th:data-address="${user.address}"
-                                                th:data-permission="${user.permission}"
+                                                th:data-permission="${user.role.roleName}"
                                                 >Details</button>
                                     </td>
 
@@ -167,7 +167,7 @@
             var email = document.getElementById('userEmail').value;
             var address = document.getElementById('userAddress').value;
             var phoneNumber = document.getElementById('userPhoneNumber').value;
-            var isUser = document.getElementById('userPermission').value;
+            var roleName = document.getElementById('userPermission').value;
 
 
             let formData = {
@@ -175,7 +175,7 @@
                 userEmail: email,
                 address: address,
                 phoneNumber:phoneNumber,
-                isUser:isUser
+                roleName:roleName
             };
             $.ajax({
                 url: '/users',

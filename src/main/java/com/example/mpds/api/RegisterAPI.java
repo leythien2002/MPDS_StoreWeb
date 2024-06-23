@@ -49,7 +49,7 @@ public class RegisterAPI {
             userDTO.setUserName(userName);
             userDTO.setEmail(email);
             userDTO.setName(name);
-            userDTO.setPermission(0);
+            userDTO.setRoleId(0);
             userDTO.setPassword(password);
             userService.save(userDTO);
             return new RedirectView("/login");
@@ -59,7 +59,7 @@ public class RegisterAPI {
             userDTO.setUserName(userName);
             userDTO.setEmail(email);
             userDTO.setName(name);
-            userDTO.setPermission(0);
+            userDTO.setRoleId(0);
             userDTO.setPassword(password);
             model.addAttribute("userInfor", userDTO);
             return  new RedirectView("/register");
@@ -77,7 +77,7 @@ public class RegisterAPI {
         userDTO.setUserName(userName);
         userDTO.setEmail(email);
         userDTO.setName(name);
-        userDTO.setPermission(0);
+        userDTO.setRoleId(0);
         userDTO.setPassword(password);
         model.addAttribute("userInfor", userDTO);
 

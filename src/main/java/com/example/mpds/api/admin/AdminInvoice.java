@@ -5,7 +5,9 @@ import com.example.mpds.dto.ProductDTO;
 import com.example.mpds.mapper.ProductMapper;
 import com.example.mpds.services.impl.InvoiceService;
 import com.example.mpds.services.impl.ProductService;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +27,8 @@ public class AdminInvoice {
     private ProductMapper productMapper;
 
     @GetMapping
-    public String getInvoice(Model model) throws ExecutionException, InterruptedException {
+    @SneakyThrows
+    public String getInvoice(Model model)  {
         List<InvoiceDTO> tmp=invoiceService.findAll();
         model.addAttribute("listInvoice",tmp);
         return "admininvoice";
@@ -33,7 +36,7 @@ public class AdminInvoice {
 
     @PutMapping
     @ResponseBody
-    public void updateProduct(@RequestBody InvoiceDTO invoiceDTO){
-        invoiceService.updateInvoice(invoiceDTO);
+    public void updateProduct(@RequestBody InvoiceDTO invoiceDTO, HttpSession httpSession){
+        invoiceService.updateInvoice(invoiceDTO, httpSession);
     }
 }

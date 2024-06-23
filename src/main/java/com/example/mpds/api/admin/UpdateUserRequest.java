@@ -8,7 +8,7 @@ import lombok.Setter;
 public class UpdateUserRequest {
     private int id;
     private String userEmail;
-    private Integer isUser;
+    private String roleName;
     private String phoneNumber;
     private String address;
 }

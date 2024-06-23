@@ -48,16 +48,15 @@ public class CheckOutAPI {
         CartDTO cart= (CartDTO) session.getAttribute("cart");
         HashMap<Integer,CartItemDTO> list=cart.getItemList();
         int userId= (int) session.getAttribute("userId");
-
+        String userName= (String) session.getAttribute("userName");
         InvoiceDTO dto=new InvoiceDTO();
 
         dto.setPhone(phone);
-
         dto.setStatus(status);
-
         dto.setEmail(email);
         dto.setTotalMoney(total);
         dto.setAddress(address);
+        dto.setCreatedBy(userName);
 
         if(vnPayChecked) dto.setPaymentMethod("VNPay");
         else dto.setPaymentMethod("COD");
@@ -68,7 +67,6 @@ public class CheckOutAPI {
         //detail invoice
         for(Map.Entry<Integer,CartItemDTO> item: list.entrySet()){
             InvoiceInfoDTO infoDTO=new InvoiceInfoDTO();
-
 
             infoDTO.setProductId(item.getValue().getProduct().getId());
             infoDTO.setInvoiceId(entity.getId());

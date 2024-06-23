@@ -1,6 +1,8 @@
 package com.example.mpds.dto;
 
-import jakarta.persistence.Column;
+import com.example.mpds.config.CustomDateSerializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +25,10 @@ public class InvoiceDTO extends AbstractDTO{
 
     private String address;
     private String status;
-    private Date createDate;
+
+    private String createdDate;
+
     private String paymentMethod;
-
-
-
-
+    private String createdBy;
+    private String updatedBy;
 }

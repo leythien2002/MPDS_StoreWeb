@@ -21,7 +21,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         boolean hasUserRole = false;
         boolean hasAdminRole = false;
-
+        boolean hasSalerRole =false;
         RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
         HttpSession session=request.getSession();
 
@@ -30,7 +30,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
                 hasUserRole = true;
                 break;
-            } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
+            } else if (grantedAuthority.getAuthority().equals("ROLE_SELLER")) {
+                hasSalerRole=true;
+                break;
+            } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")){
                 hasAdminRole = true;
                 break;
             }
@@ -43,10 +46,17 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 //Cho nay la name ko phai username
         session.setAttribute("username", name);
         session.setAttribute("userId", userId);
+
         if (hasUserRole) {
+            session.setAttribute("role", "ROLE_USER");
             redirectStrategy.sendRedirect(request, response, "/");
             System.out.println("USER LOGGED IN");
+        } else if (hasSalerRole) {
+            session.setAttribute("role", "ROLE_SELLER");
+            redirectStrategy.sendRedirect(request, response, "/invoice");
+            System.out.println("SELLER LOGGED IN");
         } else if (hasAdminRole) {
+            session.setAttribute("role", "ROLE_ADMIN");
             redirectStrategy.sendRedirect(request, response, "/admin");
             System.out.println("ADMIN LOGGED IN");
 

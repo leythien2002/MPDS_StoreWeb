@@ -1,5 +1,7 @@
 package com.example.mpds.entity;
 
+import com.example.mpds.config.CustomDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,9 +30,16 @@ public class InvoiceEntity extends BaseEntity {
     private String status;
     @Column(name = "email")
     private String email;
-    @Column(name = "createdate")
+    @Column(name = "created_date")
     @CreatedDate
     private Date createDate;
+    @Column(name = "updated_date")
+    @CreatedDate
+    private Date updatedDate;
+    @Column(name = "created_by")
+    private String createdBy;
+    @Column(name = "updated_by")
+    private String updatedBy;
     @Column(nullable = false)
     private String phone;
     @Column(nullable = false)
@@ -40,6 +49,11 @@ public class InvoiceEntity extends BaseEntity {
     @PrePersist
     public void prePersist() {
         createDate = createDate != null ? createDate : new Date();
+        updatedDate = updatedDate != null ? updatedDate : new Date();
+    }
+    @PreUpdate
+    public void preUpdate() {
+        updatedDate = new Date();
     }
 
 

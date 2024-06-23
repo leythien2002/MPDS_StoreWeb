@@ -7,6 +7,7 @@ import com.example.mpds.model.UserInvoiceResult;
 import com.example.mpds.repository.ProductReviewRepository;
 import com.example.mpds.services.impl.InvoiceInfoService;
 import com.example.mpds.services.impl.InvoiceService;
+import com.example.mpds.services.impl.ProductReviewService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +28,7 @@ import java.util.Map;
 @Controller
 @AllArgsConstructor
 public class InvoiceAPI {
-    private final InvoiceService invoiceService;
-    private final ProductReviewRepository productReviewRepository;
+    private final ProductReviewService productReviewService;
     private final InvoiceInfoService invoiceInfoService;
     @AllArgsConstructor
     @Getter
@@ -57,9 +57,8 @@ public class InvoiceAPI {
         return "invoiceDetail";
     }
     @PostMapping(value = "/review")
-    public ResponseEntity<ProductReviewEntity> test(@RequestBody Review review){
-        return ResponseEntity.ok(productReviewRepository.save(new ProductReviewEntity
-                (review.getProductId(),review.getUserId(),review.getReview(),review.getUserName())));
+    public ResponseEntity<?> addReview(@RequestBody Review review){
+        return ResponseEntity.ok(productReviewService.saveProductReview(review));
 
     }
 

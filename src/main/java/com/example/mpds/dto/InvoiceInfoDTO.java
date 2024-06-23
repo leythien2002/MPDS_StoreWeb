@@ -16,4 +16,5 @@ public class InvoiceInfoDTO extends AbstractDTO{
     private int productId;
 
 
+
 }

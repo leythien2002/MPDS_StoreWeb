@@ -16,7 +16,7 @@ public class UserDTO extends AbstractDTO{
     private String email;
     private String userName;
     private String password;
-    private int permission;
+    private int roleId;
 
     private String phoneNumber;
     private String address;

@@ -23,7 +23,7 @@
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" th:href="@{/admin}">Group 20</a>
+    <a class="navbar-brand ps-3" th:href="@{${session.role != 'ROLE_SELLER' ? '/admin' : '/invoice'}}">Group 20</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
             class="fas fa-bars"></i></button>
@@ -58,10 +58,10 @@
                     </a>
                     <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" th:href="@{/users}">User</a>
-                            <a class="nav-link" th:href="@{/invoice}">Invoice</a>
-                            <a class="nav-link" th:href="@{/product}">Product</a>
-                            <a class="nav-link" th:href="@{/brand}">Brand</a>
+                            <a class="nav-link" th:href="@{/users}"  th:if="${session.role == 'ROLE_ADMIN'}">User</a>
+                            <a class="nav-link" th:href="@{/invoice}"  th:if="${session.role == 'ROLE_SELLER' or session.role == 'ROLE_ADMIN'}"> Invoice</a>
+                            <a class="nav-link" th:href="@{/product}"  th:if="${session.role == 'ROLE_ADMIN'}">Product</a>
+                            <a class="nav-link" th:href="@{/brand}"  th:if="${session.role == 'ROLE_ADMIN'}">Brand</a>
 
                         </nav>
                     </div>
@@ -137,6 +137,8 @@
                                 <th>Address</th>
                                 <th>Phone Number</th>
                                 <th>Total Money</th>
+                                <th>Created By</th>
+                                <th>Updated By</th>
                                 <th>Action</th>
 
                             </tr>
@@ -146,24 +148,28 @@
                             <tr th:each="invoice:${listInvoice}">
                                 <td th:text="${invoice.id}"></td>
                                 <td th:text="${invoice.userId}"></td>
-                                <td th:text="${invoice.createDate}"></td>
+                                <td th:text="${invoice.getCreatedDate}"></td>
                                 <td th:text="${invoice.status}"></td>
                                 <td th:text="${invoice.paymentMethod}"></td>
                                 <td th:text="${invoice.email}"></td>
                                 <td th:text="${invoice.address}"></td>
                                 <td th:text="${invoice.phone}"></td>
                                 <td th:text="${invoice.totalMoney}"></td>
+                                <td th:text="${invoice.createdBy}"></td>
+                                <td th:text="${invoice.updatedBy}"></td>
                                 <td>
                                     <button class="details-btn"
                                             th:data-id="${invoice.id}"
                                             th:data-userid="${invoice.userId}"
-                                            th:data-createDate="${invoice.createDate}"
+                                            th:data-createDate="${invoice.getCreatedDate}"
                                             th:data-status="${invoice.status}"
                                             th:data-paymentMethod="${invoice.paymentMethod}"
                                             th:data-email="${invoice.email}"
                                             th:data-address="${invoice.address}"
                                             th:data-phoneNumber="${invoice.phone}"
                                             th:data-totalMoney="${invoice.totalMoney}"
+                                            th:data-createdBy="${invoice.createdBy}"
+                                            th:data-updatedBy="${invoice.updatedBy}"
                                     >Details</button>
                                 </td>
 

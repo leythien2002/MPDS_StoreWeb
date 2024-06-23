@@ -14,6 +14,8 @@ import com.example.mpds.model.UserInvoiceResult;
 import com.example.mpds.repository.InvoiceRepository;
 import com.example.mpds.repository.InvoiceSpecification;
 import com.example.mpds.services.IInvoiceService;
+import jakarta.servlet.http.HttpSession;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +41,7 @@ public class InvoiceService implements IInvoiceService {
     @Autowired
     private UserService userService;
 
-    public List<InvoiceDTO> findAll(){
+    public List<InvoiceDTO> findAll() throws ParseException {
         List<InvoiceDTO> result=new ArrayList<>();
         List<InvoiceEntity> list1=invoiceRepository.findAll();
         for(InvoiceEntity item: list1){
@@ -84,6 +87,7 @@ public class InvoiceService implements IInvoiceService {
         List<InvoiceEntity> listInvoice=invoiceRepository.findAll(spec);
         return (int) listInvoice.stream().mapToDouble(InvoiceEntity::getTotalMoney).sum();
     }
+    @SneakyThrows
     public UserInvoiceResult findAllByUserId(long userId, Pageable pageable){
         List<InvoiceDTO> result=new ArrayList<>();
         Page<InvoiceEntity> lst=invoiceRepository.findByUserId(userId,pageable);
@@ -120,8 +124,9 @@ public class InvoiceService implements IInvoiceService {
         return invoice;
     }
 
-    public void updateInvoice(InvoiceDTO invoiceDTO)
+    public void updateInvoice(InvoiceDTO invoiceDTO, HttpSession session)
     {
+        String userName= (String) session.getAttribute("username");
         InvoiceEntity existingInvoice = invoiceRepository.findById((long) invoiceDTO.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Invoice not found"));
         existingInvoice.setStatus(invoiceDTO.getStatus());
@@ -130,6 +135,7 @@ public class InvoiceService implements IInvoiceService {
         existingInvoice.setAddress(invoiceDTO.getAddress());
         existingInvoice.setTotalMoney(invoiceDTO.getTotalMoney());
         existingInvoice.setPaymentMethod(invoiceDTO.getPaymentMethod());
+        existingInvoice.setUpdatedBy(userName);
         invoiceRepository.save(existingInvoice);
     }
 

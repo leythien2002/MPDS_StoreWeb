@@ -25,6 +25,8 @@ public class ProductEntity extends BaseEntity{
     private CategoryEntity category;
     @OneToMany(mappedBy = "product")
     private List<InvoiceInfoEntity> listInvoiceInfo;
+    @OneToMany(mappedBy = "product")
+    private List<ProductReviewEntity> listProductReview;
     @Column
     private String image1;
     @Column

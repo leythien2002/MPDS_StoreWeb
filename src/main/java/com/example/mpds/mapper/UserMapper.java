@@ -1,8 +1,6 @@
 package com.example.mpds.mapper;
 
-import com.example.mpds.dto.ProductDTO;
 import com.example.mpds.dto.UserDTO;
-import com.example.mpds.entity.ProductEntity;
 import com.example.mpds.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +11,6 @@ public class UserMapper {
         entity.setEmail(dto.getEmail());
         entity.setName(dto.getName());
         entity.setUserName(dto.getUserName());
-        entity.setPermission(0);
     entity.setPassword(dto.getPassword());
         return entity;
 
@@ -23,7 +20,7 @@ public class UserMapper {
         dto.setId(entity.getId());//set id for add product to cart
         dto.setEmail(entity.getEmail());
         dto.setName(entity.getName());
-        dto.setPermission(entity.getPermission());
+        dto.setRoleId(entity.getRole().getId());
         dto.setUserName(entity.getUserName());
         dto.setAddress(entity.getAddress());
         dto.setPassword(entity.getPassword());
@@ -35,7 +32,7 @@ public class UserMapper {
         oldEntity.setEmail(dto.getEmail());
         oldEntity.setName(dto.getName());
         oldEntity.setUserName(dto.getUserName());
-        oldEntity.setPermission(dto.getPermission());
+
         return oldEntity;
     }
 

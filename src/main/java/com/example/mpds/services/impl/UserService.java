@@ -2,8 +2,10 @@ package com.example.mpds.services.impl;
 
 import com.example.mpds.api.admin.UpdateUserRequest;
 import com.example.mpds.dto.UserDTO;
+import com.example.mpds.entity.RoleEntity;
 import com.example.mpds.entity.UserEntity;
 import com.example.mpds.mapper.UserMapper;
+import com.example.mpds.repository.RoleRepository;
 import com.example.mpds.repository.UserRepository;
 import com.example.mpds.services.IUserService;
 import org.apache.catalina.User;
@@ -18,6 +20,8 @@ import java.util.function.Consumer;
 public class UserService implements IUserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
     @Autowired
     private UserMapper userMapper;
 
@@ -97,11 +101,13 @@ public class UserService implements IUserService {
 
     public void updateUser(UpdateUserRequest user){
 
+        RoleEntity role=roleRepository.findByRoleName(user.getRoleName());
         UserEntity existingUser = userRepository.findById((long) user.getId())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         existingUser.setEmail(user.getUserEmail());
-        existingUser.setPermission(user.getIsUser());
+        existingUser.setRole(role);
+//        existingUser.setPermission(user.getIsUser());
         existingUser.setPhoneNumber(user.getPhoneNumber());
         existingUser.setAddress(user.getAddress());
 

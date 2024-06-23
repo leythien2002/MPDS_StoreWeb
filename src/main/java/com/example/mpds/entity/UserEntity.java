@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
@@ -25,8 +24,9 @@ public class UserEntity extends BaseEntity {
     private String userName;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
-    private int permission;
+    @ManyToOne
+    @JoinColumn(name = "roleId")
+    private RoleEntity role;
     @Column(name = "phonenumber")
     private String phoneNumber;
 

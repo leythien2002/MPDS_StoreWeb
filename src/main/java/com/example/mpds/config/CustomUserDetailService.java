@@ -28,8 +28,11 @@ public class CustomUserDetailService implements UserDetailsService {
         UserEntity user=new UserEntity();
         user=userRepository.findOneByUserName(username).orElseThrow(()->new RuntimeException("Entity Not Found"));
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if(user.getPermission()==1){
+        if(user.getRole().getId()==1){
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+        else if (user.getRole().getId()==2) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_SELLER"));
         }
         else{
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));

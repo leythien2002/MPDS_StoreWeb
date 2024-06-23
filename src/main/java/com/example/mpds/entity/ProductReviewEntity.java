@@ -13,8 +13,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductReviewEntity extends BaseEntity {
-    @Column(name = "product_id")
-    private int productId;
+    @JoinColumn(name = "product_id")
+    @ManyToOne
+    private ProductEntity product;
     @Column(name = "user_id")
     private int userId;
     @Column(name = "review")

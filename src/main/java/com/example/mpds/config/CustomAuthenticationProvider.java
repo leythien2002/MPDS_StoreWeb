@@ -33,10 +33,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         // Gán vai trò dựa trên thuộc tính permission của user
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if(user.getPermission()==1){
+        if(user.getRole().getId()==1){
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }
-        else{
+        } else if (user.getRole().getId()==2) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_SELLER"));
+        } else{
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
 
@@ -48,4 +49,5 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public boolean supports(Class<?> authenticationType) {
         return authenticationType.equals(UsernamePasswordAuthenticationToken.class);
     }
+
 }

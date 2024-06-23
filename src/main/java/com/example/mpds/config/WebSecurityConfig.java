@@ -70,7 +70,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 
                         .requestMatchers("/brand").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/brand/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers("/invoice").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/invoice").hasAnyAuthority("ROLE_ADMIN","ROLE_SELLER")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
