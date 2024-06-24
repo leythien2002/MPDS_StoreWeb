@@ -1,7 +1,5 @@
 package com.example.mpds.entity;
 
-import com.example.mpds.config.CustomDateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,7 +30,7 @@ public class InvoiceEntity extends BaseEntity {
     private String email;
     @Column(name = "created_date")
     @CreatedDate
-    private Date createDate;
+    private Date createdDate;
     @Column(name = "updated_date")
     @CreatedDate
     private Date updatedDate;
@@ -48,7 +46,7 @@ public class InvoiceEntity extends BaseEntity {
     private String paymentMethod;
     @PrePersist
     public void prePersist() {
-        createDate = createDate != null ? createDate : new Date();
+        createdDate = createdDate != null ? createdDate : new Date();
         updatedDate = updatedDate != null ? updatedDate : new Date();
     }
     @PreUpdate

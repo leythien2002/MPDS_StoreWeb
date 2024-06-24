@@ -48,7 +48,7 @@ public class CheckOutAPI {
         CartDTO cart= (CartDTO) session.getAttribute("cart");
         HashMap<Integer,CartItemDTO> list=cart.getItemList();
         int userId= (int) session.getAttribute("userId");
-        String userName= (String) session.getAttribute("userName");
+        String userName= (String) session.getAttribute("username");
         InvoiceDTO dto=new InvoiceDTO();
 
         dto.setPhone(phone);

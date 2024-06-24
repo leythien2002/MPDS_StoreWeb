@@ -6,7 +6,6 @@ import com.example.mpds.entity.UserEntity;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 @Component
@@ -34,7 +33,7 @@ public class InvoiceMapper {
     @SneakyThrows
     public InvoiceDTO toDTO(InvoiceEntity entity)  {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
-        String formattedString = formatter.format(entity.getCreateDate());
+        String formattedString = formatter.format(entity.getCreatedDate());
 
         InvoiceDTO dto=new InvoiceDTO();
 

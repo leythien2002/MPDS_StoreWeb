@@ -27,6 +27,9 @@
                             <th>Product Name</th>
                             <th>Price</th>
                             <th>Type</th>
+                            <th>Strap</th>
+                            <th>Dial Size</th>
+                            <th>Category</th>
                             <th>Action</th>
                         </tr>
                         <tr th:each="product:${products}">
@@ -35,7 +38,10 @@
                             <td class="align-middle" th:text="${product.price}">
 
                             </td>
-                            <td th:text="${product.type}"></td>
+                            <td th:text="${product.getType().name}"></td>
+                            <td th:text="${product.getStrap().name}"></td>
+                            <td th:text="${product.getDialSize().name}"></td>
+                            <td th:text="${product.getCategory().name}"></td>
                             <td>
                                 <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="" data-original-title="Edit" th:onclick="|showForm(${product.id})|"><i class="fas fa-pencil-alt"></i></a>
                             </td>

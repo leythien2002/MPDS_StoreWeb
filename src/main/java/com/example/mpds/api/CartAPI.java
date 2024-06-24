@@ -30,11 +30,7 @@ public class CartAPI {
                                              HttpSession session){
         CartOutput response=new CartOutput();
 
-        CartItemDTO item=new CartItemDTO();
-        ProductDTO product=productService.findOne(id);
-        item.setProduct(product);
-        item.setQuantity(quantity);
-        item.setPrice(product.getPrice());
+
         //init Cart
         CartDTO cart= (CartDTO) session.getAttribute("cart");
         if(cart==null){
@@ -44,7 +40,19 @@ public class CartAPI {
         if(tmp==null){
             tmp=new HashMap<>();
         }
-        tmp.put(product.getId(),item);
+        CartItemDTO item1=tmp.get(id);
+        if(item1!=null){
+           item1.setQuantity(item1.getQuantity()+quantity);
+           item1.setPrice(item1.getPrice()*quantity);
+        }
+        else{
+            item1=new CartItemDTO();
+            ProductDTO product=productService.findOne(id);
+            item1.setProduct(product);
+            item1.setQuantity(quantity);
+            item1.setPrice(product.getPrice());
+        }
+        tmp.put(id,item1);
         cart.setItemList(tmp);
 
         int cartSize= tmp.size();

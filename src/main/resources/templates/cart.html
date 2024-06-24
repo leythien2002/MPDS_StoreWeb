@@ -151,7 +151,7 @@
                 <div class="card-body">
                   <h5 class="text-uppercase mb-4">Cart total</h5>
                   <ul class="list-unstyled mb-0">
-                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold" >Subtotal</strong><span class="text-muted small" th:text="'$'+((${session.cart}!=null   and ${session.cart.total} != null) ? ${session.cart.total} : 0)"></span>
+                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold" >Subtotal</strong><span class="text-muted small" th:text="'$'+((${session.cart}!=null   and ${session.cart.total} != null) ? ${session.cart.total} : 0)" th:id="subTotal"></span>
                     </li>
                     <li class="border-bottom my-2"></li>
                     <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong>
@@ -251,6 +251,7 @@
                 quantityInput.val(number);
                 price.text('$'+response.totalPrice);
                 $('#totalPrice').text('$'+response.totalPriceOfCart);
+                $('#subTotal').text('$'+response.totalPriceOfCart);
 
 
               },
@@ -283,6 +284,7 @@
                 quantityInput.val(number);
                 price.text('$'+response.totalPrice);
                 $('#totalPrice').text('$'+response.totalPriceOfCart);
+                $('#subTotal').text('$'+response.totalPriceOfCart);
 
 
               },

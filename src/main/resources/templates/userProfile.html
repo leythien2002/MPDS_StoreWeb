@@ -329,7 +329,7 @@
                                                 </thead>
                                                 <tbody id="table-body">
                                                     <tr th:each="invoice:${invoices}">
-                                                        <td><a th:href="@{'/invoice/' + ${invoice.id}}">
+                                                        <td><a th:href="@{'/profile/invoice/' + ${invoice.id}}">
                                                             <span th:text="${invoice.id}"></span>
                                                         </a></td>
                                                         <td th:text="${invoice.createdDate}"></td>
@@ -432,8 +432,8 @@
                     invoices.forEach(function(invoice){
                         // Tạo một thẻ tr mới cho mỗi invoice
                         var tr = $('<tr>');
-                        tr.append('<td><a href="/invoice/' + invoice.id + '">' + invoice.id + '</a></td>');
-                        tr.append('<td>' + invoice.createDate + '</td>');
+                        tr.append('<td><a href="/profile/invoice/' + invoice.id + '">' + invoice.id + '</a></td>');
+                        tr.append('<td>' + invoice.createdDate + '</td>');
                         tr.append('<td>' + invoice.totalMoney + '</td>');
                         tr.append('<td><span class="badge bg-light text-dark">' + invoice.status + '</span></td>');
 

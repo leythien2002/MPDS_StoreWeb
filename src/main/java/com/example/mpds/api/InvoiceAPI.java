@@ -40,7 +40,7 @@ public class InvoiceAPI {
         private int userId;
         private String userName;
     }
-    @GetMapping(value = "/invoice/{id}")
+    @GetMapping(value = "/profile/invoice/{id}")
     public String loginPage(@PathVariable Long id, Model model){
         List<ProductEntity> products=invoiceInfoService.getInfo(id);
         model.addAttribute("products", products);

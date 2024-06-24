@@ -21,7 +21,7 @@ public interface InvoiceRepository extends JpaRepository<InvoiceEntity,Long>, Jp
 //    @Query("SELECT i FROM InvoiceEntity i WHERE i.status=?1 and i.createDate BETWEEN ?2 AND ?3")
 //    List<InvoiceEntity> findAllByStatus(String status,Date startDate, Date endDate);
 
-    @Query("SELECT i FROM InvoiceEntity i WHERE i.createDate BETWEEN ?1 AND ?2")
+    @Query("SELECT i FROM InvoiceEntity i WHERE i.createdDate BETWEEN ?1 AND ?2")
     List<InvoiceEntity> findInvoicesBetweenDates(Date startDate, Date endDate);
 
 

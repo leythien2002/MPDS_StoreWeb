@@ -75,7 +75,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                         .requestMatchers("/brand/**").hasAuthority("ROLE_ADMIN")
 
                         .requestMatchers("/invoice").hasAnyAuthority("ROLE_ADMIN","ROLE_SELLER")
-                        .requestMatchers("/invoice/**").hasAnyAuthority("ROLE_ADMIN","ROLE_SELLER")
+//                        .requestMatchers("/invoice/**").hasAnyAuthority("ROLE_ADMIN","ROLE_SELLER")
 
                         .requestMatchers("/strap").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/strap/**").hasAuthority("ROLE_ADMIN")
