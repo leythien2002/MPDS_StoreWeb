@@ -15,9 +15,10 @@ public class ProductReviewService implements IProductReviewService {
     private ProductReviewRepository productReviewRepository;
     @Autowired
     private ProductRepository productRepository;
-    public ProductReviewEntity saveProductReview(InvoiceAPI.Review review) {
+    public String saveProductReview(InvoiceAPI.Review review) {
         ProductEntity product= productRepository.findOneById(review.getProductId());
         ProductReviewEntity productReview = new ProductReviewEntity(product,review.getUserId(),review.getReview(), review.getUserName());
-        return productReviewRepository.save(productReview);
+        productReviewRepository.save(productReview);
+        return "temp";
     }
 }
