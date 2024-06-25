@@ -95,6 +95,8 @@
                             <h2>Create Product</h2>
                             <label for="productId">Id:</label><br>
                             <input type="text" id="productId" name="productId" placeholder="Product Id"><br>
+                            <label for="productStatus">Id:</label><br>
+                            <input type="text" id="productStatus" name="productStatus" placeholder="Product Status"><br>
 
                             <label for="productName">Name:</label><br>
                             <input type="text" id="productName" name="productName" placeholder="Product Name"><br>
@@ -103,8 +105,12 @@
                             <input type="number" id="productPrice" name="productPrice" placeholder="Product Price"><br>
 
                             <label for="gender">Gender:</label><br>
-                            <input type="text" id="gender" name="gender" placeholder="Gender"><br>
-
+<!--                            <input type="text" id="gender" name="gender" placeholder="Gender"><br>-->
+                            <select id="gender" class>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <br>
                             <label for="categoryName">Brand Name:</label><br>
                             <input type="text" id="categoryName" name="categoryName" placeholder="Brand Name"><br>
 
@@ -182,6 +188,7 @@
                                             th:data-description="${product.description}"
                                             th:data-price="${product.price}"
                                             th:data-type="${product.type}"
+                                            th:data-status="${product.status}"
                                             th:data-imageUrl1="${product.image1}"
                                             th:data-imageUrl2="${product.image2}"
                                             th:data-imageUrl3="${product.image3}"
@@ -203,6 +210,8 @@
                                     <input id="pId"></input>
                                     <label>Product Name:</label>
                                     <input id="pName"></input>
+                                    <label>Product Status:</label>
+                                    <input id="pStatus"></input>
                                     <label>Product Gender:</label>
                                     <input id="pGender"></input>
                                     <label>Product Brand Name:</label>
@@ -258,6 +267,7 @@
             var categoryName = document.getElementById('pCategoryName').value;
             var gender = document.getElementById('pGender').value;
             var strap = document.getElementById('pStrap').value;
+            var status = document.getElementById('pStatus').value;
 
 
 
@@ -273,7 +283,8 @@
                 dialSize:dialSize,
                 categoryName: categoryName,
                 gender:gender,
-                strap:strap
+                strap:strap,
+                status:status
 
             };
 
@@ -321,14 +332,15 @@
                 var dialSize = button.getAttribute('data-dialsize');
                 var gender = button.getAttribute('data-gender');
                 var strap = button.getAttribute('data-strap');
+                var productStatus = button.getAttribute('data-status');
 
 
-                showUserDetails(id,categoryName, name, description, price, type, imageUrl1, imageUrl2, imageUrl3, dialSize, gender, strap);
+                showUserDetails(id,productStatus, categoryName, name, description, price, type, imageUrl1, imageUrl2, imageUrl3, dialSize, gender, strap);
             }
         });
 
         // When the user clicks on a row button, open the modal and populate it with data
-        function showUserDetails(id, categoryName, name, description, price, type, imageUrl1, imageUrl2, imageUrl3, dialSize, gender, strap) {
+        function showUserDetails(id, productStatus, categoryName, name, description, price, type, imageUrl1, imageUrl2, imageUrl3, dialSize, gender, strap) {
 
             document.getElementById('pId').value = id;
             document.getElementById('pName').value = name;
@@ -342,6 +354,7 @@
             document.getElementById('pCategoryName').value = categoryName;
             document.getElementById('pGender').value = gender;
             document.getElementById('pStrap').value = strap;
+            document.getElementById('pStatus').value = productStatus;
 
 
             document.getElementById('productModal').style.display = "block";
@@ -383,7 +396,8 @@
                     type: $('#type').val(),
                     dialSize: $('#dialSize').val(),
                     gender: $('#gender').val(),
-                    strap: $('#strap').val()
+                    strap: $('#strap').val(),
+                    status: $('#productStatus').val()
 
                 };
 

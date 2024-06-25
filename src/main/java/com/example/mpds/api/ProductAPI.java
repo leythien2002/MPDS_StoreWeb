@@ -155,7 +155,7 @@ public String shop(@RequestParam(value = "page", defaultValue = "1") int page,
         int count = 0;
 
         for (ProductDTO prod : allproduct) {
-            if (prod.getId() != productDTO.getId() && count < 4) {
+            if (prod.getId() != productDTO.getId() && count < 4 &&prod.getStatus()==1) {
                 suggestedList.add(prod);
                 count++;
             }

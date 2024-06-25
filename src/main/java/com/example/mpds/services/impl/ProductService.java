@@ -54,7 +54,7 @@ public class ProductService implements IProductService {
         productEntities.getContent();
         List<ProductDTO> productDTOs = new ArrayList<>();
         for (ProductEntity entity : productEntities) {
-            productDTOs.add(mapper.toDTO(entity));
+            if(entity.getStatus() == 1) productDTOs.add(mapper.toDTO(entity));
         }
 
         return new FilterProductResult(productDTOs, productEntities.getTotalElements());
@@ -166,6 +166,8 @@ public class ProductService implements IProductService {
         existingProduct.setType(type);
         existingProduct.setStrap(strap);
         existingProduct.setDialSize(dialSize);
+        existingProduct.setStatus(product.getStatus());
+
 
         productRepository.save(existingProduct);
         return "Update Suscessfully";
