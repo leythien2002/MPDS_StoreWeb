@@ -34,7 +34,7 @@ public class PaymentController {
                 // Parse the string as a double first
                 double totalMoneyDouble = Double.parseDouble(totalMoneyParam);
                 // Convert to long by multiplying by 100 (assuming cents conversion)
-                amount = (long) (totalMoneyDouble * 1000000);
+                amount = (long) (totalMoneyDouble * 2500000);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 // Handle the exception appropriately

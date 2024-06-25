@@ -94,23 +94,29 @@
             </form>
             <!-- Phần 1: Thông tin tổng quát -->
 
+            <div class="section">
+                <div class="charts">
+                    <div class="product-summary">
+                        <h3>Total Products: <span class = "totalproduct" th:text="${totalProducts}">0</span></h3>
+                        <ul>
+                            <li th:each="product : ${products}">
+                                <span class="product-name" th:text="${product.name}">Product Name</span>: <span class="product-total" th:text="${product.total}">0</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="info1">
+                        <p>Total Invoice: <span th:text="${totalInvoices}"></span></p>
+                        <p>Total Revenue: <span th:text="${totalRevenue}">$</span></p>
+                    </div>
+                </div>
 
+            </div>
             <div class="section">
                 <div class="charts">
                     <div >
                         <h3>Line Chart - Revenue</h3>
                         <canvas id="lineChart"></canvas>
                     </div>
-                    <div>
-                        <h2>Total products: <span th:text="${totalProducts}">0</span></h2>
-                        <h2>Number of each product</h2>
-                        <ul>
-                            <li th:each="product : ${products}">
-                                <span th:text="${product.name}">Product Name</span>: <span th:text="${product.total}">0</span>
-                            </li>
-                        </ul>
-                    </div>
-
                 </div>
 
             </div>
@@ -122,10 +128,7 @@
                         <h3>Pie Chart - Number Of Invoices</h3>
                         <canvas id="pieChart" class="pie-chart"></canvas>
                     </div>
-                    <div class="info">
-                        <p>Total Invoice: <span th:text="${totalInvoices}">0</span></p>
-                        <p>Total Revenue: <span th:text="${totalRevenue}">0</span></p>
-                    </div>
+
                 </div>
             </div>
 

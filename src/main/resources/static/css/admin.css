@@ -53,3 +53,50 @@ ul li {
     font-size: 16px;
     margin: 5px 0;
 }
+
+.product-summary h2 {
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.product-summary ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.product-summary li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.totalproduct{
+    color: #007BFF;
+}
+.product-summary li:hover {
+    background: #f9f9f9;
+}
+
+.product-name {
+    font-weight: bold;
+}
+
+/* Info section styling */
+.info1 {
+    background: #fafafa;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.info1 p {
+    margin-bottom: 10px;
+    font-size: 20px;
+
+}
+
+.info1 span {
+    font-weight: bold;
+    color: #007BFF;
+}

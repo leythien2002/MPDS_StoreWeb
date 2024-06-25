@@ -58,10 +58,13 @@
                     </a>
                     <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" th:href="@{/users}">User</a>
-                            <a class="nav-link" th:href="@{/invoice}">Invoice</a>
-                            <a class="nav-link" th:href="@{/product}">Product</a>
-                            <a class="nav-link" th:href="@{/brand}">Brand</a>
+                            <a class="nav-link" th:href="@{/users}"  th:if="${session.role == 'ROLE_ADMIN'}">User</a>
+                            <a class="nav-link" th:href="@{/invoice}"  th:if="${session.role == 'ROLE_SELLER' or session.role == 'ROLE_ADMIN'}"> Invoice</a>
+                            <a class="nav-link" th:href="@{/product}"  th:if="${session.role == 'ROLE_ADMIN'}">Product</a>
+                            <a class="nav-link" th:href="@{/brand}"  th:if="${session.role == 'ROLE_ADMIN'}">Brand</a>
+                            <a class="nav-link" th:href="@{/strap}"th:if="${session.role == 'ROLE_ADMIN'}">Strap</a>
+                            <a class="nav-link" th:href="@{/type}" th:if="${session.role == 'ROLE_ADMIN'}">Type</a>
+                            <a class="nav-link" th:href="@{/dialsize}"th:if="${session.role == 'ROLE_ADMIN'} ">Dial-Size</a>
 
                         </nav>
                     </div>
@@ -96,8 +99,14 @@
                         <label>Address:</label>
                         <input id="userAddress" ></input>
                         <label>Role Name:</label>
-                        <input id="userPermission" ></input>
+<!--                        <input id="userPermission" ></input>-->
+                        <select id="userPermission">
+                            <!-- You can add more options as needed -->
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="SELLER">SELLER</option>
+                            <option value="USER">USER</option>
 
+                        </select>
                         <button id="submitUserUpdate">Submit</button>
 
                     </div>

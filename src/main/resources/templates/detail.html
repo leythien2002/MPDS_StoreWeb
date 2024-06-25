@@ -114,7 +114,7 @@
                 <li class="list-inline-item m-0 4"><i class="fas fa-star small text-warning"></i></li>
               </ul>
               <h1 th:text="${product.name}"></h1>
-              <p class="text-muted lead" th:text="${product.price}"></p>
+              <p class="text-muted lead" th:text="${product.price}+ ' $'"></p>
               <p class="text-sm mb-4" th:text="${product.description}"></p>
               <div class="row align-items-stretch mb-4">
 <!--                <div class="col-sm-5 pr-sm-0">-->
@@ -129,9 +129,10 @@
                 <div class="col-sm-3 pl-sm-0"><a class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0 addToCart" th:value="${product.getId()}">Add to cart</a></div>
               </div>
               <ul class="list-unstyled small d-inline-block">
-                <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Brand:</strong><a class="reset-anchor ms-2" href="#!" th:text="${product.getCategoryName()}"></a></li>
-                <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Type:</strong><a class="reset-anchor ms-2" th:text="${product.getType()}"></a></li>
-                <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Dial Size:</strong><a class="reset-anchor ms-2" th:text="${product.getDialSize()}"></a></li>
+                <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Brand:</strong><a class="reset-anchor ms-2" th:href="@{/shop(category=${product.categoryName})}" th:text="${product.getCategoryName()}"></a></li>
+                <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Type:</strong><a class="reset-anchor ms-2" th:href="@{/shop(type=${product.getType()})}" th:text="${product.getType()}"></a></li>
+                <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Dial Size:</strong><a class="reset-anchor ms-2" th:href="@{/shop(dialSize=${product.getDialSize()})}" th:text="${product.getDialSize()}"></a></li>
+                <li class="px-3 py-2 mb-1 bg-white text-muted"><strong class="text-uppercase text-dark">Strap:</strong><a class="reset-anchor ms-2" th:href="@{/shop(strap=${product.getStrap()})}" th:text="${product.getStrap()}"></a></li>
 
               </ul>
             </div>
