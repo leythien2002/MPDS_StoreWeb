@@ -85,7 +85,12 @@ public class InvoiceService implements IInvoiceService {
     public Integer totalRevenue(Date startDate, Date endDate){
         Specification<InvoiceEntity> spec = Specification.where(InvoiceSpecification.createDateBetween(startDate, endDate));
         List<InvoiceEntity> listInvoice=invoiceRepository.findAll(spec);
-        return (int) listInvoice.stream().mapToDouble(InvoiceEntity::getTotalMoney).sum();
+        double sum = 0;
+        for ( InvoiceEntity invoice : listInvoice){
+            if(invoice.getStatus().equals("Paid")) sum += invoice.getTotalMoney();
+        }
+//        return (int) listInvoice.stream().mapToDouble(InvoiceEntity::getTotalMoney).sum();
+        return (int) sum;
     }
     @SneakyThrows
     public UserInvoiceResult findAllByUserId(long userId, Pageable pageable){
