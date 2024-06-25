@@ -39,7 +39,7 @@ public class InvoiceInfoService implements IInvoiceInfoService {
         return products;
     };
 
-    public void save(InvoiceInfoDTO dto){
+    public InvoiceInfoEntity save(InvoiceInfoDTO dto){
         InvoiceInfoEntity entity=new InvoiceInfoEntity();
 
         if(dto.getId()!=0){
@@ -53,7 +53,7 @@ public class InvoiceInfoService implements IInvoiceInfoService {
         else{
             entity=invoiceInfoMapper.toEntity(dto,invoiceService.findInvoice(dto.getInvoiceId()),productService.findProduct(dto.getProductId()));
         }
-        entity=invoiceInfoRepository.save(entity);
+        return invoiceInfoRepository.save(entity);
 //        return invoiceMapper.toDTO(entity);
 
     }

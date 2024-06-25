@@ -59,6 +59,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                         .requestMatchers("/detail/**").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
                         .requestMatchers("/update-password").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
                         .requestMatchers("/update-password/**").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
+                        .requestMatchers("/orderDetail").access(new WebExpressionAuthorizationManager("!hasRole('ROLE_ADMIN')"))
 
                         //Only admin can access admin page
 
